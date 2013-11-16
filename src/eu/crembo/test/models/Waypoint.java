@@ -1,0 +1,25 @@
+package eu.crembo.test.models;
+
+import eu.crembo.test.types.Vector2d;
+
+public class Waypoint {
+	
+	protected Vector2d coords;
+	protected int altitude;
+	
+	public Vector2d getCoords() {
+		return coords;
+	}
+	public void setCoords(Vector2d coords) {
+		this.coords = coords;
+	}
+	public int getAltitude() {
+		return altitude;
+	}
+	public void setAltitude(int altitude) {
+		this.altitude = altitude;
+	}
+	
+	
+
+}
