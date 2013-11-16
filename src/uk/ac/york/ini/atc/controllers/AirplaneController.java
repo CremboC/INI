@@ -27,6 +27,10 @@ public class AirplaneController {
 		airplaneTypes.add(type);
 	}
 	
+	/**
+	 * Generates a random aeroplane type
+	 * @return Aeroplane
+	 */
 	public Aeroplane pickRandomType() {
 		Aeroplane copy;
 		copy = airplaneTypes.get(ThreadLocalRandom.current().nextInt(airplaneTypes.size()));

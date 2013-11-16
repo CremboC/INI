@@ -30,6 +30,7 @@ public class Aeroplane {
 
 	/**
 	 * Set the speed
+	 * More detail on this method
 	 * @param speed int
 	 * 
 	 */
