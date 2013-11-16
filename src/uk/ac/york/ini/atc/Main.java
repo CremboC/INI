@@ -15,7 +15,6 @@ public class Main {
 	public static AirplaneController cntlr;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		// start game
 		cntlr = new AirplaneController();
@@ -44,6 +43,7 @@ public class Main {
 		System.out.println(cntlr.getAirplaneTypes());
 		
 		// Adding comment to try referencing issues
+		// adding comment to try out committing and else
 		
 	}
 
