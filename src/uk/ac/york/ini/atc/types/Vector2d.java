@@ -1,4 +1,4 @@
-package eu.crembo.test.types;
+package uk.ac.york.ini.atc.types;
 
 public class Vector2d {
 

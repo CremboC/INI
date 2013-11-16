@@ -1,4 +1,4 @@
-package eu.crembo.test.models;
+package uk.ac.york.ini.atc.models;
 
 public class Exitpoint extends Waypoint {
 	

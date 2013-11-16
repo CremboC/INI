@@ -1,11 +1,11 @@
-package eu.crembo.test;
+package uk.ac.york.ini.atc;
 
 import java.util.ArrayList;
 
-import eu.crembo.test.controllers.AirplaneController;
-import eu.crembo.test.models.Aeroplane;
-import eu.crembo.test.models.types.A1;
-import eu.crembo.test.models.types.B1;
+import uk.ac.york.ini.atc.controllers.AirplaneController;
+import uk.ac.york.ini.atc.models.Aeroplane;
+import uk.ac.york.ini.atc.models.types.A1;
+import uk.ac.york.ini.atc.models.types.B1;
 
 public class Main {
 	

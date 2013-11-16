@@ -1,8 +1,8 @@
-package eu.crembo.test.models;
+package uk.ac.york.ini.atc.models;
 
 import java.util.ArrayList;
 
-import eu.crembo.test.types.Vector2d;
+import uk.ac.york.ini.atc.types.Vector2d;
 
 /**
  * @author Crembo

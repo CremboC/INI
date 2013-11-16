@@ -1,6 +1,6 @@
-package eu.crembo.test.models.types;
+package uk.ac.york.ini.atc.models.types;
 
-import eu.crembo.test.models.Aeroplane;
+import uk.ac.york.ini.atc.models.Aeroplane;
 
 public class A1 extends Aeroplane {
 
