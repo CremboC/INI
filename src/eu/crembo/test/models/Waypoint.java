@@ -2,6 +2,13 @@ package eu.crembo.test.models;
 
 import eu.crembo.test.types.Vector2d;
 
+/**
+ * @author Crembo
+ * 
+ * Every airplane can have multiple waypoints, 
+ * they define how it move around the airspace.
+ *
+ */
 public class Waypoint {
 	
 	protected Vector2d coords;
