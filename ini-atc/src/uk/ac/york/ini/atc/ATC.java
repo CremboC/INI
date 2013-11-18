@@ -35,9 +35,6 @@ public class ATC implements ApplicationListener {
 	batch = new SpriteBatch();
 	font = new BitmapFont();
 
-	// texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-	// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
 	texture = new Texture(Gdx.files.internal("data/nisairspace.png"));
 	texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
