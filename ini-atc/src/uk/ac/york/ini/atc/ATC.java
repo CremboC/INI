@@ -1,53 +1,40 @@
 package uk.ac.york.ini.atc;
 
+import uk.ac.york.ini.atc.screens.Screen;
+import uk.ac.york.ini.atc.screens.TitleScreen;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 public class ATC implements ApplicationListener {
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private Texture texture;
-    private Sprite sprite;
-    private BitmapFont font;
+    private boolean running = false;
+    private Screen screen;
 
-    private final Vector2 topLeft = new Vector2(-640, 360);
-    private final Vector2 topRight = new Vector2(640, 360);
-    private final Vector2 bottomLeft = new Vector2(-640, -360);
-    private final Vector2 bottomRight = new Vector2(640, -360);
+    private float accum = 0;
 
     @Override
     public void create() {
-	float w = Gdx.graphics.getWidth();
-	float h = Gdx.graphics.getHeight();
+	Screen.width = Gdx.graphics.getWidth();
+	Screen.height = Gdx.graphics.getHeight();
 
-	camera = new OrthographicCamera(w, h);
-	batch = new SpriteBatch();
-	font = new BitmapFont();
+	running = true;
 
-	texture = new Texture(Gdx.files.internal("data/nisairspace.png"));
-	texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-	TextureRegion region = new TextureRegion(texture, 0, 0, 1280, 720);
-
-	sprite = new Sprite(region);
-	sprite.setPosition(bottomLeft.x, bottomLeft.y);
+	setScreen(new TitleScreen());
     }
 
     @Override
     public void dispose() {
-	batch.dispose();
-	texture.dispose();
+
+    }
+
+    public void setScreen(Screen newScreen) {
+	if (screen != null)
+	    screen.removed();
+	screen = newScreen;
+	if (screen != null)
+	    screen.init(this);
     }
 
     @Override
@@ -55,16 +42,14 @@ public class ATC implements ApplicationListener {
 	Gdx.gl.glClearColor(1, 1, 1, 1);
 	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-	batch.setProjectionMatrix(camera.combined);
-	batch.begin();
+	accum += Gdx.graphics.getDeltaTime();
 
-	font.setColor(Color.BLACK);
-	font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(),
-		topLeft.x + 10, topLeft.y - 10);
+	while (accum > 1.0f / 60.0f) {
+	    screen.tick();
+	    accum -= 1.0f / 60.0f;
+	}
 
-	sprite.draw(batch);
-
-	batch.end();
+	screen.render();
     }
 
     @Override
