@@ -14,71 +14,72 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class ATC implements ApplicationListener {
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Texture texture;
-	private Sprite sprite;
-	private BitmapFont font;
 
-	@Override
-	public void create() {
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+    private Texture texture;
+    private Sprite sprite;
+    private BitmapFont font;
 
-		camera = new OrthographicCamera(w, h);
-		batch = new SpriteBatch();
-		font = new BitmapFont();
+    private final Vector2 topLeft = new Vector2(-640, 360);
+    private final Vector2 topRight = new Vector2(640, 360);
+    private final Vector2 bottomLeft = new Vector2(-640, -360);
+    private final Vector2 bottomRight = new Vector2(640, -360);
 
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    @Override
+    public void create() {
+	float w = Gdx.graphics.getWidth();
+	float h = Gdx.graphics.getHeight();
 
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
+	camera = new OrthographicCamera(w, h);
+	batch = new SpriteBatch();
+	font = new BitmapFont();
 
-		sprite = new Sprite(region);
-		sprite.setSize(sprite.getHeight(), sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth(), sprite.getHeight());
-		sprite.setPosition(0, 0);
-	}
+	// texture = new Texture(Gdx.files.internal("data/libgdx.png"));
+	// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-	@Override
-	public void dispose() {
-		batch.dispose();
-		texture.dispose();
-	}
+	texture = new Texture(Gdx.files.internal("data/nisairspace.png"));
+	texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-	@Override
-	public void render() {
+	TextureRegion region = new TextureRegion(texture, 0, 0, 1280, 720);
 
-		final Vector2 topLeft = new Vector2(-640, 360);
-		final Vector2 topRight = new Vector2(640, 360);
-		final Vector2 BottomLeft = new Vector2(-640, -360);
-		final Vector2 BottomRight = new Vector2(640, -360);
+	sprite = new Sprite(region);
+	sprite.setPosition(bottomLeft.x, bottomLeft.y);
+    }
 
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+    @Override
+    public void dispose() {
+	batch.dispose();
+	texture.dispose();
+    }
 
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
+    @Override
+    public void render() {
+	Gdx.gl.glClearColor(1, 1, 1, 1);
+	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		font.setColor(Color.BLACK);
-		font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(),
-				topLeft.x + 10, topLeft.y - 10);
+	batch.setProjectionMatrix(camera.combined);
+	batch.begin();
 
-		sprite.draw(batch);
+	font.setColor(Color.BLACK);
+	font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(),
+		topLeft.x + 10, topLeft.y - 10);
 
-		batch.end();
-	}
+	sprite.draw(batch);
 
-	@Override
-	public void resize(int width, int height) {
-	}
+	batch.end();
+    }
 
-	@Override
-	public void pause() {
-	}
+    @Override
+    public void resize(int width, int height) {
+    }
 
-	@Override
-	public void resume() {
-	}
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
 
 }
