@@ -8,7 +8,7 @@ public class Aeroplane {
 
     protected Vector2 coords;
     protected int altitude;
-    private int speed;
+    private int speed; //vectorise
     protected int radius;
 
     protected ArrayList<Waypoint> waypoints;
