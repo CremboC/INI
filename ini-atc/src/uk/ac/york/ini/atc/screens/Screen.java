@@ -35,7 +35,7 @@ public abstract class Screen {
     }
 
     protected void setScreen(Screen screen) {
-	atc.setScreen(screen);
+//	atc.setScreen(screen);
     }
 
     public void draw(TextureRegion region, int x, int y) {
