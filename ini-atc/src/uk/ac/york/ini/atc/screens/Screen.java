@@ -31,11 +31,13 @@ public abstract class Screen {
     public final void init(ATC atc) {
 	this.atc = atc;
 
-	camera = new OrthographicCamera(width, height);
+	spriteBatch = new SpriteBatch();
+
+	// camera = new OrthographicCamera(width, height);
     }
 
     protected void setScreen(Screen screen) {
-//	atc.setScreen(screen);
+	atc.setScreen(screen);
     }
 
     public void draw(TextureRegion region, int x, int y) {

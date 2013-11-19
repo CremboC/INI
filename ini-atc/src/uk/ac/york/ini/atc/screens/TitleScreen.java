@@ -18,8 +18,6 @@ public class TitleScreen extends Screen {
 
     @Override
     public void render() {
-
-	spriteBatch.setProjectionMatrix(camera.combined);
 	spriteBatch.begin();
 
 	texture = new Texture(Gdx.files.internal("data/nisairspace.png"));
@@ -28,12 +26,12 @@ public class TitleScreen extends Screen {
 	TextureRegion region = new TextureRegion(texture, 0, 0, 1280, 720);
 
 	sprite = new Sprite(region);
-	sprite.setPosition(bottomLeft.x, bottomLeft.y);
+	sprite.setPosition(0, 0);
 
 	drawSprite(sprite);
 
-	drawString("fps: " + Gdx.graphics.getFramesPerSecond(), topLeft.x + 10,
-		topLeft.y - 10, Color.BLACK);
+	drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
+		Color.BLACK);
 
 	spriteBatch.end();
     }
