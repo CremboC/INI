@@ -7,28 +7,11 @@ import uk.ac.york.ini.atc.screens.TitleScreen;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class ATC implements ApplicationListener {
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private Texture texture;
-    private Sprite map;
-    private BitmapFont font;
-
     public Input input = new Input();
     public Screen screen;
-
-    private final Vector2 topLeft = new Vector2(-640, 360);
-    private final Vector2 topRight = new Vector2(640, 360);
-    private final Vector2 bottomLeft = new Vector2(-640, -360);
-    private final Vector2 bottomRight = new Vector2(640, -360);
 
     @Override
     public void create() {
@@ -43,12 +26,6 @@ public class ATC implements ApplicationListener {
 	screen = newScreen;
 	if (screen != null)
 	    screen.init(this);
-    }
-
-    @Override
-    public void dispose() {
-	batch.dispose();
-	texture.dispose();
     }
 
     @Override
@@ -74,6 +51,11 @@ public class ATC implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    @Override
+    public void dispose() {
+	screen.removed();
     }
 
 }
