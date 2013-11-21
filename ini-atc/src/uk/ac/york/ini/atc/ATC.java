@@ -31,10 +31,6 @@ public class ATC implements ApplicationListener {
     @Override
     public void render() {
 
-	// Should be in update method
-	// System.out.println(Gdx.input.getX());
-	// System.out.println(Gdx.input.getY());
-
 	Gdx.gl.glClearColor(1, 1, 1, 1);
 	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
