@@ -14,13 +14,13 @@ public class AeroplaneController {
 	// initiate airplaneTypes array, will consist of all the available types
 	airplaneTypes = new ArrayList<Aeroplane>();
 
-	// initiate airplanes on screen array, which consists of all the
-	// airplanes that are rendered atm
+	// initiate aeroplanes on screen array, which consists of all the
+	// Aeroplanes that are rendered atm
 	airplanesOnScreen = new ArrayList<Aeroplane>();
     }
 
     /**
-     * add airplane types
+     * add aeroplane types
      * 
      * @param Aeroplane
      *            type
