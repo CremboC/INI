@@ -3,7 +3,6 @@ package uk.ac.york.ini.atc.screens;
 import uk.ac.york.ini.atc.ATC;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,9 +13,20 @@ public abstract class Screen {
     public static int width;
     public static int height;
 
+    /**
+     * Instance of the main class, used for changing screen among other things
+     */
     private ATC atc;
-    protected SpriteBatch spriteBatch;
-    protected OrthographicCamera camera;
+
+    /**
+     * A sprite batch, used to draw textures
+     */
+    protected final static SpriteBatch spriteBatch = new SpriteBatch();
+
+    /**
+     * Simple way of writing on the screen, uses 15pt Arial font by default
+     */
+    private final static BitmapFont font = new BitmapFont();
 
     /**
      * Dispose of unused resources
@@ -32,14 +42,6 @@ public abstract class Screen {
      */
     public final void init(ATC atc) {
 	this.atc = atc;
-
-	// can be used for a custom coordinate system
-	// Matrix4 projection = new Matrix4();
-	// projection.setToOrtho(0, 1280, 720, 0, 0, 0);
-
-	spriteBatch = new SpriteBatch();
-	// use in conjunction with the above commented code
-	// spriteBatch.setProjectionMatrix(projection);
     }
 
     /**
@@ -85,15 +87,12 @@ public abstract class Screen {
      * @param color
      */
     public void drawString(CharSequence str, float x, float y, Color color) {
-	final BitmapFont font = new BitmapFont();
 	font.setColor(color);
 	font.draw(spriteBatch, str, x, y);
     }
 
     public abstract void render();
 
-    public void update() {
-
-    }
+    public abstract void update();
 
 }

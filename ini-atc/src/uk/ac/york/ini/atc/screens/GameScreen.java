@@ -12,4 +12,10 @@ public class GameScreen extends Screen {
 
     }
 
+    @Override
+    public void update() {
+	// TODO Auto-generated method stub
+
+    }
+
 }

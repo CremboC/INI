@@ -3,7 +3,6 @@ package uk.ac.york.ini.atc.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TitleScreen extends Screen {
@@ -29,7 +28,6 @@ public class TitleScreen extends Screen {
 
 	// loads the texture, whose size must be in power's of two
 	texture = new Texture(Gdx.files.internal("data/nisairspace.png"));
-	texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 	// select a specific area of the loaded texture, this will be passed
 	// onto a wrapper and drawn
