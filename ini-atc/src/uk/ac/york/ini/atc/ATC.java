@@ -8,50 +8,70 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
+/**
+ * Main class, calls all subsequent classes. Initialises Input, Art classes,
+ * first and last class to be called
+ * 
+ * @author Crembo
+ * 
+ */
 public class ATC implements ApplicationListener {
 
-    public Input input = new Input();
-    public Screen screen;
+	/**
+	 * Handles input
+	 */
+	public Input input = new Input();
 
-    @Override
-    public void create() {
-	Gdx.input.setInputProcessor(input);
+	/**
+	 * The current screen
+	 */
+	public Screen screen;
 
-	setScreen(new TitleScreen());
-    }
+	@Override
+	public void create() {
+		Gdx.input.setInputProcessor(input);
 
-    public void setScreen(Screen newScreen) {
-	if (screen != null)
-	    screen.removed();
-	screen = newScreen;
-	if (screen != null)
-	    screen.init(this);
-    }
+		setScreen(new TitleScreen());
+	}
 
-    @Override
-    public void render() {
+	/**
+	 * Changes the current screen
+	 * 
+	 * @param newScreen
+	 */
+	public void setScreen(Screen newScreen) {
+		if (screen != null)
+			screen.removed();
+		screen = newScreen;
+		if (screen != null)
+			screen.init(this);
+	}
 
-	Gdx.gl.glClearColor(1, 1, 1, 1);
-	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+	@Override
+	public void render() {
 
-	screen.render();
-    }
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-    @Override
-    public void resize(int width, int height) {
-    }
+		screen.update(input);
+		screen.render();
+	}
 
-    @Override
-    public void pause() {
-    }
+	@Override
+	public void resize(int width, int height) {
+	}
 
-    @Override
-    public void resume() {
-    }
+	@Override
+	public void pause() {
+	}
 
-    @Override
-    public void dispose() {
-	screen.removed();
-    }
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void dispose() {
+		screen.removed();
+	}
 
 }
