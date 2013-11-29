@@ -24,11 +24,11 @@ public class AircraftController {
 	}
 
 	public void update(Input input) {
-		for (Aircraft aircraft : aircraftList) {
-			if (isActive) {
-				aircraft.update();
+		for (int i = 0; i < aircraftList.size(); i++) {
+			if (aircraftList.get(i).isActive()) {
+				aircraftList.get(i).update();
 			} else {
-				removeAircraft();
+				removeAircraft(i);
 			}
 		}
 		generateAircraft();
@@ -38,12 +38,19 @@ public class AircraftController {
 		if (aircraftList.size() == maxAircraft)
 			return;
 		else {
-
+			Aircraft e = null;
+			aircraftList.add(e);
 		}
 	}
 
-	private void removeAircraft() {
+	private ArrayList generateFlightPlan() {
+		return aircraftList;
 
+	}
+
+	private void removeAircraft(int i) {
+		aircraftList.remove(i);
+		return;
 	}
 
 }
