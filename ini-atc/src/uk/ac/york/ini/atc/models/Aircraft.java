@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class Aeroplane {
+public class Aircraft {
 
 	protected Vector2 coords;
 	protected int altitude;
@@ -15,7 +15,7 @@ public class Aeroplane {
 
 	protected String texture;
 
-	public Aeroplane() {
+	public Aircraft() {
 		// TODO Auto-generated constructor stub
 	}
 
