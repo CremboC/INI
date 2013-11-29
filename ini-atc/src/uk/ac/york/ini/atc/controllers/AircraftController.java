@@ -27,13 +27,19 @@ public class AircraftController {
 		for (Aircraft aircraft : aircraftList) {
 			if (isActive) {
 				aircraft.update();
+			} else {
+				removeAircraft();
 			}
 		}
 		generateAircraft();
 	}
 
 	private void generateAircraft() {
+		if (aircraftList.size() == maxAircraft)
+			return;
+		else {
 
+		}
 	}
 
 	private void removeAircraft() {
