@@ -3,6 +3,7 @@ package uk.ac.york.ini.atc.screens;
 import uk.ac.york.ini.atc.ATC;
 import uk.ac.york.ini.atc.handlers.Input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -43,6 +44,9 @@ public abstract class Screen {
 	 */
 	public final void init(ATC atc) {
 		this.atc = atc;
+
+		width = Gdx.graphics.getWidth();
+		height = Gdx.graphics.getHeight();
 	}
 
 	/**
@@ -62,6 +66,9 @@ public abstract class Screen {
 	 * @param y
 	 */
 	public void draw(TextureRegion region, int x, int y) {
+		if (region == null)
+			Gdx.app.error("Screen", "Region drawing is null");
+
 		int width = region.getRegionWidth();
 
 		if (width < 0)
