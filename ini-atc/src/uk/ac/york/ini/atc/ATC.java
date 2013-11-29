@@ -1,5 +1,6 @@
 package uk.ac.york.ini.atc;
 
+import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.handlers.Input;
 import uk.ac.york.ini.atc.screens.Screen;
 import uk.ac.york.ini.atc.screens.TitleScreen;
@@ -29,6 +30,7 @@ public class ATC implements ApplicationListener {
 
 	@Override
 	public void create() {
+		Art.load();
 		Gdx.input.setInputProcessor(input);
 
 		setScreen(new TitleScreen());
