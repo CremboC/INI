@@ -3,11 +3,10 @@ package uk.ac.york.ini.atc.controllers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import uk.ac.york.ini.atc.handlers.Input;
 import uk.ac.york.ini.atc.models.Aircraft;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Waypoint;
-
-import com.badlogic.gdx.Input;
 
 public class AircraftController {
 	Random rand = new Random();
