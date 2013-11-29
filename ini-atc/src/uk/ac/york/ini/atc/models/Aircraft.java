@@ -36,10 +36,12 @@ public class Aircraft extends Entity {
 
 	public Aircraft() {
 		// TODO Auto-generated constructor stub
+		// Unsure what to implement here.
 	}
 
 	public void update(Input input) {
 		// TODO implement method
+		updateCoords();
 	}
 
 	public void draw() {
@@ -50,26 +52,35 @@ public class Aircraft extends Entity {
 		// TODO implement method
 		return false;
 	}
-
-	/**
-	 * Regular getter for speed
-	 * 
-	 * @return int speed
-	 */
-	public int getSpeed() {
-		return speed;
+	
+	public void calculateVeclocity(){
+		/*Vector2 newCoords;
+		Vector2 newVelocity;
+		newCoords.set(coords.x, coords.y);
+		
+		newVelocity = waypoints.get(0).getCoords().sub(newCoords);*/
+		
+		//Object nextWaypointCoords = waypoints.get(0).getCoords();
+		Vector3 nextWaypointNewCoords;
+		
+		// converts waypoints coordinates into 3d vectors to enabled subtraction.
+		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints.get(0).getCoords().y, 2*coords.z);
+		
+		velocity = nextWaypointNewCoords.sub(coords);
+	}
+	
+	public void turnRight(){
+		
 	}
 
-	/**
-	 * Set the speed More detail on this method
-	 * 
-	 * @param speed
-	 *            int
-	 * 
-	 */
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void turnLeft(){
+		
 	}
+	
+	public void updateCoords(){
+		coords.add(velocity);
+	}
+
 	
 	/**
 	 * Regular regular getter for radius
