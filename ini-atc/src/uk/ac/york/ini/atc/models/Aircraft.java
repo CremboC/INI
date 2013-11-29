@@ -2,9 +2,11 @@ package uk.ac.york.ini.atc.models;
 
 import java.util.ArrayList;
 
+import uk.ac.york.ini.atc.handlers.Input;
+
 import com.badlogic.gdx.math.Vector2;
 
-public class Aircraft {
+public class Aircraft extends Entity {
 
 	protected Vector2 coords;
 	protected int altitude;
@@ -17,6 +19,19 @@ public class Aircraft {
 
 	public Aircraft() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public void update(Input input) {
+		// TODO implement method
+	}
+
+	public void draw() {
+		// TODO implement method
+	}
+
+	public boolean isActive() {
+		// TODO implement method
+		return false;
 	}
 
 	/**
@@ -37,10 +52,6 @@ public class Aircraft {
 	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
-	}
-
-	public void update() {
-
 	}
 
 }
