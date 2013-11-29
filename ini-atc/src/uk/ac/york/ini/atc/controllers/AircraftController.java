@@ -6,6 +6,8 @@ import uk.ac.york.ini.atc.models.Aeroplane;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Waypoint;
 
+import com.badlogic.gdx.Input;
+
 public class AircraftController {
 
 	private ArrayList<Aeroplane> airplaneTypes;
@@ -18,11 +20,24 @@ public class AircraftController {
 	public AircraftController() {
 
 		// initiate airplaneTypes array, will consist of all the available types
-		airplaneTypes = new ArrayList<Aeroplane>();
+		// initialise list of way points
 	}
 
-	public ArrayList<Aeroplane> getAirplaneTypes() {
-		return airplaneTypes;
+	public void update(Input input) {
+		for (Aeroplane aircraft : aircraftList) {
+			if (isActive) {
+				aircraft.update();
+			}
+		}
+		generateAircraft();
+	}
+
+	private void generateAircraft() {
+
+	}
+
+	private void removeAircraft() {
+
 	}
 
 }
