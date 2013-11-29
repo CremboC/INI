@@ -39,4 +39,8 @@ public class Aircraft {
 		this.speed = speed;
 	}
 
+	public void update() {
+
+	}
+
 }
