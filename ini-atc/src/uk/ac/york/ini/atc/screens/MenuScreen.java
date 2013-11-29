@@ -10,6 +10,14 @@ import uk.ac.york.ini.atc.handlers.Input;
  */
 public class MenuScreen extends Screen {
 
+	public MenuScreen() {
+		/**
+		 * Initialise screen on startup -Start and exit buttons
+		 * 
+		 */
+
+	}
+
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
