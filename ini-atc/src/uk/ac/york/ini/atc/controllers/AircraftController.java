@@ -3,43 +3,23 @@ package uk.ac.york.ini.atc.controllers;
 import java.util.ArrayList;
 
 import uk.ac.york.ini.atc.models.Aeroplane;
+import uk.ac.york.ini.atc.models.Exitpoint;
+import uk.ac.york.ini.atc.models.Waypoint;
 
-public class AeroplaneController {
+public class AircraftController {
 
-	public ArrayList<Aeroplane> airplaneTypes;
-	public ArrayList<Aeroplane> airplanesOnScreen;
+	private ArrayList<Aeroplane> airplaneTypes;
+	private ArrayList<Aeroplane> aircraftList;
+	private ArrayList<Waypoint> waypointList;
+	private ArrayList<Waypoint> entryList;
+	private ArrayList<Exitpoint> exitList;
+	private int maxAircraft;
 
-	public AeroplaneController() {
+	public AircraftController() {
 
 		// initiate airplaneTypes array, will consist of all the available types
 		airplaneTypes = new ArrayList<Aeroplane>();
-
-		// initiate aeroplanes on screen array, which consists of all the
-		// Aeroplanes that are rendered atm
-		airplanesOnScreen = new ArrayList<Aeroplane>();
 	}
-
-	/**
-	 * add aeroplane types
-	 * 
-	 * @param Aeroplane
-	 *            type
-	 */
-	public void addType(Aeroplane type) {
-		airplaneTypes.add(type);
-	}
-
-	/**
-	 * Generates a random aeroplane type
-	 * 
-	 * @return Aeroplane
-	 */
-	// public Aeroplane pickRandomType() {
-	// Aeroplane copy;
-	// copy = airplaneTypes.get(ThreadLocalRandom.current().nextInt(
-	// airplaneTypes.size()));
-	// return copy;
-	// }
 
 	public ArrayList<Aeroplane> getAirplaneTypes() {
 		return airplaneTypes;
