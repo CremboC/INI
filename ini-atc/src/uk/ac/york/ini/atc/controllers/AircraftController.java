@@ -26,7 +26,7 @@ public class AircraftController {
 	public void update(Input input) {
 		for (int i = 0; i < aircraftList.size(); i++) {
 			if (aircraftList.get(i).isActive()) {
-				aircraftList.get(i).update();
+				aircraftList.get(i).update(input);
 			} else {
 				removeAircraft(i);
 			}
