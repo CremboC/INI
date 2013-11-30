@@ -1,4 +1,4 @@
-INI - Air Trafic Controller
+INI - Air Traffic Controller
 ===
 
 INI The Pharoah (or the airport)
