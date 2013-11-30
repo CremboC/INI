@@ -1,28 +1,25 @@
 package uk.ac.york.ini.atc.models;
 
-import Waypoint;
-
 import java.util.ArrayList;
 
 import uk.ac.york.ini.atc.handlers.Input;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Aircraft extends Entity {
 
-	/*protected Vector2 coords;
-	protected int altitude;
-	private int speed; // vectorise
-	protected int radius;
-
-	protected ArrayList<Waypoint> waypoints;
-
-	protected String texture;*/
+	/*
+	 * protected Vector2 coords; protected int altitude; private int speed; //
+	 * vectorise protected int radius;
+	 * 
+	 * protected ArrayList<Waypoint> waypoints;
+	 * 
+	 * protected String texture;
+	 */
 	// Old code. Replaced with separately written code below.
-	
+
 	protected Vector3 coords;
-	protected Vector3 velocity;	
+	protected Vector3 velocity;
 	protected int radius;
 	protected int separationRadius;
 	protected String texture;
@@ -52,42 +49,43 @@ public class Aircraft extends Entity {
 		// TODO implement method
 		return false;
 	}
-	
-	public void calculateVeclocity(){
-		/*Vector2 newCoords;
-		Vector2 newVelocity;
-		newCoords.set(coords.x, coords.y);
-		
-		newVelocity = waypoints.get(0).getCoords().sub(newCoords);*/
-		
-		//Object nextWaypointCoords = waypoints.get(0).getCoords();
-		Vector3 nextWaypointNewCoords;
-		
-		// converts waypoints coordinates into 3d vectors to enabled subtraction.
-		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints.get(0).getCoords().y, 2*coords.z);
-		
+
+	public void calculateVelocity() {
+		/*
+		 * Vector2 newCoords; Vector2 newVelocity; newCoords.set(coords.x,
+		 * coords.y);
+		 * 
+		 * newVelocity = waypoints.get(0).getCoords().sub(newCoords);
+		 */
+
+		// Object nextWaypointCoords = waypoints.get(0).getCoords();
+		Vector3 nextWaypointNewCoords = new Vector3();
+
+		// converts waypoints coordinates into 3d vectors to enabled
+		// subtraction.
+		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
+				.get(0).getCoords().y, 2 * coords.z);
+
 		velocity = nextWaypointNewCoords.sub(coords);
 	}
-	
-	public void turnRight(){
-		
+
+	public void turnRight() {
+
 	}
 
-	public void turnLeft(){
-		
+	public void turnLeft() {
+
 	}
-	
-	public void updateCoords(){
+
+	public void updateCoords() {
 		coords.add(velocity);
 	}
 
-	
 	/**
 	 * Regular regular getter for radius
 	 * 
 	 * @return int radius
 	 */
-
 	public int getRadius() {
 		return radius;
 	}
@@ -97,7 +95,6 @@ public class Aircraft extends Entity {
 	 * 
 	 * @param int radius
 	 */
-
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
@@ -107,7 +104,6 @@ public class Aircraft extends Entity {
 	 * 
 	 * @return int separationRadius
 	 */
-
 	public int getSeparationRadius() {
 		return separationRadius;
 	}
@@ -117,7 +113,6 @@ public class Aircraft extends Entity {
 	 * 
 	 * @param int separationRadius
 	 */
-
 	public void setSeparationRadius(int separationRadius) {
 		this.separationRadius = separationRadius;
 	}
@@ -127,7 +122,6 @@ public class Aircraft extends Entity {
 	 * 
 	 * @return String Texture
 	 */
-
 	public String getTexture() {
 		return texture;
 	}
@@ -135,10 +129,10 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the Texture
 	 * 
-	 * @param String Texture
+	 * @param String
+	 *            Texture
 	 */
-
-	public void setTexture(String texture){
+	public void setTexture(String texture) {
 		this.texture = texture;
 	}
 
@@ -147,9 +141,7 @@ public class Aircraft extends Entity {
 	 * 
 	 * @param int maxTurningSpeed
 	 */
-
-
-	public void setMaxTurningRate(int maxTurningRate){
+	public void setMaxTurningRate(int maxTurningRate) {
 		this.maxTurningRate = maxTurningRate;
 	}
 
@@ -158,9 +150,7 @@ public class Aircraft extends Entity {
 	 * 
 	 * @param int maxClimbRate
 	 */
-
-
-	public void setMaxClimbRate(int maxClimbRate){
+	public void setMaxClimbRate(int maxClimbRate) {
 		this.maxClimbRate = maxClimbRate;
 	}
 
@@ -169,23 +159,22 @@ public class Aircraft extends Entity {
 	 * 
 	 * @param int maxSpeed
 	 */
-
-	public void setMaxSpeed(int maxSpeed){
+	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
 
-	public boolean getIsActive(){
+	public boolean getIsActive() {
 		return isActive;
 	}
-	
-	public void setIsActive(boolean isActive){
+
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 
-	public void checkSpeed(){
-		if (turningFlag){
+	public void checkSpeed() {
+		if (turningFlag) {
 			// check speed against maxTurningSpeed
-		} 
+		}
 	}
 
 }
