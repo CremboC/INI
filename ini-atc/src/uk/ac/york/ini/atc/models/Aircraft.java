@@ -39,18 +39,15 @@ public class Aircraft extends Entity {
 	}
 
 	public void update(Input input) {
-		// TODO implement method
-		updateCoords();
+		this.updateCoords();
+		this.calculateVelocity();
+		this.isActive();
 	}
 
 	public void draw() {
 		// TODO implement method
 	}
 
-	public boolean isActive() {
-		// TODO implement method
-		return false;
-	}
 
 	public void calculateVelocity() {
 		/*
@@ -70,6 +67,8 @@ public class Aircraft extends Entity {
 
 		velocity = nextWaypointNewCoords.sub(coords);
 		
+		isAtNextWaypoint(velocity);
+		
 		checkSpeed();
 	}
 	
@@ -80,7 +79,7 @@ public class Aircraft extends Entity {
 	public void turnRight() {
 			Vector3 zAxis = new Vector3();
 			zAxis.set(0,0,1);
-			velocity.rotate(zAxis, 5);	
+			velocity.rotate(zAxis, 5);
 	}
 
 	public void turnLeft() {
@@ -88,15 +87,34 @@ public class Aircraft extends Entity {
 			zAxis.set(0,0,1);
 			velocity.rotate(zAxis, -5);
 	}
+	
+	public void increaseAltitude() {
+		this.velocity.add(0, 0, 5);
+		if (this.velocity.z > maxClimbRate) {
+			this.velocity.z = maxClimbRate;	
+		}
+	}
+	
+	public void decreaseAltitude() {
+		this.velocity.add(0, 0, -5);
+		if (this.velocity.z > - maxClimbRate) {
+			this.velocity.z = - maxClimbRate;	
+		}
+		
+	}
 
 	public void updateCoords() {
 		coords.add(velocity);
 	}
 	
-	public boolean isAtNextWaypoint() {
+	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 		
-		
+		if (vectorToWaypoint.len() < 10){
+			isActive();
+			return true;
+		} else {
 		return false;
+		}
 	}
 
 	/**
@@ -185,8 +203,10 @@ public class Aircraft extends Entity {
 		return isActive;
 	}
 
-	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
+	public void isActive(){
+		if (waypoints.size() == 1){
+			this.isActive = false;
+		}
 	}
 
 	public void checkSpeed() {
@@ -194,4 +214,4 @@ public class Aircraft extends Entity {
 		}
 	}
 
-}
+
