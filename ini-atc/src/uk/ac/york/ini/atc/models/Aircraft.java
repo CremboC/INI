@@ -30,6 +30,7 @@ public class Aircraft extends Entity {
 	protected boolean turningFlag; // May not be used
 	protected ArrayList<Waypoint> waypoints;
 	protected int sepRulesBreachCounter;
+	protected int lastTimeTurned;
 
 	public Aircraft() {
 		// TODO Auto-generated constructor stub
@@ -67,18 +68,34 @@ public class Aircraft extends Entity {
 				.get(0).getCoords().y, 2 * coords.z);
 
 		velocity = nextWaypointNewCoords.sub(coords);
+		
+		checkSpeed();
+	}
+	
+	public void insertWaypoint(Waypoint newWaypoint){
+		waypoints.add(0, newWaypoint);
 	}
 
 	public void turnRight() {
-
+			Vector3 zAxis = new Vector3();
+			zAxis.set(0,0,1);
+			velocity.rotate(zAxis, 5);	
 	}
 
 	public void turnLeft() {
-
+			Vector3 zAxis = new Vector3();
+			zAxis.set(0,0,1);
+			velocity.rotate(zAxis, -5);
 	}
 
 	public void updateCoords() {
 		coords.add(velocity);
+	}
+	
+	public boolean isAtNextWaypoint() {
+		
+		
+		return false;
 	}
 
 	/**
@@ -172,8 +189,7 @@ public class Aircraft extends Entity {
 	}
 
 	public void checkSpeed() {
-		if (turningFlag) {
-			// check speed against maxTurningSpeed
+		this.velocity.clamp(0, this.maxSpeed);
 		}
 	}
 
