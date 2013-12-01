@@ -1,7 +1,6 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.handlers.Art;
-import uk.ac.york.ini.atc.handlers.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -37,7 +36,7 @@ public class TitleScreen extends Screen {
 	 * @param input
 	 */
 	@Override
-	public void update(Input input) {
+	public void update() {
 		time++;
 	}
 

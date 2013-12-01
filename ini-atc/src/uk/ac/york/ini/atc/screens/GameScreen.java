@@ -1,15 +1,14 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.controllers.AircraftController;
-import uk.ac.york.ini.atc.handlers.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameScreen extends Screen {
 
-	private Stage stage;
-	private AircraftController controller;
+	private final Stage stage;
+	private final AircraftController controller;
 
 	public GameScreen() {
 		// TODO Auto-generated constructor stub
@@ -27,9 +26,9 @@ public class GameScreen extends Screen {
 	}
 
 	@Override
-	public void update(Input input) {
+	public void update() {
 		// TODO Auto-generated method stub
-		controller.update(input);
+		// controller.update();
 	}
 
 }

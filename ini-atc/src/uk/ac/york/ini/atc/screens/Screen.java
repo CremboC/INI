@@ -1,7 +1,6 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.ATC;
-import uk.ac.york.ini.atc.handlers.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -101,6 +100,6 @@ public abstract class Screen {
 
 	public abstract void render();
 
-	public abstract void update(Input input);
+	public abstract void update();
 
 }

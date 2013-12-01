@@ -55,7 +55,7 @@ public class ATC implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		screen.update(input);
+		screen.update();
 		screen.render();
 	}
 
