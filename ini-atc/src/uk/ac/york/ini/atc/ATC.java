@@ -2,8 +2,8 @@ package uk.ac.york.ini.atc;
 
 import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.handlers.Input;
+import uk.ac.york.ini.atc.screens.MenuScreen;
 import uk.ac.york.ini.atc.screens.Screen;
-import uk.ac.york.ini.atc.screens.TitleScreen;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -33,7 +33,7 @@ public class ATC implements ApplicationListener {
 		Art.load();
 		Gdx.input.setInputProcessor(input);
 
-		setScreen(new TitleScreen());
+		setScreen(new MenuScreen());
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class ATC implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		screen.update(input);
+		screen.update();
 		screen.render();
 	}
 

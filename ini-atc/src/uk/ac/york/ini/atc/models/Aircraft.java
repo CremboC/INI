@@ -2,6 +2,7 @@ package uk.ac.york.ini.atc.models;
 
 import java.util.ArrayList;
 
+import uk.ac.york.ini.atc.controllers.AircraftType;
 import uk.ac.york.ini.atc.handlers.Input;
 
 import com.badlogic.gdx.math.Vector3;
@@ -32,7 +33,7 @@ public class Aircraft extends Entity {
 	protected int sepRulesBreachCounter;
 	protected int lastTimeTurned;
 
-	public Aircraft() {
+	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
 		// TODO Auto-generated constructor stub
 		// Unsure what to implement here.
 	}
