@@ -1,0 +1,4 @@
+To access textures:
+- Airspace: start 0,0 size 1280,720
+- Airplane: start 1281,0 size 75,62
+- Waypoint marker: start 1357,0 size 36,36
