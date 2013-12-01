@@ -12,7 +12,8 @@ public class AircraftController {
 	Random rand = new Random();
 	private ArrayList<Aircraft> airplaneTypes;
 	private ArrayList<Aircraft> aircraftList;
-	private ArrayList<Waypoint> waypointList;
+	private ArrayList<Waypoint> permanentWaypointList;
+	private ArrayList<Waypoint> userWaypointList;
 	private ArrayList<Waypoint> entryList;
 	private ArrayList<Exitpoint> exitList;
 	private int maxAircraft;
@@ -45,28 +46,51 @@ public class AircraftController {
 
 	private ArrayList generateFlightPlan() {
 		ArrayList<Waypoint> flightPlan = null;
-		flightPlan.add(getStartpoint());
-		flightPlan.add(getEndpoint());
-
+		flightPlan.add(setStartpoint());
+		flightPlan.add(setEndpoint());
 		Waypoint currentWaypoint = flightPlan.get(0);
-		return recurseFlightPlanGen(flightPlan, currentWaypoint);
+		Waypoint lastWaypoint = flightPlan.get(flightPlan.size() - 1);
+		return recurseFlightPlanGen(flightPlan, currentWaypoint, lastWaypoint);
 	}
 
 	private ArrayList<Waypoint> recurseFlightPlanGen(
-			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint) {
-		if (currentWaypoint.getCoords() == flightPlan
-				.get(flightPlan.size() - 1).getCoords()) {
+			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint,
+			Waypoint lastWaypoint) {
+		if (currentWaypoint == lastWaypoint) {
 			return flightPlan;
-		} else {
-			return recurseFlightPlanGen(flightPlan, currentWaypoint);
+		}
+		// I get the feeling the vectors below should be normalised first; I
+		// suppose we'll find out the hard way.
+		else {
+			float angleFromCurrentToLast = currentWaypoint.getCoords().dot(
+					lastWaypoint.getCoords());
+			Waypoint nextWaypoint = null;
+			for (Waypoint waypoint : permanentWaypointList) {
+				float angleFromCurrentToPotential = currentWaypoint.getCoords()
+						.dot(waypoint.getCoords());
+				// The following chooses the first waypoint that is found to be
+				// within the 'cone' of selectable waypoints. Currently this
+				// cone is set to 0.25 radians on either side, so a total size
+				// of 0.5 (aka 90 degrees).
+				if (angleFromCurrentToLast - angleFromCurrentToPotential < 0.25
+						|| angleFromCurrentToPotential - angleFromCurrentToLast < 0.25) {
+					flightPlan.add(flightPlan.size() - 1, waypoint);
+					nextWaypoint = waypoint;
+					continue;
+				}
+			}
+			if (nextWaypoint == null) {
+				nextWaypoint = lastWaypoint;
+			}
+			return recurseFlightPlanGen(flightPlan, nextWaypoint, lastWaypoint);
 		}
 	}
 
-	private Waypoint getStartpoint() {
+	private Waypoint setStartpoint() {
 		return entryList.get(rand.nextInt(entryList.size() - 1));
 	}
 
-	private Exitpoint getEndpoint() {
+	private Exitpoint setEndpoint() {
 		return exitList.get(rand.nextInt(exitList.size() - 1));
 	}
 
