@@ -3,6 +3,7 @@ package uk.ac.york.ini.atc.controllers;
 import com.badlogic.gdx.math.Vector3;
 
 public class AircraftType {
+	private String aircraftName;
 	private Vector3 coords;
 	private Vector3 velocity;
 	private int radius;
@@ -91,6 +92,15 @@ public class AircraftType {
 
 	public AircraftType setActive(boolean isActive) {
 		this.isActive = isActive;
+		return this;
+	}
+
+	public String getAircraftName() {
+		return aircraftName;
+	}
+
+	public AircraftType setAircraftName(String aircraftName) {
+		this.aircraftName = aircraftName;
 		return this;
 	}
 }
