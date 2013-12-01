@@ -10,17 +10,23 @@ import uk.ac.york.ini.atc.models.Waypoint;
 
 public class AircraftController {
 	Random rand = new Random();
-	private ArrayList<Aircraft> airplaneTypes;
+	private ArrayList<AircraftType> aircraftTypeList;
 	private ArrayList<Aircraft> aircraftList;
 	private ArrayList<Waypoint> permanentWaypointList;
 	private ArrayList<Waypoint> userWaypointList;
 	private ArrayList<Waypoint> entryList;
 	private ArrayList<Exitpoint> exitList;
 	private int maxAircraft;
+	private AircraftType defaultAircraft;
 
 	public AircraftController() {
 
-		// initiate airplaneTypes array, will consist of all the available types
+		// initialise aircraft types.
+		defaultAircraft.setCoords(null).setActive(true).setMaxClimbRate(0)
+				.setMaxSpeed(0).setMaxTurningSpeed(0).setRadius(0)
+				.setSeparationRadius(0).setTexture(null).setVelocity(null);
+		// add aircraft types to airplaneTypes array.
+		aircraftTypeList.add(defaultAircraft);
 		// initialise list of way points
 	}
 
@@ -31,20 +37,23 @@ public class AircraftController {
 			} else {
 				removeAircraft(i);
 			}
+			aircraftList.get(i).update(input);
 		}
 		generateAircraft();
 	}
 
+	// Generates aircraft of random type with 'random' flight plan.
 	private void generateAircraft() {
 		if (aircraftList.size() == maxAircraft)
 			return;
 		else {
-			Aircraft e = null;
-			aircraftList.add(e);
+			aircraftList.add(new Aircraft(selectAircraftType(),
+					generateFlightPlan()));
 		}
 	}
 
-	private ArrayList generateFlightPlan() {
+	@SuppressWarnings("null")
+	private ArrayList<Waypoint> generateFlightPlan() {
 		ArrayList<Waypoint> flightPlan = null;
 		flightPlan.add(setStartpoint());
 		flightPlan.add(setEndpoint());
@@ -94,9 +103,23 @@ public class AircraftController {
 		return exitList.get(rand.nextInt(exitList.size() - 1));
 	}
 
+	private AircraftType selectAircraftType() {
+		return aircraftTypeList.get(rand.nextInt(aircraftTypeList.size() - 1));
+	}
+
 	private void removeAircraft(int i) {
 		aircraftList.remove(i);
 		return;
+	}
+
+	private void createWaypoint() {
+		// TODO when the user left clicks inside the game window and no waypoint
+		// or aircraft exists there, create a waypoint at that location
+	}
+
+	private void removeWaypoint() {
+		// TODO when the user right clicks on a user-made waypoint, remove that
+		// waypoint from the userWaypointList
 	}
 
 }
