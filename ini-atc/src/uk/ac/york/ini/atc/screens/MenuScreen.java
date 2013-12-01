@@ -18,60 +18,63 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class MenuScreen extends Screen {
 	private final Stage stage;
 
-	public MenuScreen() {
+	private final TextButton startButton, exitButton;
 
-		// TODO Auto-generated constructor stub
+	private class ButtonHandler extends ChangeListener {
+
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			// TODO Auto-generated method stub
+			if (actor.equals(startButton))
+				setScreen(new TitleScreen());
+
+			if (actor.equals(exitButton))
+				Gdx.app.exit();
+		}
+
+	}
+
+	public MenuScreen() {
+		ButtonHandler handler = new ButtonHandler();
+
+		// create a stage and set it as the input processor
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 
+		// create a table layout
 		Table table = new Table();
+
+		// make it fill the whole screen
 		table.setFillParent(true);
+
+		// add it to the screen
 		stage.addActor(table);
 
-		// Create a button with the "default" TextButtonStyle. A 3rd parameter
-		// can be used to specify a name other than "default".
-		final TextButton startButton = new TextButton("Start game!",
-				Art.getSkin());
-		table.add(startButton);
+		// Create a start button and add a listener to the button.
+		// ChangeListener is fired when the button
+		// is clicked
+		startButton = new TextButton("Start game!", Art.getSkin());
+		startButton.addListener(handler);
+		table.add(startButton).width(100);
 
-		// Add a listener to the button. ChangeListener is fired when the
-		// button's checked state changes, eg when clicked,
-		// Button#setChecked() is called, via a key press, etc. If the
-		// event.cancel() is called, the checked state will be reverted.
-		// ClickListener could have been used, but would only fire when clicked.
-		// Also, canceling a ClickListener event won't
-		// revert the checked state.
-		startButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				setScreen(new TitleScreen());
-			}
-		});
-
+		// create a new row
 		table.row();
 
-		final TextButton exitButton = new TextButton("Exit", Art.getSkin());
+		// create the Exit button
+		exitButton = new TextButton("Exit", Art.getSkin());
+		exitButton.addListener(handler);
 		table.add(exitButton).width(100);
-
-		exitButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.exit();
-			}
-		});
 
 		table.toFront();
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
 		stage.draw();
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		stage.act(Gdx.graphics.getDeltaTime());
 	}
 
