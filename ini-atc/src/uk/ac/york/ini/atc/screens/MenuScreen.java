@@ -16,26 +16,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  * 
  */
 public class MenuScreen extends Screen {
+
+	/**
+	 * The stage for this screen
+	 */
 	private final Stage stage;
 
+	/**
+	 * Buttons in this screen, so the button handler can access them
+	 */
 	private final TextButton startButton, exitButton;
 
-	private class ButtonHandler extends ChangeListener {
-
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			// TODO Auto-generated method stub
-			if (actor.equals(startButton))
-				setScreen(new TitleScreen());
-
-			if (actor.equals(exitButton))
-				Gdx.app.exit();
-		}
-
-	}
-
 	public MenuScreen() {
-		ButtonHandler handler = new ButtonHandler();
+		InputHandler handler = new InputHandler();
 
 		// create a stage and set it as the input processor
 		stage = new Stage();
@@ -53,7 +46,7 @@ public class MenuScreen extends Screen {
 		// Create a start button and add a listener to the button.
 		// ChangeListener is fired when the button
 		// is clicked
-		startButton = new TextButton("Start game!", Art.getSkin());
+		startButton = new TextButton("Start game", Art.getSkin());
 		startButton.addListener(handler);
 		table.add(startButton).width(100);
 
@@ -85,6 +78,31 @@ public class MenuScreen extends Screen {
 	@Override
 	public void removed() {
 		stage.dispose();
+	}
+
+	/**
+	 * Handles the input for this screen
+	 * 
+	 * @author Paulius, Miguel
+	 * 
+	 */
+	private class InputHandler extends ChangeListener {
+
+		/**
+		 * Handles all the buttons for this screen. For every new button a new
+		 * if should be added followed by what should be done after it's clicked
+		 * 
+		 */
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+
+			if (actor.equals(startButton))
+				setScreen(new TitleScreen());
+
+			if (actor.equals(exitButton))
+				Gdx.app.exit();
+		}
+
 	}
 
 }
