@@ -42,12 +42,18 @@ public class AircraftController {
 		generateAircraft();
 	}
 
-	// Generates aircraft of random type with 'random' flight plan.
+	/**
+	 * Generates aircraft of random type with 'random' flight plan.
+	 * <p>
+	 * Checks if maximum number of aircraft is not exceeded. If it isn't, a new
+	 * aircraft is generated with the arguments randomAircraftType() and
+	 * generateFlightPlan().
+	 */
 	private void generateAircraft() {
 		if (aircraftList.size() == maxAircraft)
 			return;
 		else {
-			aircraftList.add(new Aircraft(selectAircraftType(),
+			aircraftList.add(new Aircraft(randomAircraftType(),
 					generateFlightPlan()));
 		}
 	}
@@ -62,9 +68,26 @@ public class AircraftController {
 		return recurseFlightPlanGen(flightPlan, currentWaypoint, lastWaypoint);
 	}
 
+	/**
+	 * Recursive function to generate sensible flightplan. <br>
+	 * 1. Generates flightplan between currentWaypoint and exitpoint. Initially,
+	 * currentWaypoint will be the entryWaypoint. <br>
+	 * 2. Calculates angle between currentWaypoint and exitWaypoint, then
+	 * chooses a waypoint within 0.25 radians of that angle. <br>
+	 * 3. Adds that waypoint to the flightplan, between existing waypoints and
+	 * exitWaypoint. <br>
+	 * 4. Recurse, using chosen waypoint as currentWaypoint.
+	 * 
+	 * 
+	 * @param flightPlan
+	 * @param currentWaypoint
+	 * @param lastWaypoint
+	 * @return ArrayList<Waypoint>
+	 */
 	private ArrayList<Waypoint> recurseFlightPlanGen(
 			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint,
 			Waypoint lastWaypoint) {
+		// Base case
 		if (currentWaypoint == lastWaypoint) {
 			return flightPlan;
 		}
@@ -73,7 +96,7 @@ public class AircraftController {
 		else {
 			float angleFromCurrentToLast = currentWaypoint.getCoords().dot(
 					lastWaypoint.getCoords());
-			Waypoint nextWaypoint = null;
+			Waypoint chosenWaypoint = null;
 			for (Waypoint waypoint : permanentWaypointList) {
 				float angleFromCurrentToPotential = currentWaypoint.getCoords()
 						.dot(waypoint.getCoords());
@@ -84,42 +107,90 @@ public class AircraftController {
 				if (angleFromCurrentToLast - angleFromCurrentToPotential < 0.25
 						|| angleFromCurrentToPotential - angleFromCurrentToLast < 0.25) {
 					flightPlan.add(flightPlan.size() - 1, waypoint);
-					nextWaypoint = waypoint;
+					chosenWaypoint = waypoint;
 					continue;
 				}
 			}
-			if (nextWaypoint == null) {
-				nextWaypoint = lastWaypoint;
+			if (chosenWaypoint == null) {
+				chosenWaypoint = lastWaypoint;
 			}
-			return recurseFlightPlanGen(flightPlan, nextWaypoint, lastWaypoint);
+			return recurseFlightPlanGen(flightPlan, chosenWaypoint,
+					lastWaypoint);
 		}
 	}
 
+	/**
+	 * Selects random waypoint from entrypointList.
+	 * 
+	 * @return Waypoint
+	 */
 	private Waypoint setStartpoint() {
 		return entryList.get(rand.nextInt(entryList.size() - 1));
 	}
 
+	/**
+	 * Selects random exitpoint from exitpointList.
+	 * 
+	 * @return Exitpoint
+	 */
 	private Exitpoint setEndpoint() {
 		return exitList.get(rand.nextInt(exitList.size() - 1));
 	}
 
-	private AircraftType selectAircraftType() {
+	/**
+	 * Selects random aircraft type from aircraftTypeList.
+	 * 
+	 * @return AircraftType
+	 */
+	private AircraftType randomAircraftType() {
 		return aircraftTypeList.get(rand.nextInt(aircraftTypeList.size() - 1));
 	}
 
+	/**
+	 * Removes aircraft from aircraftList at index i.
+	 * 
+	 * @param i
+	 */
 	private void removeAircraft(int i) {
 		aircraftList.remove(i);
 		return;
 	}
 
+	/**
+	 * Creates a new waypoint.
+	 * <p>
+	 * Creates a new user waypoint when the user left-clicks within the airspace
+	 * window.
+	 */
 	private void createWaypoint() {
 		// TODO when the user left clicks inside the game window and no waypoint
-		// or aircraft exists there, create a waypoint at that location
+		// or aircraft exists there, create a waypoint at that location.
+		// This check should be done before this method is called.
 	}
 
+	/**
+	 * Removes a user-created waypoint.
+	 * <p>
+	 * Removes a user waypoint if a user waypoint is right-clicked.
+	 */
 	private void removeWaypoint() {
 		// TODO when the user right clicks on a user-made waypoint, remove that
 		// waypoint from the userWaypointList
 	}
 
+	/**
+	 * Selects an aircraft.
+	 */
+	private void selectAircraft() {
+		// TODO when the user left-clicks on an aircraft, select it.
+	}
+
+	/**
+	 * Redirects aircraft to another waypoint.
+	 */
+	private void redirectAircraft() {
+		// TODO if an aircraft is selected, if the user right-clicks on a
+		// waypoint redirect the aircraft to that waypoint:
+		// Call selected aircrafts insertWaypoint() method.
+	}
 }
