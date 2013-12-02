@@ -3,8 +3,8 @@ package uk.ac.york.ini.atc.models;
 import java.util.ArrayList;
 
 import uk.ac.york.ini.atc.controllers.AircraftType;
-import uk.ac.york.ini.atc.handlers.Input;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 public class Aircraft extends Entity {
@@ -38,7 +38,7 @@ public class Aircraft extends Entity {
 		// Unsure what to implement here.
 	}
 
-	public void update(Input input) {
+	public void act() {
 		this.updateCoords();
 		this.calculateVelocity();
 		this.isActive();
@@ -47,7 +47,6 @@ public class Aircraft extends Entity {
 	public void draw() {
 		// TODO implement method
 	}
-
 
 	public void calculateVelocity() {
 		/*
@@ -66,54 +65,54 @@ public class Aircraft extends Entity {
 				.get(0).getCoords().y, 2 * coords.z);
 
 		velocity = nextWaypointNewCoords.sub(coords);
-		
+
 		isAtNextWaypoint(velocity);
-		
+
 		checkSpeed();
 	}
-	
-	public void insertWaypoint(Waypoint newWaypoint){
+
+	public void insertWaypoint(Waypoint newWaypoint) {
 		waypoints.add(0, newWaypoint);
 	}
 
 	public void turnRight() {
-			Vector3 zAxis = new Vector3();
-			zAxis.set(0,0,1);
-			velocity.rotate(zAxis, 5);
+		Vector3 zAxis = new Vector3();
+		zAxis.set(0, 0, 1);
+		velocity.rotate(zAxis, 5);
 	}
 
 	public void turnLeft() {
-			Vector3 zAxis = new Vector3();
-			zAxis.set(0,0,1);
-			velocity.rotate(zAxis, -5);
+		Vector3 zAxis = new Vector3();
+		zAxis.set(0, 0, 1);
+		velocity.rotate(zAxis, -5);
 	}
-	
+
 	public void increaseAltitude() {
 		this.velocity.add(0, 0, 5);
 		if (this.velocity.z > maxClimbRate) {
-			this.velocity.z = maxClimbRate;	
+			this.velocity.z = maxClimbRate;
 		}
 	}
-	
+
 	public void decreaseAltitude() {
 		this.velocity.add(0, 0, -5);
-		if (this.velocity.z > - maxClimbRate) {
-			this.velocity.z = - maxClimbRate;	
+		if (this.velocity.z > -maxClimbRate) {
+			this.velocity.z = -maxClimbRate;
 		}
-		
+
 	}
 
 	public void updateCoords() {
 		coords.add(velocity);
 	}
-	
+
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
-		
-		if (vectorToWaypoint.len() < 10){
+
+		if (vectorToWaypoint.len() < 10) {
 			isActive();
 			return true;
 		} else {
-		return false;
+			return false;
 		}
 	}
 
@@ -203,15 +202,22 @@ public class Aircraft extends Entity {
 		return isActive;
 	}
 
-	public void isActive(){
-		if (waypoints.size() == 1){
+	public boolean isActive() {
+		if (waypoints.size() == 1) {
 			this.isActive = false;
 		}
+		return isActive;
 	}
 
 	public void checkSpeed() {
 		this.velocity.clamp(0, this.maxSpeed);
-		}
 	}
 
-
+	/**
+	 * Will be used to draw the aircraft
+	 */
+	public TextureRegion getRegion() {
+		// stub
+		return null;
+	}
+}

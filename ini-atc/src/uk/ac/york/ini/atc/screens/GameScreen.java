@@ -20,15 +20,13 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		// controller.update();
+		controller.update(stage);
+		stage.act(Gdx.graphics.getDeltaTime());
 	}
 
 }

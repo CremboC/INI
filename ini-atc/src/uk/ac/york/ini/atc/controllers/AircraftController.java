@@ -3,10 +3,11 @@ package uk.ac.york.ini.atc.controllers;
 import java.util.ArrayList;
 import java.util.Random;
 
-import uk.ac.york.ini.atc.handlers.Input;
 import uk.ac.york.ini.atc.models.Aircraft;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Waypoint;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class AircraftController {
 	Random rand = new Random();
@@ -30,16 +31,29 @@ public class AircraftController {
 		// initialise list of way points
 	}
 
-	public void update(Input input) {
+	/**
+	 * Updates the aircraft positions, generates a new aircraft and adds it to
+	 * the stage
+	 * 
+	 * @param stage
+	 */
+	public void update(Stage stage) {
 		for (int i = 0; i < aircraftList.size(); i++) {
 			if (aircraftList.get(i).isActive()) {
-				aircraftList.get(i).update(input);
+				aircraftList.get(i).update();
 			} else {
 				removeAircraft(i);
 			}
-			aircraftList.get(i).update(input);
+			aircraftList.get(i).update();
 		}
-		generateAircraft();
+
+		Aircraft generatedAircraft = generateAircraft();
+
+		// if the newly generated aircraft is not null (as in, it indeed
+		// generated one), add it as an actor to the stage
+		if (generatedAircraft != null) {
+			stage.addActor(generatedAircraft);
+		}
 	}
 
 	/**
@@ -49,13 +63,16 @@ public class AircraftController {
 	 * aircraft is generated with the arguments randomAircraftType() and
 	 * generateFlightPlan().
 	 */
-	private void generateAircraft() {
+	private Aircraft generateAircraft() {
 		if (aircraftList.size() == maxAircraft)
-			return;
-		else {
-			aircraftList.add(new Aircraft(randomAircraftType(),
-					generateFlightPlan()));
-		}
+			return null;
+
+		Aircraft newAircraft = new Aircraft(randomAircraftType(),
+				generateFlightPlan());
+
+		aircraftList.add(newAircraft);
+
+		return newAircraft;
 	}
 
 	@SuppressWarnings("null")
