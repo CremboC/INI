@@ -5,6 +5,7 @@ import uk.ac.york.ini.atc.handlers.Art;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -29,6 +30,7 @@ public class MenuScreen extends Screen {
 			startButtonHard, exitButton;
 
 	public MenuScreen() {
+		Label difficultylabel = new Label("Difficulty:", Art.getSkin());
 		InputHandler handler = new InputHandler();
 
 		// create a stage and set it as the input processor
@@ -41,12 +43,14 @@ public class MenuScreen extends Screen {
 		// make it fill the whole screen
 		table.setFillParent(true);
 
-		// add it to the screen
 		stage.addActor(table);
 
 		// Create a start button and add a listener to the button.
 		// ChangeListener is fired when the button
 		// is clicked
+
+		table.add(difficultylabel).width(100);
+
 		startButtonEasy = new TextButton("Easy", Art.getSkin());
 		startButtonEasy.addListener(handler);
 		table.add(startButtonEasy).width(100);
@@ -65,8 +69,7 @@ public class MenuScreen extends Screen {
 		// create the Exit button
 		exitButton = new TextButton("Exit", Art.getSkin());
 		exitButton.addListener(handler);
-		table.add(exitButton).width(100);
-
+		table.add(exitButton).width(200).colspan(4);
 		table.toFront();
 	}
 
