@@ -1,6 +1,8 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.controllers.AircraftController;
+import uk.ac.york.ini.atc.data.GameDifficulty;
+import uk.ac.york.ini.atc.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,12 +12,17 @@ public class GameScreen extends Screen {
 	private final Stage stage;
 	private final AircraftController controller;
 
-	public GameScreen() {
-		// TODO Auto-generated constructor stub
+	private final Airspace airspace;
+
+	public GameScreen(GameDifficulty diff) {
+
 		stage = new Stage();
-		controller = new AircraftController();
+		controller = new AircraftController(diff);
 
 		Gdx.input.setInputProcessor(stage);
+
+		airspace = new Airspace();
+		stage.addActor(airspace);
 	}
 
 	@Override

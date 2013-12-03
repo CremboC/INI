@@ -3,6 +3,8 @@ package uk.ac.york.ini.atc.controllers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import uk.ac.york.ini.atc.data.GameDifficulty;
+import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Aircraft;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Waypoint;
@@ -10,24 +12,35 @@ import uk.ac.york.ini.atc.models.Waypoint;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class AircraftController {
+
 	Random rand = new Random();
-	private ArrayList<AircraftType> aircraftTypeList;
-	private ArrayList<Aircraft> aircraftList;
+	private final ArrayList<AircraftType> aircraftTypeList;
+	private final ArrayList<Aircraft> aircraftList;
 	private ArrayList<Waypoint> permanentWaypointList;
 	private ArrayList<Waypoint> userWaypointList;
 	private ArrayList<Waypoint> entryList;
 	private ArrayList<Exitpoint> exitList;
 	private int maxAircraft;
-	private AircraftType defaultAircraft;
+	private final AircraftType defaultAircraft = new AircraftType();
 
-	public AircraftController() {
+	private final GameDifficulty difficulty;
+
+	public AircraftController(GameDifficulty diff) {
+
+		this.difficulty = diff;
+
+		aircraftTypeList = new ArrayList<AircraftType>();
+		aircraftList = new ArrayList<Aircraft>();
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(null).setActive(true).setMaxClimbRate(0)
 				.setMaxSpeed(0).setMaxTurningSpeed(0).setRadius(0)
-				.setSeparationRadius(0).setTexture(null).setVelocity(null);
+				.setSeparationRadius(0)
+				.setTexture(Art.getTextureRegion("aircraft")).setVelocity(null);
+
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
+
 		// initialise list of way points
 	}
 
@@ -38,14 +51,14 @@ public class AircraftController {
 	 * @param stage
 	 */
 	public void update(Stage stage) {
-		for (int i = 0; i < aircraftList.size(); i++) {
-			if (aircraftList.get(i).isActive()) {
-				aircraftList.get(i).update();
-			} else {
-				removeAircraft(i);
-			}
-			aircraftList.get(i).update();
-		}
+		// for (int i = 0; i < aircraftList.size(); i++) {
+		// if (aircraftList.get(i).isActive()) {
+		// aircraftList.get(i).update();
+		// } else {
+		// removeAircraft(i);
+		// }
+		// aircraftList.get(i).update();
+		// }
 
 		Aircraft generatedAircraft = generateAircraft();
 

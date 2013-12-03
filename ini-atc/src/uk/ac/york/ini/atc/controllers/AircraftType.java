@@ -1,14 +1,16 @@
 package uk.ac.york.ini.atc.controllers;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 public class AircraftType {
+
 	private String aircraftName;
 	private Vector3 coords;
 	private Vector3 velocity;
 	private int radius;
 	private int separationRadius;
-	private String texture;
+	private TextureRegion texture;
 	private int maxTurningSpeed;
 	private int maxClimbRate;
 	private int maxSpeed;
@@ -50,11 +52,11 @@ public class AircraftType {
 		return this;
 	}
 
-	public String getTexture() {
+	public TextureRegion getTexture() {
 		return texture;
 	}
 
-	public AircraftType setTexture(String texture) {
+	public AircraftType setTexture(TextureRegion texture) {
 		this.texture = texture;
 		return this;
 	}
