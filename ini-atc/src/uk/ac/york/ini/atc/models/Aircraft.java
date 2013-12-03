@@ -7,17 +7,9 @@ import uk.ac.york.ini.atc.controllers.AircraftType;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
-public class Aircraft extends Entity {
+import java.util.Calendar;
 
-	/*
-	 * protected Vector2 coords; protected int altitude; private int speed; //
-	 * vectorise protected int radius;
-	 * 
-	 * protected ArrayList<Waypoint> waypoints;
-	 * 
-	 * protected String texture;
-	 */
-	// Old code. Replaced with separately written code below.
+public class Aircraft extends Entity {
 
 	protected Vector3 coords;
 	protected Vector3 velocity;
@@ -49,12 +41,6 @@ public class Aircraft extends Entity {
 	}
 
 	public void calculateVelocity() {
-		/*
-		 * Vector2 newCoords; Vector2 newVelocity; newCoords.set(coords.x,
-		 * coords.y);
-		 * 
-		 * newVelocity = waypoints.get(0).getCoords().sub(newCoords);
-		 */
 
 		// Object nextWaypointCoords = waypoints.get(0).getCoords();
 		Vector3 nextWaypointNewCoords = new Vector3();
@@ -95,12 +81,6 @@ public class Aircraft extends Entity {
     		return true;
 	}
 	
-	public void updateCoords(){
-		coords.add(velocity);
-	}
-
-
-
 	public void increaseAltitude() {
 		this.velocity.add(0, 0, 5);
 		if (this.velocity.z > maxClimbRate) {
