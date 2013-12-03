@@ -25,7 +25,8 @@ public class MenuScreen extends Screen {
 	/**
 	 * Buttons in this screen, so the button handler can access them
 	 */
-	private final TextButton startButton, exitButton;
+	private final TextButton startButtonEasy, startButtonMedium,
+			startButtonHard, exitButton;
 
 	public MenuScreen() {
 		InputHandler handler = new InputHandler();
@@ -46,9 +47,17 @@ public class MenuScreen extends Screen {
 		// Create a start button and add a listener to the button.
 		// ChangeListener is fired when the button
 		// is clicked
-		startButton = new TextButton("Start game", Art.getSkin());
-		startButton.addListener(handler);
-		table.add(startButton).width(100);
+		startButtonEasy = new TextButton("Easy", Art.getSkin());
+		startButtonEasy.addListener(handler);
+		table.add(startButtonEasy).width(100);
+
+		startButtonMedium = new TextButton("Medium", Art.getSkin());
+		startButtonMedium.addListener(handler);
+		table.add(startButtonMedium).width(100);
+
+		startButtonHard = new TextButton("Hard", Art.getSkin());
+		startButtonHard.addListener(handler);
+		table.add(startButtonHard).width(100);
 
 		// create a new row
 		table.row();
@@ -96,13 +105,18 @@ public class MenuScreen extends Screen {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 
-			if (actor.equals(startButton))
-				setScreen(new TitleScreen());
-
 			if (actor.equals(exitButton))
 				Gdx.app.exit();
-		}
 
+			if (actor.equals(startButtonEasy))
+				setScreen(new TitleScreen());
+
+			if (actor.equals(startButtonMedium))
+				setScreen(new TitleScreen());
+
+			if (actor.equals(startButtonHard))
+				setScreen(new TitleScreen());
+		}
 	}
 
 }
