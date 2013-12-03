@@ -86,6 +86,20 @@ public class Aircraft extends Entity {
 		zAxis.set(0, 0, 1);
 		velocity.rotate(zAxis, -5);
 	}
+	
+	public boolean delay(){
+    	Calendar cal = Calendar.getInstance();
+    	long currentTime = cal.getTimeInMillis();
+    	long previousTime = currentTime;
+    	if (currentTime - previousTime >= 2000);
+    		return true;
+	}
+	
+	public void updateCoords(){
+		coords.add(velocity);
+	}
+
+
 
 	public void increaseAltitude() {
 		this.velocity.add(0, 0, 5);
