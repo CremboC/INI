@@ -75,6 +75,7 @@ public class Art {
 
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
+		labelStyle.background = skin.newDrawable("white", Color.DARK_GRAY);
 		skin.add("default", labelStyle);
 
 	}

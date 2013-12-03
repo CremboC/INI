@@ -1,5 +1,6 @@
 package uk.ac.york.ini.atc.screens;
 
+import uk.ac.york.ini.atc.data.GameDifficulty;
 import uk.ac.york.ini.atc.handlers.Art;
 
 import com.badlogic.gdx.Gdx;
@@ -30,7 +31,7 @@ public class MenuScreen extends Screen {
 			startButtonHard, exitButton;
 
 	public MenuScreen() {
-		Label difficultylabel = new Label("Difficulty:", Art.getSkin());
+		Label difficultylabel = new Label("    Difficulty:", Art.getSkin());
 		InputHandler handler = new InputHandler();
 
 		// create a stage and set it as the input processor
@@ -49,7 +50,7 @@ public class MenuScreen extends Screen {
 		// ChangeListener is fired when the button
 		// is clicked
 
-		table.add(difficultylabel).width(100);
+		table.add(difficultylabel).width(100).center();
 
 		startButtonEasy = new TextButton("Easy", Art.getSkin());
 		startButtonEasy.addListener(handler);
@@ -112,13 +113,13 @@ public class MenuScreen extends Screen {
 				Gdx.app.exit();
 
 			if (actor.equals(startButtonEasy))
-				setScreen(new TitleScreen());
+				setScreen(new GameScreen(GameDifficulty.EASY));
 
 			if (actor.equals(startButtonMedium))
-				setScreen(new TitleScreen());
+				setScreen(new GameScreen(GameDifficulty.MEDIUM));
 
 			if (actor.equals(startButtonHard))
-				setScreen(new TitleScreen());
+				setScreen(new GameScreen(GameDifficulty.HARD));
 		}
 	}
 
