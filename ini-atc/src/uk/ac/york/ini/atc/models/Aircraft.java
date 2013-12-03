@@ -42,7 +42,7 @@ public class Aircraft extends Entity {
 
 	public void calculateVelocity() {
 
-		// Object nextWaypointCoords = waypoints.get(0).getCoords();
+		// Creates a new vector to store the new velocity in temporarily
 		Vector3 nextWaypointNewCoords = new Vector3();
 
 		// converts waypoints coordinates into 3d vectors to enabled
@@ -50,28 +50,39 @@ public class Aircraft extends Entity {
 		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
 				.get(0).getCoords().y, 2 * coords.z);
 
+		// Calculating velocity and making sure it is under the max and before the next waypoint
 		velocity = nextWaypointNewCoords.sub(coords);
 
 		isAtNextWaypoint(velocity);
 
 		checkSpeed();
 	}
+	
+	// Adding a new waypoint to the head of the arraylist
 
 	public void insertWaypoint(Waypoint newWaypoint) {
 		waypoints.add(0, newWaypoint);
 	}
+	
+	// Turns right by 5 degrees if the user presses the right key for more than 2000ms
 
 	public void turnRight() {
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
+		if (delay());
 		velocity.rotate(zAxis, 5);
-	}
+		}
 
+	// Turns left by 5 degrees if the user presses the right key for more than 2000ms
+	
 	public void turnLeft() {
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
+		if (delay());
 		velocity.rotate(zAxis, -5);
 	}
+	
+	// Calculates the time for which the buttons have been pressed.
 	
 	public boolean delay(){
     	Calendar cal = Calendar.getInstance();
@@ -81,12 +92,16 @@ public class Aircraft extends Entity {
     		return true;
 	}
 	
+	// increases rate of altitude change
+	
 	public void increaseAltitude() {
 		this.velocity.add(0, 0, 5);
 		if (this.velocity.z > maxClimbRate) {
 			this.velocity.z = maxClimbRate;
 		}
 	}
+	
+	// decreasing rate of altitude change
 
 	public void decreaseAltitude() {
 		this.velocity.add(0, 0, -5);
@@ -96,10 +111,14 @@ public class Aircraft extends Entity {
 
 	}
 
+	// updates the coords in every frame
+	
 	public void updateCoords() {
 		coords.add(velocity);
 	}
 
+	// checks whether the aircraft is within 10 pixels of the next waypoint
+	
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 
 		if (vectorToWaypoint.len() < 10) {
@@ -191,11 +210,19 @@ public class Aircraft extends Entity {
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-
+	
+	/**
+	 * Regular getter for maxspeed
+	 * 
+	 * @return boolean isActive
+	 */
+	
 	public boolean getIsActive() {
 		return isActive;
 	}
 
+	// check if its only got the exit point left to go to.
+	
 	public boolean isActive() {
 		if (waypoints.size() == 1) {
 			this.isActive = false;
@@ -203,6 +230,8 @@ public class Aircraft extends Entity {
 		return isActive;
 	}
 
+	// limits speed to max speed
+	
 	public void checkSpeed() {
 		this.velocity.clamp(0, this.maxSpeed);
 	}
