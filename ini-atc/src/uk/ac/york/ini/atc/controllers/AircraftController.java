@@ -20,14 +20,17 @@ public class AircraftController {
 	private ArrayList<Waypoint> userWaypointList;
 	private ArrayList<Waypoint> entryList;
 	private ArrayList<Exitpoint> exitList;
-	private int maxAircraft;
+	private final int maxAircraft = 2;
 	private final AircraftType defaultAircraft = new AircraftType();
 
 	private final GameDifficulty difficulty;
 
-	public AircraftController(GameDifficulty diff) {
+	private final Stage stage;
+
+	public AircraftController(GameDifficulty diff, Stage stage) {
 
 		this.difficulty = diff;
+		this.stage = stage;
 
 		aircraftTypeList = new ArrayList<AircraftType>();
 		aircraftList = new ArrayList<Aircraft>();
@@ -48,19 +51,17 @@ public class AircraftController {
 	 * Updates the aircraft positions, generates a new aircraft and adds it to
 	 * the stage
 	 * 
-	 * @param stage
 	 */
-	public void update(Stage stage) {
-		// for (int i = 0; i < aircraftList.size(); i++) {
-		// if (aircraftList.get(i).isActive()) {
-		// aircraftList.get(i).update();
-		// } else {
-		// removeAircraft(i);
-		// }
-		// aircraftList.get(i).update();
-		// }
+	public void update() {
+		for (int i = 0; i < aircraftList.size(); i++) {
+			if (!aircraftList.get(i).isActive()) {
+				removeAircraft(i);
+			}
+		}
 
 		Aircraft generatedAircraft = generateAircraft();
+
+		System.out.println(generatedAircraft);
 
 		// if the newly generated aircraft is not null (as in, it indeed
 		// generated one), add it as an actor to the stage
@@ -182,7 +183,14 @@ public class AircraftController {
 	 * @param i
 	 */
 	private void removeAircraft(int i) {
+		Aircraft aircraft = aircraftList.get(i);
+
+		// removes the aircraft from the list of aircrafts on screen
 		aircraftList.remove(i);
+
+		// removes the aircraft from the stage
+		aircraft.remove();
+
 		return;
 	}
 

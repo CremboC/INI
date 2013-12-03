@@ -13,7 +13,6 @@ public class Airspace extends Entity {
 
 	@Override
 	public void act() {
-
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class GameScreen extends Screen {
 	public GameScreen(GameDifficulty diff) {
 
 		stage = new Stage();
-		controller = new AircraftController(diff);
+		controller = new AircraftController(diff, stage);
 
 		Gdx.input.setInputProcessor(stage);
 
@@ -32,7 +32,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void update() {
-		controller.update(stage);
+		controller.update();
 		stage.act(Gdx.graphics.getDeltaTime());
 	}
 
