@@ -7,12 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Entity extends Actor {
 
-	public Entity() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public abstract void act();
 
+	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		Color color = getColor();
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
@@ -20,5 +17,17 @@ public abstract class Entity extends Actor {
 	}
 
 	public abstract TextureRegion getRegion();
+
+	@Override
+	public abstract float getX();
+
+	@Override
+	public abstract float getY();
+
+	@Override
+	public abstract float getWidth();
+
+	@Override
+	public abstract float getHeight();
 
 }

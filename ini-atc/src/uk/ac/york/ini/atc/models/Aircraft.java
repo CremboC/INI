@@ -1,21 +1,22 @@
 package uk.ac.york.ini.atc.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uk.ac.york.ini.atc.controllers.AircraftType;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-import java.util.Calendar;
 
 public class Aircraft extends Entity {
 
 	protected Vector3 coords;
 	protected Vector3 velocity;
+	protected Vector2 size = new Vector2(76, 63);
 	protected int radius;
 	protected int separationRadius;
-	protected String texture;
+	protected TextureRegion texture;
 	protected int maxTurningRate;
 	protected int maxClimbRate;
 	protected int maxSpeed;
@@ -30,14 +31,11 @@ public class Aircraft extends Entity {
 		// Unsure what to implement here.
 	}
 
+	@Override
 	public void act() {
 		this.updateCoords();
 		this.calculateVelocity();
 		this.isActive();
-	}
-
-	public void draw() {
-		// TODO implement method
 	}
 
 	public void calculateVelocity() {
@@ -50,57 +48,63 @@ public class Aircraft extends Entity {
 		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
 				.get(0).getCoords().y, 2 * coords.z);
 
-		// Calculating velocity and making sure it is under the max and before the next waypoint
+		// Calculating velocity and making sure it is under the max and before
+		// the next waypoint
 		velocity = nextWaypointNewCoords.sub(coords);
 
 		isAtNextWaypoint(velocity);
 
 		checkSpeed();
 	}
-	
+
 	// Adding a new waypoint to the head of the arraylist
 
 	public void insertWaypoint(Waypoint newWaypoint) {
 		waypoints.add(0, newWaypoint);
 	}
-	
-	// Turns right by 5 degrees if the user presses the right key for more than 2000ms
+
+	// Turns right by 5 degrees if the user presses the right key for more than
+	// 2000ms
 
 	public void turnRight() {
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
-		if (delay());
+		if (delay())
+			;
 		velocity.rotate(zAxis, 5);
-		}
+	}
 
-	// Turns left by 5 degrees if the user presses the right key for more than 2000ms
-	
+	// Turns left by 5 degrees if the user presses the right key for more than
+	// 2000ms
+
 	public void turnLeft() {
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
-		if (delay());
+		if (delay())
+			;
 		velocity.rotate(zAxis, -5);
 	}
-	
+
 	// Calculates the time for which the buttons have been pressed.
-	
-	public boolean delay(){
-    	Calendar cal = Calendar.getInstance();
-    	long currentTime = cal.getTimeInMillis();
-    	long previousTime = currentTime;
-    	if (currentTime - previousTime >= 2000);
-    		return true;
+
+	public boolean delay() {
+		Calendar cal = Calendar.getInstance();
+		long currentTime = cal.getTimeInMillis();
+		long previousTime = currentTime;
+		if (currentTime - previousTime >= 2000)
+			;
+		return true;
 	}
-	
+
 	// increases rate of altitude change
-	
+
 	public void increaseAltitude() {
 		this.velocity.add(0, 0, 5);
 		if (this.velocity.z > maxClimbRate) {
 			this.velocity.z = maxClimbRate;
 		}
 	}
-	
+
 	// decreasing rate of altitude change
 
 	public void decreaseAltitude() {
@@ -112,13 +116,13 @@ public class Aircraft extends Entity {
 	}
 
 	// updates the coords in every frame
-	
+
 	public void updateCoords() {
 		coords.add(velocity);
 	}
 
 	// checks whether the aircraft is within 10 pixels of the next waypoint
-	
+
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 
 		if (vectorToWaypoint.len() < 10) {
@@ -166,25 +170,6 @@ public class Aircraft extends Entity {
 	}
 
 	/**
-	 * Regular getter for Texture
-	 * 
-	 * @return String Texture
-	 */
-	public String getTexture() {
-		return texture;
-	}
-
-	/**
-	 * Regular Set the Texture
-	 * 
-	 * @param String
-	 *            Texture
-	 */
-	public void setTexture(String texture) {
-		this.texture = texture;
-	}
-
-	/**
 	 * Regular Set the maxTurningSpeed
 	 * 
 	 * @param int maxTurningSpeed
@@ -210,19 +195,19 @@ public class Aircraft extends Entity {
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-	
+
 	/**
 	 * Regular getter for maxspeed
 	 * 
 	 * @return boolean isActive
 	 */
-	
+
 	public boolean getIsActive() {
 		return isActive;
 	}
 
 	// check if its only got the exit point left to go to.
-	
+
 	public boolean isActive() {
 		if (waypoints.size() == 1) {
 			this.isActive = false;
@@ -231,7 +216,7 @@ public class Aircraft extends Entity {
 	}
 
 	// limits speed to max speed
-	
+
 	public void checkSpeed() {
 		this.velocity.clamp(0, this.maxSpeed);
 	}
@@ -239,8 +224,28 @@ public class Aircraft extends Entity {
 	/**
 	 * Will be used to draw the aircraft
 	 */
+	@Override
 	public TextureRegion getRegion() {
-		// stub
-		return null;
+		return texture;
+	}
+
+	@Override
+	public float getX() {
+		return coords.x;
+	}
+
+	@Override
+	public float getY() {
+		return coords.y;
+	}
+
+	@Override
+	public float getWidth() {
+		return size.x;
+	}
+
+	@Override
+	public float getHeight() {
+		return size.y;
 	}
 }
