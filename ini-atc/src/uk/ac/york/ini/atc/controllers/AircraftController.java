@@ -20,7 +20,7 @@ public class AircraftController {
 	private ArrayList<Waypoint> userWaypointList;
 	private ArrayList<Waypoint> entryList;
 	private ArrayList<Exitpoint> exitList;
-	private final int maxAircraft = 2;
+	private final int maxAircraft = 0;
 	private final AircraftType defaultAircraft = new AircraftType();
 
 	private final GameDifficulty difficulty;
