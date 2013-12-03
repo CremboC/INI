@@ -8,6 +8,7 @@ import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Aircraft;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Waypoint;
+import uk.ac.york.ini.atc.screens.GameScreen.InputHandler;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -26,11 +27,14 @@ public class AircraftController {
 	private final GameDifficulty difficulty;
 
 	private final Stage stage;
+	private final InputHandler input;
 
-	public AircraftController(GameDifficulty diff, Stage stage) {
+	public AircraftController(GameDifficulty diff, Stage stage,
+			InputHandler input) {
 
 		this.difficulty = diff;
 		this.stage = stage;
+		this.input = input;
 
 		aircraftTypeList = new ArrayList<AircraftType>();
 		aircraftList = new ArrayList<Aircraft>();
@@ -59,9 +63,11 @@ public class AircraftController {
 			}
 		}
 
-		Aircraft generatedAircraft = generateAircraft();
+		// Coordinates where the user has clicked
+		// System.out.println(input.getMousePosition().x);
+		// System.out.println(input.getMousePosition().y);
 
-		System.out.println(generatedAircraft);
+		Aircraft generatedAircraft = generateAircraft();
 
 		// if the newly generated aircraft is not null (as in, it indeed
 		// generated one), add it as an actor to the stage

@@ -6,11 +6,12 @@ import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameScreen extends Screen {
 
@@ -21,11 +22,12 @@ public class GameScreen extends Screen {
 
 	private final TextButton button;
 
+	private final InputHandler handler = new InputHandler();
+
 	public GameScreen(GameDifficulty diff) {
 
-		InputHandler handler = new InputHandler();
 		stage = new Stage();
-		controller = new AircraftController(diff, stage);
+		controller = new AircraftController(diff, stage, handler);
 
 		Gdx.input.setInputProcessor(stage);
 
@@ -38,7 +40,8 @@ public class GameScreen extends Screen {
 		stage.addActor(table);
 
 		airspace = new Airspace();
-		// stage.addActor(airspace);
+		airspace.addListener(handler);
+		stage.addActor(airspace);
 
 		table.add(airspace).width(1080);
 
@@ -64,19 +67,18 @@ public class GameScreen extends Screen {
 	 * @author Paulius, Miguel
 	 * 
 	 */
-	private class InputHandler extends ChangeListener {
+	public class InputHandler extends ClickListener {
 
-		/**
-		 * Handles all the buttons for this screen. For every new button a new
-		 * if should be added followed by what should be done after it's clicked
-		 * 
-		 */
+		public Vector2 mousePosition = new Vector2(0, 0);
+
 		@Override
-		public void changed(ChangeEvent event, Actor actor) {
+		public void clicked(InputEvent event, float x, float y) {
+			mousePosition.x = x;
+			mousePosition.y = y;
+		}
 
-			if (actor.equals(button))
-				return;
-
+		public Vector2 getMousePosition() {
+			return mousePosition;
 		}
 	}
 
