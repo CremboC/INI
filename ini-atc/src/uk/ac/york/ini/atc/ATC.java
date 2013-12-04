@@ -1,7 +1,6 @@
 package uk.ac.york.ini.atc;
 
 import uk.ac.york.ini.atc.handlers.Art;
-import uk.ac.york.ini.atc.handlers.Input;
 import uk.ac.york.ini.atc.screens.MenuScreen;
 import uk.ac.york.ini.atc.screens.Screen;
 
@@ -19,11 +18,6 @@ import com.badlogic.gdx.graphics.GL10;
 public class ATC implements ApplicationListener {
 
 	/**
-	 * Handles input
-	 */
-	public Input input = new Input();
-
-	/**
 	 * The current screen
 	 */
 	public Screen screen;
@@ -31,7 +25,6 @@ public class ATC implements ApplicationListener {
 	@Override
 	public void create() {
 		Art.load();
-		Gdx.input.setInputProcessor(input);
 
 		setScreen(new MenuScreen());
 	}
