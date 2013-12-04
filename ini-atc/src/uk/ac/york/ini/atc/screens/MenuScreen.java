@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
- * Menu Screen, displays the menu
+ * Menu Screen, displays the menu with buttons to start and exit the game
  * 
  * @author Paulius, Miguel
  * 
@@ -30,8 +30,12 @@ public class MenuScreen extends Screen {
 	private final TextButton startButtonEasy, startButtonMedium,
 			startButtonHard, exitButton;
 
+	/**
+	 * Initialises the input handler, stage and create the layout with buttons
+	 * for the menu screen
+	 */
 	public MenuScreen() {
-		Label difficultylabel = new Label("    Difficulty:", Art.getSkin());
+
 		InputHandler handler = new InputHandler();
 
 		// create a stage and set it as the input processor
@@ -50,16 +54,21 @@ public class MenuScreen extends Screen {
 		// ChangeListener is fired when the button
 		// is clicked
 
+		// Create a label for difficulty and add it
+		Label difficultylabel = new Label("Difficulty:", Art.getSkin());
 		table.add(difficultylabel).width(100).center();
 
+		// create a button to start the game in easy mode
 		startButtonEasy = new TextButton("Easy", Art.getSkin());
 		startButtonEasy.addListener(handler);
 		table.add(startButtonEasy).width(100);
 
+		// create a button to start the game in medium mode
 		startButtonMedium = new TextButton("Medium", Art.getSkin());
 		startButtonMedium.addListener(handler);
 		table.add(startButtonMedium).width(100);
 
+		// create a button to start the game in hard mode
 		startButtonHard = new TextButton("Hard", Art.getSkin());
 		startButtonHard.addListener(handler);
 		table.add(startButtonHard).width(100);
@@ -81,7 +90,7 @@ public class MenuScreen extends Screen {
 
 	@Override
 	public void update() {
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act();
 	}
 
 	/**

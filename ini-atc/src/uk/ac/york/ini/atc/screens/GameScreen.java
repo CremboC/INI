@@ -6,6 +6,7 @@ import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * The game screen - all game logic starts here
+ * 
+ * @author Paulius, Miguel
+ * 
+ */
 public class GameScreen extends Screen {
 
 	private final Stage stage;
@@ -53,6 +60,8 @@ public class GameScreen extends Screen {
 	@Override
 	public void render() {
 		stage.draw();
+		drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
+				Color.BLACK, stage.getSpriteBatch());
 	}
 
 	@Override
