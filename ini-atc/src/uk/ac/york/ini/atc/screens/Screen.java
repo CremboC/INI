@@ -93,9 +93,12 @@ public abstract class Screen {
 	 * @param y
 	 * @param color
 	 */
-	public void drawString(CharSequence str, float x, float y, Color color) {
+	public void drawString(CharSequence str, float x, float y, Color color,
+			SpriteBatch batch) {
+		batch.begin();
 		font.setColor(color);
-		font.draw(spriteBatch, str, x, y);
+		font.draw(batch, str, x, y);
+		batch.end();
 	}
 
 	public abstract void render();

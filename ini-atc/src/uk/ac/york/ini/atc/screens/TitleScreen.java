@@ -24,7 +24,7 @@ public class TitleScreen extends Screen {
 		draw(aircraft, Screen.width / 2, Screen.height / 2);
 
 		drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
-				Color.BLACK);
+				Color.BLACK, spriteBatch);
 
 		spriteBatch.end();
 	}
