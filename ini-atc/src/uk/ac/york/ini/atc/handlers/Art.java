@@ -48,6 +48,7 @@ public class Art {
 		textures.put("aircraft", split(combined, 1281, 0, 76, 63));
 		textures.put("waypoint", split(combined, 1357, 0, 36, 36));
 		textures.put("menuAircraft", split(combined, 1281, 75, 727, 249));
+
 		// load the default skin
 		loadSkin();
 	}
@@ -74,10 +75,17 @@ public class Art {
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 
+		// labelStyle with background
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
 		labelStyle.background = skin.newDrawable("white", Color.DARK_GRAY);
 		skin.add("default", labelStyle);
+
+		// labelStyle without a background and black text
+		LabelStyle textStyle = new LabelStyle();
+		textStyle.font = skin.getFont("default");
+		textStyle.fontColor = Color.BLACK;
+		skin.add("textStyle", textStyle);
 
 	}
 
