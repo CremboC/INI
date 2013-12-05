@@ -9,10 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * The game screen - all game logic starts here
@@ -76,18 +76,46 @@ public class GameScreen extends Screen {
 	 * @author Paulius, Miguel
 	 * 
 	 */
-	public class InputHandler extends ClickListener {
+	public class InputHandler extends InputListener {
 
-		public Vector2 mousePosition = new Vector2(0, 0);
+		/**
+		 * Last mouse position after click
+		 */
+		private Vector2 mousePosition = new Vector2(0, 0);
+
+		/**
+		 * Which mouse button was clicked
+		 */
+		private int buttonPressed = -1;
 
 		@Override
-		public void clicked(InputEvent event, float x, float y) {
+		public boolean touchDown(InputEvent event, float x, float y,
+				int pointer, int button) {
+			buttonPressed = button;
 			mousePosition.x = x;
 			mousePosition.y = y;
+
+			return true;
 		}
 
+		/**
+		 * Coordinates where the mouse was last clicked
+		 * 
+		 * @return
+		 */
 		public Vector2 getMousePosition() {
 			return mousePosition;
+		}
+
+		/**
+		 * Get which mouse button was clicked. <br>
+		 * Compare with Button.LEFT and Button.RIGHT to check which one was
+		 * clicked.
+		 * 
+		 * @return
+		 */
+		public int getButtonPressed() {
+			return buttonPressed;
 		}
 	}
 

@@ -66,6 +66,8 @@ public class AircraftController {
 		// Coordinates where the user has clicked
 		// System.out.println(input.getMousePosition().x);
 		// System.out.println(input.getMousePosition().y);
+		// Which mouse button was pressed, see JavaDoc (hover)
+		// System.out.println(input.getButtonPressed());
 
 		Aircraft generatedAircraft = generateAircraft();
 
