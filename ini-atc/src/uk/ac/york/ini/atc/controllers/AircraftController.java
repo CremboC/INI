@@ -212,6 +212,11 @@ public class AircraftController {
 		// TODO when the user left clicks inside the game window and no waypoint
 		// or aircraft exists there, create a waypoint at that location.
 		// This check should be done before this method is called.
+		Waypoint userWaypoint = null;
+		userWaypoint.setXCoord(input.getMousePosition().x);
+		userWaypoint.setYCoord(input.getMousePosition().y);
+		userWaypointList.add((userWaypointList.size() + 1), userWaypoint);
+
 	}
 
 	/**
@@ -222,6 +227,13 @@ public class AircraftController {
 	private void removeWaypoint() {
 		// TODO when the user right clicks on a user-made waypoint, remove that
 		// waypoint from the userWaypointList
+		for (Waypoint userWaypoint : userWaypointList) {
+			if (input.getMousePosition().x == userWaypoint.getCoords().x) {
+				if (input.getMousePosition().y == userWaypoint.getCoords().y) {
+					userWaypointList.remove(userWaypoint);
+				}
+			}
+		}
 	}
 
 	/**
