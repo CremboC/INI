@@ -81,12 +81,12 @@ public class GameScreen extends Screen {
 		/**
 		 * Last mouse position after click
 		 */
-		private Vector2 mousePosition = new Vector2(0, 0);
+		private final Vector2 mousePosition = new Vector2(0, 0);
 
 		/**
 		 * Which mouse button was clicked
 		 */
-		private int buttonPressed = -1;
+		private Integer buttonPressed = -1;
 
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y,
@@ -96,6 +96,12 @@ public class GameScreen extends Screen {
 			mousePosition.y = y;
 
 			return true;
+		}
+
+		@Override
+		public void touchUp(InputEvent event, float x, float y, int pointer,
+				int button) {
+			buttonPressed = null;
 		}
 
 		/**
@@ -114,7 +120,7 @@ public class GameScreen extends Screen {
 		 * 
 		 * @return
 		 */
-		public int getButtonPressed() {
+		public Integer getButtonPressed() {
 			return buttonPressed;
 		}
 	}

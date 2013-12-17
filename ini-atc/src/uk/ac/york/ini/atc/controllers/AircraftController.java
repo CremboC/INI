@@ -20,11 +20,11 @@ public class AircraftController {
 	Random rand = new Random();
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
-	private ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
-	private ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
-	private ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
-	private ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
-	private final int maxAircraft = 1;
+	private final ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
+	private final ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
+	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
+	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
+	private final int maxAircraft = 0;
 	private final AircraftType defaultAircraft = new AircraftType();
 
 	private final GameDifficulty difficulty;
@@ -40,16 +40,14 @@ public class AircraftController {
 		this.input = input;
 
 		// add entry waypoints to entryList
-		Vector2 eVector = new Vector2(0, 0);
-		Waypoint e = new Waypoint();
-		e.setCoords(eVector);
+		Waypoint e = new Waypoint(new Vector2(0, 0));
 		entryList.add(e);
+		stage.addActor(e);
 
 		// add exit waypoints to exitList
-		Vector2 exVector = new Vector2(1280, 720);
-		Exitpoint f = new Exitpoint();
-		f.setCoords(exVector);
+		Exitpoint f = new Exitpoint(new Vector2(1280, 720));
 		exitList.add(f);
+		stage.addActor(f);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector3(0, 0, 0)).setActive(true)
@@ -74,6 +72,8 @@ public class AircraftController {
 				removeAircraft(i);
 			}
 		}
+
+		createWaypoint();
 
 		// Coordinates where the user has clicked
 		// System.out.println(input.getMousePosition().x);
@@ -223,12 +223,15 @@ public class AircraftController {
 		// TODO when the user left clicks inside the game window and no waypoint
 		// or aircraft exists there, create a waypoint at that location.
 		// This check should be done before this method is called.
-		int buttonPressed = input.getButtonPressed();
+		Integer buttonPressed = input.getButtonPressed();
+
+		if (buttonPressed == null)
+			return;
+
 		if (buttonPressed == Buttons.LEFT) {
-			Waypoint userWaypoint = new Waypoint();
-			userWaypoint.setXCoord(input.getMousePosition().x);
-			userWaypoint.setYCoord(input.getMousePosition().y);
-			userWaypointList.add((userWaypointList.size() + 1), userWaypoint);
+			Waypoint userWaypoint = new Waypoint(input.getMousePosition());
+			userWaypointList.add(userWaypoint);
+			stage.addActor(userWaypoint);
 		}
 
 	}
