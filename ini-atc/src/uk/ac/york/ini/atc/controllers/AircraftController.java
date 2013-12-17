@@ -11,18 +11,20 @@ import uk.ac.york.ini.atc.models.Waypoint;
 import uk.ac.york.ini.atc.screens.GameScreen.InputHandler;
 
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class AircraftController {
 
 	Random rand = new Random();
-	private final ArrayList<AircraftType> aircraftTypeList;
-	private final ArrayList<Aircraft> aircraftList;
-	private ArrayList<Waypoint> permanentWaypointList;
-	private ArrayList<Waypoint> userWaypointList;
-	private ArrayList<Waypoint> entryList;
-	private ArrayList<Exitpoint> exitList;
-	private final int maxAircraft = 0;
+	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
+	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
+	private ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
+	private ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
+	private ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
+	private ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
+	private final int maxAircraft = 1;
 	private final AircraftType defaultAircraft = new AircraftType();
 
 	private final GameDifficulty difficulty;
@@ -37,13 +39,22 @@ public class AircraftController {
 		this.stage = stage;
 		this.input = input;
 
-		aircraftTypeList = new ArrayList<AircraftType>();
-		aircraftList = new ArrayList<Aircraft>();
+		// add entry waypoints to entryList
+		Vector2 eVector = new Vector2(0, 0);
+		Waypoint e = new Waypoint();
+		e.setCoords(eVector);
+		entryList.add(e);
+
+		// add exit waypoints to exitList
+		Vector2 exVector = new Vector2(1280, 720);
+		Exitpoint f = new Exitpoint();
+		f.setCoords(exVector);
+		exitList.add(f);
 
 		// initialise aircraft types.
-		defaultAircraft.setCoords(null).setActive(true).setMaxClimbRate(0)
-				.setMaxSpeed(0).setMaxTurningSpeed(0).setRadius(0)
-				.setSeparationRadius(0)
+		defaultAircraft.setCoords(new Vector3(0, 0, 0)).setActive(true)
+				.setMaxClimbRate(0).setMaxSpeed(0).setMaxTurningSpeed(0)
+				.setRadius(0).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft")).setVelocity(null);
 
 		// add aircraft types to airplaneTypes array.
@@ -98,9 +109,8 @@ public class AircraftController {
 		return newAircraft;
 	}
 
-	@SuppressWarnings("null")
 	private ArrayList<Waypoint> generateFlightPlan() {
-		ArrayList<Waypoint> flightPlan = null;
+		ArrayList<Waypoint> flightPlan = new ArrayList<Waypoint>();
 		flightPlan.add(setStartpoint());
 		flightPlan.add(setEndpoint());
 		Waypoint currentWaypoint = flightPlan.get(0);
@@ -165,7 +175,7 @@ public class AircraftController {
 	 * @return Waypoint
 	 */
 	private Waypoint setStartpoint() {
-		return entryList.get(rand.nextInt(entryList.size() - 1));
+		return entryList.get(rand.nextInt(entryList.size()));
 	}
 
 	/**
@@ -174,7 +184,7 @@ public class AircraftController {
 	 * @return Exitpoint
 	 */
 	private Exitpoint setEndpoint() {
-		return exitList.get(rand.nextInt(exitList.size() - 1));
+		return exitList.get(rand.nextInt(exitList.size()));
 	}
 
 	/**
@@ -183,7 +193,7 @@ public class AircraftController {
 	 * @return AircraftType
 	 */
 	private AircraftType randomAircraftType() {
-		return aircraftTypeList.get(rand.nextInt(aircraftTypeList.size() - 1));
+		return aircraftTypeList.get(rand.nextInt(aircraftTypeList.size()));
 	}
 
 	/**

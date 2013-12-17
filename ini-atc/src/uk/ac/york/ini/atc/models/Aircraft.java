@@ -11,18 +11,18 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Aircraft extends Entity {
 
-	protected Vector3 coords;
-	protected Vector3 velocity;
+	protected Vector3 coords = new Vector3();
+	protected Vector3 velocity = new Vector3();
 	protected Vector2 size = new Vector2(76, 63);
 	protected int radius;
 	protected int separationRadius;
-	protected TextureRegion texture;
+	protected TextureRegion texture = new TextureRegion();
 	protected int maxTurningRate;
 	protected int maxClimbRate;
 	protected int maxSpeed;
 	protected boolean isActive;
 	protected boolean turningFlag; // May not be used
-	protected ArrayList<Waypoint> waypoints;
+	protected ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
 	protected int sepRulesBreachCounter;
 	protected int lastTimeTurned;
 

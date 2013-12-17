@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Waypoint extends Entity {
 
-	protected Vector2 coords;
+	protected Vector2 coords = new Vector2();
 	protected Vector2 size = new Vector2(32, 32);
 	protected TextureRegion texture = Art.getTextureRegion("waypoint");
 
