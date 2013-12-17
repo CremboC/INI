@@ -45,18 +45,17 @@ public class AircraftController {
 		// add entry waypoints to entryList
 		Waypoint e = new Waypoint(new Vector2(0, 0));
 		entryList.add(e);
-		stage.addActor(e);
 
 		// add exit waypoints to exitList
 		Exitpoint f = new Exitpoint(new Vector2(1280, 720));
 		exitList.add(f);
-		stage.addActor(f);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector3(0, 0, 0)).setActive(true)
 				.setMaxClimbRate(0).setMaxSpeed(0).setMaxTurningSpeed(0)
 				.setRadius(0).setSeparationRadius(0)
-				.setTexture(Art.getTextureRegion("aircraft")).setVelocity(null);
+				.setTexture(Art.getTextureRegion("aircraft"))
+				.setVelocity(new Vector3(1, 1, 0));
 
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
