@@ -67,19 +67,16 @@ public class AircraftController {
 	 * 
 	 */
 	public void update() {
+
+		// removes aircraft which are no longer active
 		for (int i = 0; i < aircraftList.size(); i++) {
 			if (!aircraftList.get(i).isActive()) {
 				removeAircraft(i);
 			}
 		}
 
+		// handles waypoint creation
 		createWaypoint();
-
-		// Coordinates where the user has clicked
-		// System.out.println(input.getMousePosition().x);
-		// System.out.println(input.getMousePosition().y);
-		// Which mouse button was pressed, see JavaDoc (hover)
-		// System.out.println(input.getButtonPressed());
 
 		Aircraft generatedAircraft = generateAircraft();
 
@@ -110,11 +107,15 @@ public class AircraftController {
 	}
 
 	private ArrayList<Waypoint> generateFlightPlan() {
+
 		ArrayList<Waypoint> flightPlan = new ArrayList<Waypoint>();
+
 		flightPlan.add(setStartpoint());
 		flightPlan.add(setEndpoint());
+
 		Waypoint currentWaypoint = flightPlan.get(0);
 		Waypoint lastWaypoint = flightPlan.get(flightPlan.size() - 1);
+
 		return recurseFlightPlanGen(flightPlan, currentWaypoint, lastWaypoint);
 	}
 
@@ -137,33 +138,45 @@ public class AircraftController {
 	private ArrayList<Waypoint> recurseFlightPlanGen(
 			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint,
 			Waypoint lastWaypoint) {
+
 		// Base case
 		if (currentWaypoint == lastWaypoint) {
+
 			return flightPlan;
-		}
-		// I get the feeling the vectors below should be normalised first; I
-		// suppose we'll find out the hard way.
-		else {
+
+		} else {
+			// I get the feeling the vectors below should be normalised first; I
+			// suppose we'll find out the hard way.
+
 			float angleFromCurrentToLast = currentWaypoint.getCoords().dot(
 					lastWaypoint.getCoords());
+
 			Waypoint chosenWaypoint = null;
+
 			for (Waypoint waypoint : permanentWaypointList) {
+
 				float angleFromCurrentToPotential = currentWaypoint.getCoords()
 						.dot(waypoint.getCoords());
+
 				// The following chooses the first waypoint that is found to be
 				// within the 'cone' of selectable waypoints. Currently this
 				// cone is set to 0.25 radians on either side, so a total size
 				// of 0.5 (aka 90 degrees).
 				if (angleFromCurrentToLast - angleFromCurrentToPotential < 0.25
 						|| angleFromCurrentToPotential - angleFromCurrentToLast < 0.25) {
+
 					flightPlan.add(flightPlan.size() - 1, waypoint);
 					chosenWaypoint = waypoint;
+
 					continue;
 				}
+
 			}
+
 			if (chosenWaypoint == null) {
 				chosenWaypoint = lastWaypoint;
 			}
+
 			return recurseFlightPlanGen(flightPlan, chosenWaypoint,
 					lastWaypoint);
 		}
