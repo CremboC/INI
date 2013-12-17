@@ -18,13 +18,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class AircraftController {
 
 	Random rand = new Random();
+
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
+
 	private final ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
 	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
-	private final int maxAircraft = 0;
+
+	private final int maxAircraft = 1;
 	private final AircraftType defaultAircraft = new AircraftType();
 
 	private final GameDifficulty difficulty;
