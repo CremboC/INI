@@ -102,6 +102,22 @@ public class MenuScreen extends Screen {
 		stage.dispose();
 	}
 
+	public TextButton getStartButtonEasy() {
+		return startButtonEasy;
+	}
+
+	public TextButton getStartButtonMedium() {
+		return startButtonMedium;
+	}
+
+	public TextButton getStartButtonHard() {
+		return startButtonHard;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
 	/**
 	 * Handles the input for this screen
 	 * 
@@ -129,6 +145,7 @@ public class MenuScreen extends Screen {
 
 			if (actor.equals(startButtonHard))
 				setScreen(new GameScreen(GameDifficulty.HARD));
+
 		}
 	}
 
