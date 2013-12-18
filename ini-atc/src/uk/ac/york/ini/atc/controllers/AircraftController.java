@@ -14,7 +14,6 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class AircraftController {
 
@@ -48,12 +47,22 @@ public class AircraftController {
 		entryList.add(e);
 
 		// add exit waypoints to exitList
-		Exitpoint f = new Exitpoint(new Vector2(1280, 720));
+		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
 		exitList.add(f);
+
+		Waypoint g = new Waypoint(new Vector2(500, 200));
+		permanentWaypointList.add(g);
+
+		Waypoint h = new Waypoint(new Vector2(800, 250));
+		permanentWaypointList.add(h);
+
+		Waypoint i = new Waypoint(new Vector2(700, 500));
+		permanentWaypointList.add(i);
+		permanentWaypointList.add(f);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector3(0, 0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(0).setMaxTurningSpeed(0)
+				.setMaxClimbRate(0).setMaxSpeed(2).setMaxTurningSpeed(0)
 				.setRadius(0).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector3(1, 1, 0));
@@ -64,9 +73,6 @@ public class AircraftController {
 		// initialise list of way points
 	}
 
-	boolean called = false;
-	Aircraft generatedAircraft;
-
 	/**
 	 * Updates the aircraft positions, generates a new aircraft and adds it to
 	 * the stage
@@ -76,6 +82,7 @@ public class AircraftController {
 
 		// removes aircraft which are no longer active
 		for (int i = 0; i < aircraftList.size(); i++) {
+			aircraftList.get(i).act();
 			if (!aircraftList.get(i).isActive()) {
 				removeAircraft(i);
 			}
@@ -84,13 +91,7 @@ public class AircraftController {
 		// handles waypoint creation
 		createWaypoint();
 
-		if (!called) {
-			generatedAircraft = generateAircraft();
-			generatedAircraft.addAction(Actions.moveTo(500, 500, 1));
-			called = true;
-		}
-
-		System.out.println(generatedAircraft.getActions());
+		Aircraft generatedAircraft = generateAircraft();
 
 		// if the newly generated aircraft is not null (as in, it indeed
 		// generated one), add it as an actor to the stage
@@ -98,6 +99,7 @@ public class AircraftController {
 			stage.addActor(generatedAircraft);
 		}
 	}
+
 	/**
 	 * Generates aircraft of random type with 'random' flight plan.
 	 * <p>
@@ -159,27 +161,30 @@ public class AircraftController {
 			// I get the feeling the vectors below should be normalised first; I
 			// suppose we'll find out the hard way.
 
-			float angleFromCurrentToLast = currentWaypoint.getCoords().dot(
-					lastWaypoint.getCoords());
+			Vector2 vectorFromCurrentToLast = lastWaypoint.getCoords().cpy()
+					.sub(currentWaypoint.getCoords());
 
 			Waypoint chosenWaypoint = null;
 
 			for (Waypoint waypoint : permanentWaypointList) {
 
-				float angleFromCurrentToPotential = currentWaypoint.getCoords()
-						.dot(waypoint.getCoords());
+				Vector2 vectorFromCurrentToPotential = waypoint.getCoords()
+						.cpy().sub(currentWaypoint.getCoords());
 
 				// The following chooses the first waypoint that is found to be
 				// within the 'cone' of selectable waypoints. Currently this
 				// cone is set to 0.25 radians on either side, so a total size
 				// of 0.5 (aka 90 degrees).
-				if (angleFromCurrentToLast - angleFromCurrentToPotential < 0.25
-						|| angleFromCurrentToPotential - angleFromCurrentToLast < 0.25) {
+
+				if (vectorFromCurrentToLast.angle()
+						- vectorFromCurrentToPotential.angle() < 40
+						&& vectorFromCurrentToPotential.angle()
+								- vectorFromCurrentToLast.angle() < 40) {
 
 					flightPlan.add(flightPlan.size() - 1, waypoint);
 					chosenWaypoint = waypoint;
 
-					continue;
+					break;
 				}
 
 			}

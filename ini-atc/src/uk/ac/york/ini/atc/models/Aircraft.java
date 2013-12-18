@@ -27,7 +27,7 @@ public class Aircraft extends Entity {
 	protected int radius;
 	protected int separationRadius;
 
-	protected ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+	protected ArrayList<Waypoint> waypoints;
 
 	protected int maxTurningRate;
 	protected int maxClimbRate;
@@ -70,7 +70,7 @@ public class Aircraft extends Entity {
 		// converts waypoints coordinates into 3d vectors to enabled
 		// subtraction.
 		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
-				.get(0).getCoords().y, 2 * coords.z);
+				.get(0).getCoords().y, coords.z);
 
 		// Calculating velocity and making sure it is under the max and before
 		// the next waypoint
@@ -79,6 +79,8 @@ public class Aircraft extends Entity {
 		System.out.println(velocity);
 
 		isAtNextWaypoint(velocity);
+
+		System.out.println(velocity);
 
 		checkSpeed();
 
@@ -169,7 +171,9 @@ public class Aircraft extends Entity {
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 
 		if (vectorToWaypoint.len() < 10) {
-			isActive();
+			// isActive();
+			waypoints.remove(0);
+			calculateVelocity();
 			return true;
 		} else {
 			return false;
