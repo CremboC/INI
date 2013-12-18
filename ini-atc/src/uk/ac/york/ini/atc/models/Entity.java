@@ -13,7 +13,9 @@ public abstract class Entity extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		Color color = getColor();
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-		batch.draw(getRegion(), getX(), getY(), getWidth(), getHeight());
+		// batch.draw(getRegion(), getX(), getY(), getWidth(), getHeight(),);
+		batch.draw(getRegion(), getX(), getY(), getOriginX(), getOriginY(),
+				getWidth(), getHeight(), 1, 1, getRotation());
 	}
 
 	public abstract TextureRegion getRegion();
