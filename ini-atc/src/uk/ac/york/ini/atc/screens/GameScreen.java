@@ -50,7 +50,7 @@ public class GameScreen extends Screen {
 		airspace.addListener(handler);
 		stage.addActor(airspace);
 
-		table.add(airspace).width(1080);
+		table.add(airspace).width(1080).left();
 
 		button = new TextButton("button", Art.getSkin());
 		button.addListener(handler);
@@ -67,7 +67,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void update() {
 		controller.update();
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act();
 	}
 
 	/**

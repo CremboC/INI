@@ -14,6 +14,7 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class AircraftController {
 
@@ -63,6 +64,9 @@ public class AircraftController {
 		// initialise list of way points
 	}
 
+	boolean called = false;
+	Aircraft generatedAircraft;
+
 	/**
 	 * Updates the aircraft positions, generates a new aircraft and adds it to
 	 * the stage
@@ -80,7 +84,13 @@ public class AircraftController {
 		// handles waypoint creation
 		createWaypoint();
 
-		Aircraft generatedAircraft = generateAircraft();
+		if (!called) {
+			generatedAircraft = generateAircraft();
+			generatedAircraft.addAction(Actions.moveTo(500, 500, 1));
+			called = true;
+		}
+
+		System.out.println(generatedAircraft.getActions());
 
 		// if the newly generated aircraft is not null (as in, it indeed
 		// generated one), add it as an actor to the stage
@@ -88,7 +98,6 @@ public class AircraftController {
 			stage.addActor(generatedAircraft);
 		}
 	}
-
 	/**
 	 * Generates aircraft of random type with 'random' flight plan.
 	 * <p>

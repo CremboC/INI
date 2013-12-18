@@ -57,8 +57,8 @@ public class Aircraft extends Entity {
 
 	@Override
 	public void act() {
-		updateCoords();
 		calculateVelocity();
+		updateCoords();
 		isActive();
 	}
 
@@ -76,9 +76,13 @@ public class Aircraft extends Entity {
 		// the next waypoint
 		velocity = nextWaypointNewCoords.sub(coords);
 
+		System.out.println(velocity);
+
 		isAtNextWaypoint(velocity);
 
 		checkSpeed();
+
+		System.out.println(velocity);
 	}
 
 	/**

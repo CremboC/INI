@@ -1,5 +1,6 @@
 package uk.ac.york.ini.atc.models;
 
+import uk.ac.york.ini.atc.data.Config;
 import uk.ac.york.ini.atc.handlers.Art;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,7 +10,7 @@ public class Airspace extends Entity {
 
 	private final TextureRegion texture = Art.getTextureRegion("airspace");
 	private final Vector2 pos = new Vector2(0, 0);
-	private final Vector2 size = new Vector2(1280, 720);
+	private final Vector2 size = Config.AIRSPACE_SIZE;
 
 	@Override
 	public void act() {

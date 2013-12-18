@@ -1,5 +1,6 @@
 package uk.ac.york.ini.atc.models;
 
+import uk.ac.york.ini.atc.data.Config;
 import uk.ac.york.ini.atc.handlers.Art;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Waypoint extends Entity {
 
 	protected Vector2 coords = new Vector2();
-	protected Vector2 size = new Vector2(32, 32);
+	protected Vector2 size = Config.WAYPOINT_SIZE;
 	protected TextureRegion texture = Art.getTextureRegion("waypoint");
 
 	public Waypoint(Vector2 position) {
