@@ -34,7 +34,6 @@ public class GameScreen extends Screen {
 	public GameScreen(GameDifficulty diff) {
 
 		stage = new Stage();
-		controller = new AircraftController(diff, stage, handler);
 
 		Gdx.input.setInputProcessor(stage);
 
@@ -55,6 +54,8 @@ public class GameScreen extends Screen {
 		button = new TextButton("button", Art.getSkin());
 		button.addListener(handler);
 		table.add(button).width(200).top();
+
+		controller = new AircraftController(diff, stage, handler);
 	}
 
 	@Override
