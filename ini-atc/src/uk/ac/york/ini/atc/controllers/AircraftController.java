@@ -13,7 +13,9 @@ import uk.ac.york.ini.atc.screens.GameScreen.InputHandler;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class AircraftController {
 
@@ -29,6 +31,7 @@ public class AircraftController {
 
 	private final int maxAircraft = 1;
 	private final AircraftType defaultAircraft = new AircraftType();
+	private Aircraft selectedAircraft;
 
 	private final GameDifficulty difficulty;
 
@@ -50,14 +53,25 @@ public class AircraftController {
 		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
 		exitList.add(f);
 
+		// Waypoint a = new Waypoint(new Vector2(200, 300));
+		// permanentWaypointList.add(a);
+		// stage.addActor(a);
+		//
+		// Waypoint b = new Waypoint(new Vector2(500, 300));
+		// permanentWaypointList.add(b);
+		// stage.addActor(b);
+
 		Waypoint g = new Waypoint(new Vector2(500, 200));
 		permanentWaypointList.add(g);
+		stage.addActor(g);
 
 		Waypoint h = new Waypoint(new Vector2(800, 250));
 		permanentWaypointList.add(h);
+		stage.addActor(h);
 
 		Waypoint i = new Waypoint(new Vector2(700, 500));
 		permanentWaypointList.add(i);
+		stage.addActor(i);
 		permanentWaypointList.add(f);
 
 		// initialise aircraft types.
@@ -89,13 +103,24 @@ public class AircraftController {
 		}
 
 		// handles waypoint creation
-		createWaypoint();
+		// createWaypoint();
 
-		Aircraft generatedAircraft = generateAircraft();
+		final Aircraft generatedAircraft = generateAircraft();
 
 		// if the newly generated aircraft is not null (as in, it indeed
 		// generated one), add it as an actor to the stage
 		if (generatedAircraft != null) {
+
+			// makes the aircraft clickable, once clicked, it is set as the
+			// selected aircraft
+			generatedAircraft.addListener(new ClickListener() {
+
+				public void clicked(InputEvent event, float x, float y) {
+					selectedAircraft = generatedAircraft;
+				}
+
+			});
+
 			stage.addActor(generatedAircraft);
 		}
 	}

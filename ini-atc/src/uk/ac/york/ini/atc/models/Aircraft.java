@@ -55,13 +55,15 @@ public class Aircraft extends Entity {
 		waypoints = flightPlan;
 
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
-		this.setRotation(225);
+		this.setBounds(getX(), getY(), getWidth(), getHeight());
+		this.setRotation(45);
 	}
 
 	@Override
 	public void act() {
 		calculateVelocity();
 		updateCoords();
+		this.setBounds(getX(), getY(), getWidth(), getHeight());
 		isActive();
 	}
 
@@ -75,22 +77,16 @@ public class Aircraft extends Entity {
 		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
 				.get(0).getCoords().y, coords.z);
 
-		this.setRotation(180 + new Vector2(nextWaypointNewCoords.x,
+		this.setRotation(new Vector2(nextWaypointNewCoords.x,
 				nextWaypointNewCoords.y).angle());
 
 		// Calculating velocity and making sure it is under the max and before
 		// the next waypoint
 		velocity = nextWaypointNewCoords.sub(coords);
 
-		System.out.println(velocity);
-
 		isAtNextWaypoint(velocity);
 
-		System.out.println(velocity);
-
 		checkSpeed();
-
-		System.out.println(velocity);
 	}
 
 	/**
@@ -177,9 +173,8 @@ public class Aircraft extends Entity {
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 
 		if (vectorToWaypoint.len() < 10) {
-			// isActive();
+			isActive();
 			waypoints.remove(0);
-			calculateVelocity();
 			return true;
 		} else {
 			return false;
