@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 public class MenuAircraft extends Entity {
 
 	private final TextureRegion texture = Art.getTextureRegion("menuAircraft");
-	private final Vector2 pos = new Vector2(0, 0);
-	private final Vector2 size = new Vector2(1280, 720);
+	private final Vector2 pos = new Vector2(300, 400);
+	private final Vector2 size = new Vector2(727, 249);
 
 	@Override
 	public void act() {

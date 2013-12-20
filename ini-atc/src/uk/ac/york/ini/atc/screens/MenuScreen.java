@@ -2,6 +2,7 @@ package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.data.GameDifficulty;
 import uk.ac.york.ini.atc.handlers.Art;
+import uk.ac.york.ini.atc.models.MenuAircraft;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -49,6 +50,8 @@ public class MenuScreen extends Screen {
 		table.setFillParent(true);
 
 		stage.addActor(table);
+
+		table.addActor(new MenuAircraft());
 
 		// Create a start button and add a listener to the button.
 		// ChangeListener is fired when the button
