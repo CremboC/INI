@@ -10,16 +10,17 @@ public class Waypoint extends Entity {
 
 	public static Vector2 size = Config.WAYPOINT_SIZE;
 
-	protected Vector2 coords;
+	protected Vector2 coords = new Vector2();
 	protected TextureRegion texture = Art.getTextureRegion("waypoint");
 
 	public Waypoint(Vector2 position) {
-		coords = position;
+		coords.x = position.x - size.x / 2;
+		coords.y = position.y - size.y / 2;
 		init();
 	}
 
 	public Waypoint(float x, float y) {
-		coords = new Vector2(x, y);
+		coords = new Vector2(x - size.x / 2, y - size.y / 2);
 		init();
 	}
 
