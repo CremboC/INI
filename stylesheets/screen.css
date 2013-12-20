@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('../fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+    }
+}
+
 @font-face {
   font-family: 'Open Sans';
   src: url('../fonts/opensans-italic-webfont.eot');
@@ -21,6 +28,13 @@
        url('../fonts/opensans-italic-webfont.svg#OpenSansItalic') format('svg');
   font-weight: normal;
   font-style: italic;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('../fonts/opensans-italic-webfont.svg#OpenSansItalic') format('svg');
+    }
 }
 
 @font-face {
@@ -34,6 +48,14 @@
   font-style: normal;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('../fonts/opensans-bold-webfont.svg#OpenSansBold') format('svg');
+    }
+}
+
+
 @font-face {
   font-family: 'Open Sans';
   src: url('../fonts/opensans-bolditalic-webfont.eot');
@@ -45,6 +67,13 @@
   font-style: italic;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('../fonts/opensans-bolditalic-webfont.svg#OpenSansBoldItalic') format('svg');
+    }
+}
+
 @font-face {
   font-family: 'Open Sans';
   src: url('../fonts/opensans-extrabold-webfont.eot');
@@ -54,6 +83,13 @@
        url('../fonts/opensans-extrabold-webfont.svg#OpenSansExtrabold') format('svg');
   font-weight: 800;
   font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('../fonts/opensans-extrabold-webfont.svg#OpenSansExtrabold') format('svg');
+    }
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
