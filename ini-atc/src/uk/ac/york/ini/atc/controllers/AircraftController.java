@@ -6,18 +6,20 @@ import java.util.Random;
 import uk.ac.york.ini.atc.data.GameDifficulty;
 import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Aircraft;
+import uk.ac.york.ini.atc.models.Airspace;
 import uk.ac.york.ini.atc.models.Exitpoint;
+import uk.ac.york.ini.atc.models.Map;
 import uk.ac.york.ini.atc.models.Waypoint;
-import uk.ac.york.ini.atc.screens.GameScreen.InputHandler;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class AircraftController {
+public class AircraftController extends InputListener {
 
 	Random rand = new Random();
 
@@ -33,17 +35,31 @@ public class AircraftController {
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
 
-	private final GameDifficulty difficulty;
+	private GameDifficulty difficulty;
 
-	private final Stage stage;
-	private final InputHandler input;
+	private final Airspace airspace;
+	private final Table sidebar;
 
-	public AircraftController(GameDifficulty diff, Stage stage,
-			InputHandler input) {
+	/**
+	 * Last mouse position after click
+	 */
+	private final Vector2 mousePosition = new Vector2(0, 0);
 
+	/**
+	 * Which mouse button was clicked
+	 */
+	private Integer buttonPressed = -1;
+
+	public AircraftController(GameDifficulty diff, Airspace airspace,
+			Table sidebar) {
 		this.difficulty = diff;
-		this.stage = stage;
-		this.input = input;
+		this.airspace = airspace;
+		this.sidebar = sidebar;
+	}
+
+	public void init() {
+
+		airspace.addActor(new Map());
 
 		// add entry waypoints to entryList
 		Waypoint e = new Waypoint(new Vector2(0, 0));
@@ -53,25 +69,18 @@ public class AircraftController {
 		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
 		exitList.add(f);
 
-		// Waypoint a = new Waypoint(new Vector2(200, 300));
-		// permanentWaypointList.add(a);
-		// stage.addActor(a);
-		//
-		// Waypoint b = new Waypoint(new Vector2(500, 300));
-		// permanentWaypointList.add(b);
-		// stage.addActor(b);
-
 		Waypoint g = new Waypoint(new Vector2(500, 200));
 		permanentWaypointList.add(g);
-		stage.addActor(g);
+		airspace.addActor(g);
 
 		Waypoint h = new Waypoint(new Vector2(800, 250));
 		permanentWaypointList.add(h);
-		stage.addActor(h);
+		airspace.addActor(h);
 
 		Waypoint i = new Waypoint(new Vector2(700, 500));
 		permanentWaypointList.add(i);
-		stage.addActor(i);
+		airspace.addActor(i);
+
 		permanentWaypointList.add(f);
 
 		// initialise aircraft types.
@@ -102,9 +111,6 @@ public class AircraftController {
 			}
 		}
 
-		// handles waypoint creation
-		// createWaypoint();
-
 		final Aircraft generatedAircraft = generateAircraft();
 
 		// if the newly generated aircraft is not null (as in, it indeed
@@ -116,12 +122,12 @@ public class AircraftController {
 			generatedAircraft.addListener(new ClickListener() {
 
 				public void clicked(InputEvent event, float x, float y) {
-					selectedAircraft = generatedAircraft;
+					selectAircraft(generatedAircraft);
 				}
 
 			});
 
-			stage.addActor(generatedAircraft);
+			airspace.addActor(generatedAircraft);
 		}
 	}
 
@@ -273,48 +279,45 @@ public class AircraftController {
 	 * Creates a new user waypoint when the user left-clicks within the airspace
 	 * window.
 	 */
-	private void createWaypoint() {
-		// TODO when the user left clicks inside the game window and no waypoint
-		// or aircraft exists there, create a waypoint at that location.
-		// This check should be done before this method is called.
-		Integer buttonPressed = input.getButtonPressed();
+	private void createWaypoint(float x, float y) {
 
-		if (buttonPressed == null)
-			return;
+		final Waypoint userWaypoint = new Waypoint(x, y);
 
-		if (buttonPressed == Buttons.LEFT) {
-			Waypoint userWaypoint = new Waypoint(input.getMousePosition());
-			userWaypointList.add(userWaypoint);
-			stage.addActor(userWaypoint);
-		}
+		userWaypointList.add(userWaypoint);
 
-	}
+		userWaypoint.addListener(new ClickListener() {
 
-	/**
-	 * Removes a user-created waypoint.
-	 * <p>
-	 * Removes a user waypoint if a user waypoint is right-clicked.
-	 */
-	private void removeWaypoint() {
-		// TODO when the user right clicks on a user-made waypoint, remove that
-		// waypoint from the userWaypointList
-		int buttonPressed = input.getButtonPressed();
-		if (buttonPressed == Buttons.RIGHT) {
-			for (Waypoint userWaypoint : userWaypointList) {
-				if (input.getMousePosition().x == userWaypoint.getCoords().x) {
-					if (input.getMousePosition().y == userWaypoint.getCoords().y) {
-						userWaypointList.remove(userWaypoint);
-					}
+			/**
+			 * Removes a user-created waypoint.
+			 * <p>
+			 * Removes a user waypoint if a user waypoint is right-clicked.
+			 */
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				if (button == Buttons.RIGHT) {
+					userWaypointList.remove(userWaypoint);
+					airspace.removeActor(userWaypoint);
 				}
+
+				return true;
 			}
-		}
+		});
+
+		airspace.addActor(userWaypoint);
+
+		return;
 	}
 
 	/**
 	 * Selects an aircraft.
+	 * 
+	 * @param aircraft
 	 */
-	private void selectAircraft() {
-		// TODO when the user left-clicks on an aircraft, select it.
+	private void selectAircraft(Aircraft aircraft) {
+		selectedAircraft = aircraft;
+		// TODO: do more stuff
 	}
 
 	/**
@@ -324,5 +327,16 @@ public class AircraftController {
 		// TODO if an aircraft is selected, if the user right-clicks on a
 		// waypoint redirect the aircraft to that waypoint:
 		// Call selected aircrafts insertWaypoint() method.
+	}
+
+	@Override
+	public boolean touchDown(InputEvent event, float x, float y, int pointer,
+			int button) {
+
+		if (button == Buttons.LEFT) {
+			createWaypoint(x, y);
+		}
+
+		return true;
 	}
 }

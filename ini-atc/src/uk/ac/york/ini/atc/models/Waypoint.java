@@ -8,14 +8,24 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Waypoint extends Entity {
 
+	public static Vector2 size = Config.WAYPOINT_SIZE;
+
 	protected Vector2 coords;
-	protected Vector2 size = Config.WAYPOINT_SIZE;
 	protected TextureRegion texture = Art.getTextureRegion("waypoint");
 
 	public Waypoint(Vector2 position) {
 		coords = position;
+		init();
+	}
 
+	public Waypoint(float x, float y) {
+		coords = new Vector2(x, y);
+		init();
+	}
+
+	private void init() {
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
+		this.setBounds(getX(), getY(), getWidth(), getHeight());
 	}
 
 	@Override
