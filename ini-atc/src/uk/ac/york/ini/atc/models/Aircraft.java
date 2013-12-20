@@ -56,7 +56,6 @@ public class Aircraft extends Entity {
 
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
 		this.setBounds(getX(), getY(), getWidth(), getHeight());
-		this.setRotation(45);
 	}
 
 	@Override
@@ -67,28 +66,34 @@ public class Aircraft extends Entity {
 		isActive();
 	}
 
-	public void calculateVelocity() {
+	private void calculateVelocity() {
 
 		// Creates a new vector to store the new velocity in temporarily
-		Vector3 nextWaypointNewCoords = new Vector3();
+		Vector3 nextWaypoint = new Vector3();
 
 		// converts waypoints coordinates into 3d vectors to enabled
 		// subtraction.
-		nextWaypointNewCoords.set(waypoints.get(0).getCoords().x, waypoints
-				.get(0).getCoords().y, coords.z);
+		nextWaypoint.x = waypoints.get(0).getCoords().x;
+		nextWaypoint.y = waypoints.get(0).getCoords().y;
+		nextWaypoint.z = coords.z;
 
-		this.setRotation(new Vector2(nextWaypointNewCoords.x,
-				nextWaypointNewCoords.y).angle());
+		// setting new rotation using the waypoint's size so it heads towards
+		// the centre of the waypoint
+		Vector2 newRotation = new Vector2();
+
+		newRotation.x = nextWaypoint.x + (Waypoint.size.x / 2);
+		newRotation.y = nextWaypoint.y + (Waypoint.size.y / 2);
+
+		this.setRotation(newRotation.angle());
 
 		// Calculating velocity and making sure it is under the max and before
 		// the next waypoint
-		velocity = nextWaypointNewCoords.sub(coords);
+		velocity = nextWaypoint.sub(coords);
 
 		isAtNextWaypoint(velocity);
 
 		checkSpeed();
 	}
-
 	/**
 	 * Adding a new waypoint to the head of the arraylist
 	 * 
@@ -168,7 +173,7 @@ public class Aircraft extends Entity {
 	 * Checks whether the aircraft is within 10 pixels of the next waypoint
 	 * 
 	 * @param vectorToWaypoint
-	 * @return
+	 * @return whether aicraft is at the next waypoint
 	 */
 	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 
@@ -193,7 +198,7 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the radius
 	 * 
-	 * @param int radius
+	 * @param radius
 	 */
 	public void setRadius(int radius) {
 		this.radius = radius;
@@ -211,7 +216,7 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the separationRadius
 	 * 
-	 * @param int separationRadius
+	 * @param separationRadius
 	 */
 	public void setSeparationRadius(int separationRadius) {
 		this.separationRadius = separationRadius;
@@ -220,7 +225,7 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the maxTurningSpeed
 	 * 
-	 * @param int maxTurningSpeed
+	 * @param maxTurningRate
 	 */
 	public void setMaxTurningRate(int maxTurningRate) {
 		this.maxTurningRate = maxTurningRate;
@@ -229,7 +234,7 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the maxClimbRate
 	 * 
-	 * @param int maxClimbRate
+	 * @param maxClimbRate
 	 */
 	public void setMaxClimbRate(int maxClimbRate) {
 		this.maxClimbRate = maxClimbRate;
@@ -238,7 +243,7 @@ public class Aircraft extends Entity {
 	/**
 	 * Regular Set the maxSpeed
 	 * 
-	 * @param int maxSpeed
+	 * @param maxSpeed
 	 */
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
@@ -279,12 +284,12 @@ public class Aircraft extends Entity {
 
 	@Override
 	public float getX() {
-		return coords.x;
+		return coords.x - getOriginX();
 	}
 
 	@Override
 	public float getY() {
-		return coords.y;
+		return coords.y - getOriginY();
 	}
 
 	@Override
