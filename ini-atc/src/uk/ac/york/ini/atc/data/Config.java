@@ -13,7 +13,10 @@ public final class Config {
 	public final static boolean RESIZABLE = false;
 
 	// Art related config
-	public final static Vector2 AIRSPACE_SIZE = new Vector2(1080, 720);
+	public final static Vector2 AIRSPACE_SIZE = new Vector2(1080, SCREEN_HEIGHT);
 	public final static Vector2 WAYPOINT_SIZE = new Vector2(20, 20);
+
+	// UI related
+	public final static Vector2 SIDEBAR_SIZE = new Vector2(200, SCREEN_HEIGHT);
 
 }
