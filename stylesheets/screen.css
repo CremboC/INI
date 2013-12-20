@@ -298,6 +298,10 @@ footer span.ribbon-inner {
   z-index: 1;
 }
 
+footer span.ribbon-inner p {
+  padding-top: 4px;
+}
+
 footer p {
   font-family: 'Open Sans', Myriad, Calibri, sans-serif;
   font-weight: bold;
