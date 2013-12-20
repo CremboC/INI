@@ -1,16 +1,15 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.controllers.AircraftController;
+import uk.ac.york.ini.atc.data.Config;
 import uk.ac.york.ini.atc.data.GameDifficulty;
 import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
@@ -22,108 +21,64 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  */
 public class GameScreen extends Screen {
 
-	private final Stage stage;
+	private final Stage root;
 	private final AircraftController controller;
 
-	private final Airspace airspace;
+	private Airspace airspace;
 
 	private final TextButton button;
 
-	private final InputHandler handler = new InputHandler();
-
 	public GameScreen(GameDifficulty diff) {
 
-		stage = new Stage();
+		// create a table layout, main ui
+		Table ui = new Table();
 
-		Gdx.input.setInputProcessor(stage);
+		// create a separate layout for sidebar with all the buttons and
+		// required info
+		Table sidebar = new Table();
 
-		// create a table layout
-		Table table = new Table();
+		// create and add the Airspace group, contains aircraft and waypoints
+		Airspace airspace = new Airspace();
+
+		controller = new AircraftController(diff, airspace, sidebar);
+		root = new Stage();
+
+		Gdx.input.setInputProcessor(root);
 
 		// make it fill the whole screen
-		table.setFillParent(true);
+		ui.setFillParent(true);
+		root.addActor(ui);
 
-		stage.addActor(table);
+		airspace.addListener(controller);
+		ui.add(airspace).width(Config.AIRSPACE_SIZE.x)
+				.height(Config.AIRSPACE_SIZE.y);
 
-		airspace = new Airspace();
-		airspace.addListener(handler);
-		stage.addActor(airspace);
-
-		table.add(airspace).width(1080).left();
+		ui.add(sidebar).width(Config.SIDEBAR_SIZE.x)
+				.height(Config.SIDEBAR_SIZE.y).right();
 
 		button = new TextButton("button", Art.getSkin());
-		button.addListener(handler);
-		table.add(button).width(200).top();
+		button.addListener(controller);
+		sidebar.add(button).width(200);
 
-		controller = new AircraftController(diff, stage, handler);
+		sidebar.row();
+
+		Label label = new Label("Label", Art.getSkin(), "textStyle");
+		sidebar.add(label).center();
+
+		controller.init();
 	}
 
 	@Override
 	public void render() {
-		stage.draw();
+		root.draw();
 		drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
-				Color.BLACK, stage.getSpriteBatch());
+				Color.BLACK, root.getSpriteBatch());
 	}
 
 	@Override
 	public void update() {
 		controller.update();
-		stage.act();
-	}
-
-	/**
-	 * Handles the input for this screen
-	 * 
-	 * @author Paulius, Miguel
-	 * 
-	 */
-	public class InputHandler extends InputListener {
-
-		/**
-		 * Last mouse position after click
-		 */
-		private final Vector2 mousePosition = new Vector2(0, 0);
-
-		/**
-		 * Which mouse button was clicked
-		 */
-		private Integer buttonPressed = -1;
-
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y,
-				int pointer, int button) {
-			buttonPressed = button;
-			mousePosition.x = x;
-			mousePosition.y = y;
-
-			return true;
-		}
-
-		@Override
-		public void touchUp(InputEvent event, float x, float y, int pointer,
-				int button) {
-			buttonPressed = null;
-		}
-
-		/**
-		 * Coordinates where the mouse was last clicked
-		 * 
-		 * @return
-		 */
-		public Vector2 getMousePosition() {
-			return mousePosition;
-		}
-
-		/**
-		 * Get which mouse button was clicked. <br>
-		 * Compare with Button.LEFT and Button.RIGHT to check which one was
-		 * clicked.
-		 * 
-		 * @return
-		 */
-		public Integer getButtonPressed() {
-			return buttonPressed;
-		}
+		root.act();
 	}
 
 }
