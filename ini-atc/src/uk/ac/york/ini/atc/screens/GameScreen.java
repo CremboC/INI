@@ -24,8 +24,6 @@ public class GameScreen extends Screen {
 	private final Stage root;
 	private final AircraftController controller;
 
-	private Airspace airspace;
-
 	private final TextButton button;
 
 	public GameScreen(GameDifficulty diff) {

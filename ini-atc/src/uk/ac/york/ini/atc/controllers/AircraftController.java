@@ -40,16 +40,6 @@ public class AircraftController extends InputListener {
 	private final Airspace airspace;
 	private final Table sidebar;
 
-	/**
-	 * Last mouse position after click
-	 */
-	private final Vector2 mousePosition = new Vector2(0, 0);
-
-	/**
-	 * Which mouse button was clicked
-	 */
-	private Integer buttonPressed = -1;
-
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar) {
 		this.difficulty = diff;
@@ -127,6 +117,7 @@ public class AircraftController extends InputListener {
 
 			});
 
+			generatedAircraft.toFront();
 			airspace.addActor(generatedAircraft);
 		}
 	}
@@ -197,7 +188,10 @@ public class AircraftController extends InputListener {
 
 			Waypoint chosenWaypoint = null;
 
-			for (Waypoint waypoint : permanentWaypointList) {
+			ArrayList<Waypoint> tempList = permanentWaypointList;
+			tempList.addAll(userWaypointList);
+
+			for (Waypoint waypoint : tempList) {
 
 				Vector2 vectorFromCurrentToPotential = waypoint.getCoords()
 						.cpy().sub(currentWaypoint.getCoords());
@@ -228,7 +222,6 @@ public class AircraftController extends InputListener {
 					lastWaypoint);
 		}
 	}
-
 	/**
 	 * Selects random waypoint from entrypointList.
 	 * 

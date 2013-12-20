@@ -133,7 +133,7 @@ public class Art {
 	 * Returns a texture region, should be used for all drawing all models
 	 * 
 	 * @param key
-	 * @return
+	 * @return the required texture region or null if doesn't exist
 	 */
 	public static TextureRegion getTextureRegion(String key) {
 		if (!textures.containsKey(key))

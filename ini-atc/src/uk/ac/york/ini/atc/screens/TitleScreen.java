@@ -32,8 +32,6 @@ public class TitleScreen extends Screen {
 	/**
 	 * Called every tick of the main loop. Do all the movement and collision
 	 * detection here
-	 * 
-	 * @param input
 	 */
 	@Override
 	public void update() {
