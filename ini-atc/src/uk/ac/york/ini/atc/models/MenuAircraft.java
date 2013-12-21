@@ -2,43 +2,19 @@ package uk.ac.york.ini.atc.models;
 
 import uk.ac.york.ini.atc.handlers.Art;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class MenuAircraft extends Entity {
 
-	private final TextureRegion texture = Art.getTextureRegion("menuAircraft");
-	private final Vector2 pos = new Vector2(300, 400);
-	private final Vector2 size = new Vector2(727, 249);
+	public MenuAircraft() {
+		this.coords = new Vector2(300, 400);
+		this.size = new Vector2(727, 249);
+		this.texture = Art.getTextureRegion("menuAircraft");
+	}
 
 	@Override
 	public void act() {
 
-	}
-
-	@Override
-	public TextureRegion getRegion() {
-		return texture;
-	}
-
-	@Override
-	public float getX() {
-		return pos.x;
-	}
-
-	@Override
-	public float getY() {
-		return pos.y;
-	}
-
-	@Override
-	public float getWidth() {
-		return size.x;
-	}
-
-	@Override
-	public float getHeight() {
-		return size.y;
 	}
 
 }
