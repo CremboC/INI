@@ -74,7 +74,7 @@ public class AircraftController extends InputListener {
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(2).setMaxTurningSpeed(0.5f)
+				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(1)
 				.setRadius(0).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(1, 1));

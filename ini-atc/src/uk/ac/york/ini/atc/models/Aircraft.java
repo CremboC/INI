@@ -62,28 +62,30 @@ public class Aircraft extends Entity {
 		this.setBounds(getX(), getY(), getWidth() / 2, getHeight() / 2);
 
 		// set rotation to fit next waypoint
-		this.setRotation(angleToWaypoint());
+		this.setRotation(Math.round(angleToWaypoint()));
 	}
+
+	private float startAngle;
 
 	@Override
 	public void act() {
 		float delta = Gdx.graphics.getDeltaTime();
 
-		calculateVelocity();
-		this.setBounds(getX() + getOriginX(), getY() + getOriginY(),
-				getWidth(), getHeight());
-		isActive();
-
-	}
-
-	private void calculateVelocity() {
-
 		Vector2 nextWaypoint = vectorToWaypoint();
 
-		float degrees = (float) ((Math.atan2(coords.x - nextWaypoint.x,
-				-(coords.y - nextWaypoint.y)) * 180.0d / Math.PI) + 90.0f);
+		float degrees = (float) ((Math.atan2(getX() - nextWaypoint.x,
+				-(getY() - nextWaypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
-		this.setRotation(degrees);
+		float rounded = Math.round(degrees);
+
+		if (getRotation() != rounded) {
+			startAngle = rounded;
+			if (startAngle < getRotation()) {
+				rotate(-maxTurningRate);
+			} else {
+				rotate(maxTurningRate);
+			}
+		}
 
 		// Calculating velocity and making sure it is under the max and before
 		// the next waypoint
@@ -101,8 +103,10 @@ public class Aircraft extends Entity {
 
 		// finally updating coordinates
 		coords.add(velocity);
-	}
 
+		this.setBounds(getX(), getY(), getWidth(), getHeight());
+
+	}
 	/**
 	 * Calculates the vector to the next waypoint
 	 * 
