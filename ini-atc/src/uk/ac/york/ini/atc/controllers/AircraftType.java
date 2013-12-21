@@ -1,35 +1,35 @@
 package uk.ac.york.ini.atc.controllers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 
 public class AircraftType {
 
 	private String aircraftName;
-	private Vector3 coords;
-	private Vector3 velocity;
+	private Vector2 coords;
+	private Vector2 velocity;
 	private int radius;
 	private int separationRadius;
 	private TextureRegion texture;
-	private int maxTurningSpeed;
-	private int maxClimbRate;
-	private int maxSpeed;
+	private float maxTurningSpeed;
+	private float maxClimbRate;
+	private float maxSpeed;
 	private boolean isActive;
 
-	public Vector3 getCoords() {
+	public Vector2 getCoords() {
 		return coords;
 	}
 
-	public AircraftType setCoords(Vector3 coords) {
+	public AircraftType setCoords(Vector2 coords) {
 		this.coords = coords;
 		return this;
 	}
 
-	public Vector3 getVelocity() {
+	public Vector2 getVelocity() {
 		return velocity;
 	}
 
-	public AircraftType setVelocity(Vector3 velocity) {
+	public AircraftType setVelocity(Vector2 velocity) {
 		this.velocity = velocity;
 		return this;
 	}
@@ -61,29 +61,29 @@ public class AircraftType {
 		return this;
 	}
 
-	public int getMaxTurningSpeed() {
+	public float getMaxTurningSpeed() {
 		return maxTurningSpeed;
 	}
 
-	public AircraftType setMaxTurningSpeed(int maxTurningSpeed) {
+	public AircraftType setMaxTurningSpeed(float maxTurningSpeed) {
 		this.maxTurningSpeed = maxTurningSpeed;
 		return this;
 	}
 
-	public int getMaxClimbRate() {
+	public float getMaxClimbRate() {
 		return maxClimbRate;
 	}
 
-	public AircraftType setMaxClimbRate(int maxClimbRate) {
+	public AircraftType setMaxClimbRate(float maxClimbRate) {
 		this.maxClimbRate = maxClimbRate;
 		return this;
 	}
 
-	public int getMaxSpeed() {
+	public float getMaxSpeed() {
 		return maxSpeed;
 	}
 
-	public AircraftType setMaxSpeed(int maxSpeed) {
+	public AircraftType setMaxSpeed(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 		return this;
 	}

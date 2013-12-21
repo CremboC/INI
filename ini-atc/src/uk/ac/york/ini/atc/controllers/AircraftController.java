@@ -13,7 +13,6 @@ import uk.ac.york.ini.atc.models.Waypoint;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -52,7 +51,7 @@ public class AircraftController extends InputListener {
 		airspace.addActor(new Map());
 
 		// add entry waypoints to entryList
-		Waypoint e = new Waypoint(new Vector2(0, 0));
+		Waypoint e = new Waypoint(new Vector2(10, 10));
 		entryList.add(e);
 
 		// add exit waypoints to exitList
@@ -74,11 +73,11 @@ public class AircraftController extends InputListener {
 		permanentWaypointList.add(f);
 
 		// initialise aircraft types.
-		defaultAircraft.setCoords(new Vector3(0, 0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(2).setMaxTurningSpeed(0)
+		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
+				.setMaxClimbRate(0).setMaxSpeed(2).setMaxTurningSpeed(0.5f)
 				.setRadius(0).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft"))
-				.setVelocity(new Vector3(1, 1, 0));
+				.setVelocity(new Vector2(1, 1));
 
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
@@ -310,6 +309,7 @@ public class AircraftController extends InputListener {
 	 */
 	private void selectAircraft(Aircraft aircraft) {
 		selectedAircraft = aircraft;
+		System.out.println(aircraft);
 		// TODO: do more stuff
 	}
 
