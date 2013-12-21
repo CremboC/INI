@@ -71,15 +71,23 @@ public class Aircraft extends Entity {
 	public void act() {
 		float delta = Gdx.graphics.getDeltaTime();
 
+		// Vector to next waypoint
 		Vector2 nextWaypoint = vectorToWaypoint();
 
+		// degrees to nextWaypoint relative to aircraft
 		float degrees = (float) ((Math.atan2(getX() - nextWaypoint.x,
 				-(getY() - nextWaypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
 		float rounded = Math.round(degrees);
 
+		// smoothly rotate aircraft sprite
+		// if current rotation is not the one needed
 		if (getRotation() != rounded) {
+			// set the startAngle to remember it
 			startAngle = rounded;
+
+			// making sure we rotate to the correct side, otherwise may results
+			// in a helicopter with no tail rotor
 			if (startAngle < getRotation()) {
 				rotate(-maxTurningRate);
 			} else {
@@ -104,9 +112,10 @@ public class Aircraft extends Entity {
 		// finally updating coordinates
 		coords.add(velocity);
 
+		// setting bounds to make sure the aircraft is clickable
 		this.setBounds(getX(), getY(), getWidth(), getHeight());
-
 	}
+
 	/**
 	 * Calculates the vector to the next waypoint
 	 * 
