@@ -7,13 +7,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Waypoint extends Entity {
 
-	public Waypoint(Vector2 position) {
+	private boolean deletable;
+
+	public Waypoint(Vector2 position, boolean deletable) {
 		coords = position;
+		this.deletable = deletable;
 		init();
 	}
 
-	public Waypoint(float x, float y) {
+	public Waypoint(float x, float y, boolean deletable) {
 		coords = new Vector2(x, y);
+		this.deletable = deletable;
 		init();
 	}
 
@@ -27,6 +31,10 @@ public class Waypoint extends Entity {
 
 	@Override
 	public void act() {
+	}
+
+	public boolean isDeletable() {
+		return deletable;
 	}
 
 }

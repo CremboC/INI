@@ -7,6 +7,6 @@ public class Exitpoint extends Waypoint {
 	protected int radius;
 
 	public Exitpoint(Vector2 position) {
-		super(position);
+		super(position, false);
 	}
 }
