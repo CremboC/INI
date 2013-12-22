@@ -6,7 +6,6 @@ import java.util.Calendar;
 import uk.ac.york.ini.atc.data.Config;
 import uk.ac.york.ini.atc.models.types.AircraftType;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -29,6 +28,8 @@ public class Aircraft extends Entity {
 
 	protected boolean isActive = true;
 	protected boolean turningFlag; // May not be used
+
+	private float startAngle;
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
 
@@ -65,12 +66,8 @@ public class Aircraft extends Entity {
 		this.setRotation(Math.round(angleToWaypoint()));
 	}
 
-	private float startAngle;
-
 	@Override
 	public void act() {
-		float delta = Gdx.graphics.getDeltaTime();
-
 		// Vector to next waypoint
 		Vector2 nextWaypoint = vectorToWaypoint();
 
@@ -78,7 +75,8 @@ public class Aircraft extends Entity {
 		float degrees = (float) ((Math.atan2(getX() - nextWaypoint.x,
 				-(getY() - nextWaypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
-		float rounded = Math.round(degrees);
+		// round it to 2 points after decimal so it's not rotating forever
+		float rounded = (float) Math.round(degrees * 100.0f) / 100.0f;
 
 		// smoothly rotate aircraft sprite
 		// if current rotation is not the one needed
@@ -95,24 +93,23 @@ public class Aircraft extends Entity {
 			}
 		}
 
-		// Calculating velocity and making sure it is under the max and before
-		// the next waypoint
-		velocity = nextWaypoint.sub(coords);
+		// Calculating vector to waypoint to check how close we are to it
+		Vector2 vectorToWaypoint = nextWaypoint.sub(coords);
 
 		// checking whether aircraft is at the next waypoint (close enough =
 		// 10px)
-		if (velocity.len() < 10) {
+		if (vectorToWaypoint.len() < 10) {
 			isActive();
 			waypoints.remove(0);
 		}
 
-		// making sure speed is not too big
-		velocity.clamp(0, this.maxSpeed);
+		// set velocity angle to fit rotation, allows for smooth turning
+		velocity.setAngle(getRotation());
 
 		// finally updating coordinates
 		coords.add(velocity);
 
-		// setting bounds to make sure the aircraft is clickable
+		// updating bounds to make sure the aircraft is clickable
 		this.setBounds(getX(), getY(), getWidth(), getHeight());
 	}
 
@@ -131,6 +128,10 @@ public class Aircraft extends Entity {
 				+ (Config.WAYPOINT_SIZE.x / 2);
 		nextWaypoint.y = waypoints.get(0).getCoords().y
 				+ (Config.WAYPOINT_SIZE.y / 2);
+
+		// round it to 2 points after decimal, makes it more mangeable later
+		nextWaypoint.x = (float) (Math.round(nextWaypoint.x * 100.0) / 100.0);
+		nextWaypoint.y = (float) (Math.round(nextWaypoint.y * 100.0) / 100.0);
 
 		return nextWaypoint;
 	}
