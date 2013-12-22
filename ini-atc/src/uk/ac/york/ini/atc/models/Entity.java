@@ -34,11 +34,11 @@ public abstract class Entity extends Actor {
 	}
 
 	public float getX() {
-		return coords.x;
+		return coords.x - getWidth() / 2;
 	}
 
 	public float getY() {
-		return coords.y;
+		return coords.y - getHeight() / 2;
 	}
 
 	public float getWidth() {

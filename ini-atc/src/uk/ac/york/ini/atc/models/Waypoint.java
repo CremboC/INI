@@ -8,14 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 public class Waypoint extends Entity {
 
 	public Waypoint(Vector2 position) {
-		coords = new Vector2(position.x - Config.WAYPOINT_SIZE.x / 2,
-				position.y - Config.WAYPOINT_SIZE.y / 2);
+		coords = position;
 		init();
 	}
 
 	public Waypoint(float x, float y) {
-		coords = new Vector2(x - Config.WAYPOINT_SIZE.x / 2, y
-				- Config.WAYPOINT_SIZE.y / 2);
+		coords = new Vector2(x, y);
 		init();
 	}
 

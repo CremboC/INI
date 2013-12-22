@@ -3,8 +3,8 @@ package uk.ac.york.ini.atc.models;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import uk.ac.york.ini.atc.controllers.AircraftType;
 import uk.ac.york.ini.atc.data.Config;
+import uk.ac.york.ini.atc.models.types.AircraftType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
