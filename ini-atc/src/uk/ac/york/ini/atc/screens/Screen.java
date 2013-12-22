@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Screen {
 
-	public static int width;
-	public static int height;
+	public final static int width = Gdx.graphics.getWidth();
+	public final static int height = Gdx.graphics.getHeight();
 
 	/**
 	 * Instance of the main class, used for changing screen among other things
@@ -43,17 +43,13 @@ public abstract class Screen {
 	 */
 	public final void init(ATC atc) {
 		this.atc = atc;
-
-		width = Gdx.graphics.getWidth();
-		height = Gdx.graphics.getHeight();
 	}
-
 	/**
 	 * Convenience method for the main setScreen method
 	 * 
 	 * @param screen
 	 */
-	protected void setScreen(Screen screen) {
+	public void setScreen(Screen screen) {
 		atc.setScreen(screen);
 	}
 
