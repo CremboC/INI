@@ -48,29 +48,23 @@ public class AircraftController extends InputListener implements Controller {
 	}
 
 	public void init() {
-
+		// add the background
 		airspace.addActor(new Map());
 
 		// add entry waypoints to entryList
-		Waypoint e = new Waypoint(new Vector2(10, 10));
+		Waypoint e = new Waypoint(new Vector2(10, 10), true);
 		entryList.add(e);
 
 		// add exit waypoints to exitList
 		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
 		exitList.add(f);
 
-		Waypoint g = new Waypoint(new Vector2(500, 200));
-		permanentWaypointList.add(g);
-		airspace.addActor(g);
+		// add some waypoints
+		createWaypoint(500, 200, true);
+		createWaypoint(800, 250, true);
+		createWaypoint(700, 500, true);
 
-		Waypoint h = new Waypoint(new Vector2(800, 250));
-		permanentWaypointList.add(h);
-		airspace.addActor(h);
-
-		Waypoint i = new Waypoint(new Vector2(700, 500));
-		permanentWaypointList.add(i);
-		airspace.addActor(i);
-
+		// add exitpoint to waypoint list, TODO: FIXME
 		permanentWaypointList.add(f);
 
 		// initialise aircraft types.
@@ -82,8 +76,6 @@ public class AircraftController extends InputListener implements Controller {
 
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
-
-		// initialise list of way points
 	}
 
 	/**
@@ -222,6 +214,7 @@ public class AircraftController extends InputListener implements Controller {
 					lastWaypoint);
 		}
 	}
+
 	/**
 	 * Selects random waypoint from entrypointList.
 	 * 
@@ -271,18 +264,33 @@ public class AircraftController extends InputListener implements Controller {
 	 * <p>
 	 * Creates a new user waypoint when the user left-clicks within the airspace
 	 * window.
+	 * 
+	 * Also is convinience method for generated permanent waypoints
+	 * 
+	 * @param x
+	 * @param y
+	 * @param permanent
 	 */
-	private void createWaypoint(float x, float y) {
+	private void createWaypoint(float x, float y, boolean permanent) {
 
-		final Waypoint userWaypoint = new Waypoint(x, y);
+		final Waypoint waypoint = new Waypoint(x, y, permanent);
 
-		userWaypointList.add(userWaypoint);
+		// add it to the correct list according to whether it is user created or
+		// not
+		if (permanent)
+			permanentWaypointList.add(waypoint);
+		else
+			userWaypointList.add(waypoint);
 
-		userWaypoint.addListener(new ClickListener() {
+		airspace.addActor(waypoint);
+
+		// if it's permanent it doesn't need a listener, return;
+		if (permanent)
+			return;
+
+		waypoint.addListener(new ClickListener() {
 
 			/**
-			 * Removes a user-created waypoint.
-			 * <p>
 			 * Removes a user waypoint if a user waypoint is right-clicked.
 			 */
 			@Override
@@ -290,15 +298,13 @@ public class AircraftController extends InputListener implements Controller {
 					int pointer, int button) {
 
 				if (button == Buttons.RIGHT) {
-					userWaypointList.remove(userWaypoint);
-					airspace.removeActor(userWaypoint);
+					userWaypointList.remove(waypoint);
+					airspace.removeActor(waypoint);
 				}
 
 				return true;
 			}
 		});
-
-		airspace.addActor(userWaypoint);
 
 		return;
 	}
@@ -328,7 +334,7 @@ public class AircraftController extends InputListener implements Controller {
 			int button) {
 
 		if (button == Buttons.LEFT) {
-			createWaypoint(x, y);
+			createWaypoint(x, y, false);
 		}
 
 		return true;
