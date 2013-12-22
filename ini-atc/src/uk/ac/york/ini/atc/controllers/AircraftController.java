@@ -10,6 +10,7 @@ import uk.ac.york.ini.atc.models.Airspace;
 import uk.ac.york.ini.atc.models.Exitpoint;
 import uk.ac.york.ini.atc.models.Map;
 import uk.ac.york.ini.atc.models.Waypoint;
+import uk.ac.york.ini.atc.models.types.AircraftType;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class AircraftController extends InputListener {
+public class AircraftController extends InputListener implements Controller {
 
 	Random rand = new Random();
 
