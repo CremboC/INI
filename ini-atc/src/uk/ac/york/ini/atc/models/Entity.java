@@ -20,9 +20,9 @@ public abstract class Entity extends Actor {
 
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 
-		batch.draw(getRegion(), getX(), getY(), getOriginX(), getOriginY(),
-				getWidth(), getHeight(), getScaleX(), getScaleX(),
-				getRotation());
+		batch.draw(getRegion(), getX() - getWidth() / 2, getY() - getHeight()
+				/ 2, getOriginX(), getOriginY(), getWidth(), getHeight(),
+				getScaleX(), getScaleX(), getRotation());
 	}
 
 	public TextureRegion getRegion() {
@@ -34,11 +34,11 @@ public abstract class Entity extends Actor {
 	}
 
 	public float getX() {
-		return coords.x - getWidth() / 2;
+		return coords.x;
 	}
 
 	public float getY() {
-		return coords.y - getHeight() / 2;
+		return coords.y;
 	}
 
 	public float getWidth() {
