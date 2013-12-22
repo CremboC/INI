@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -42,6 +43,7 @@ public class Art {
 	public static void load() {
 		// loads the whole sprite which consists most of the game's textures
 		Texture combined = loadTexture("data/combinedgraphics.png");
+		combined.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1080, 720));
