@@ -3,8 +3,8 @@ package uk.ac.york.ini.atc.controllers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import uk.ac.york.ini.atc.data.Art;
 import uk.ac.york.ini.atc.data.GameDifficulty;
-import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Aircraft;
 import uk.ac.york.ini.atc.models.Airspace;
 import uk.ac.york.ini.atc.models.Exitpoint;
@@ -75,7 +75,7 @@ public class AircraftController extends InputListener implements Controller {
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(1)
+				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(0.4f)
 				.setRadius(0).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(1, 1));

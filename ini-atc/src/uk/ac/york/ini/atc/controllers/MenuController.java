@@ -2,8 +2,8 @@ package uk.ac.york.ini.atc.controllers;
 
 import java.util.HashMap;
 
+import uk.ac.york.ini.atc.data.Art;
 import uk.ac.york.ini.atc.data.GameDifficulty;
-import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.MenuAircraft;
 import uk.ac.york.ini.atc.screens.GameScreen;
 import uk.ac.york.ini.atc.screens.MenuScreen;

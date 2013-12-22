@@ -1,7 +1,7 @@
 package uk.ac.york.ini.atc.models;
 
+import uk.ac.york.ini.atc.data.Art;
 import uk.ac.york.ini.atc.data.Config;
-import uk.ac.york.ini.atc.handlers.Art;
 
 import com.badlogic.gdx.math.Vector2;
 

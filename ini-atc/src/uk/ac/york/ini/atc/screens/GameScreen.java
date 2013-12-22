@@ -1,9 +1,9 @@
 package uk.ac.york.ini.atc.screens;
 
 import uk.ac.york.ini.atc.controllers.AircraftController;
+import uk.ac.york.ini.atc.data.Art;
 import uk.ac.york.ini.atc.data.Config;
 import uk.ac.york.ini.atc.data.GameDifficulty;
-import uk.ac.york.ini.atc.handlers.Art;
 import uk.ac.york.ini.atc.models.Airspace;
 
 import com.badlogic.gdx.Gdx;

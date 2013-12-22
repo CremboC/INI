@@ -1,6 +1,6 @@
 package uk.ac.york.ini.atc;
 
-import uk.ac.york.ini.atc.handlers.Art;
+import uk.ac.york.ini.atc.data.Art;
 import uk.ac.york.ini.atc.screens.MenuScreen;
 import uk.ac.york.ini.atc.screens.Screen;
 
