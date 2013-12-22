@@ -1,4 +1,4 @@
-package uk.ac.york.ini.atc.controllers;
+package uk.ac.york.ini.atc.models.types;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
