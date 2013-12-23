@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public final class Config {
 
+	// Used for debugging all around
+	public final static boolean DEBUG = true;
+
 	// General, graphics related settings
 	public final static String GAME_TITLE = "Controller Concern";
 	public final static int SCREEN_WIDTH = 1280;
