@@ -16,7 +16,9 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class AircraftController extends InputListener implements Controller {
@@ -35,10 +37,13 @@ public class AircraftController extends InputListener implements Controller {
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
 
-	private GameDifficulty difficulty;
+	private final GameDifficulty difficulty;
 
 	private final Airspace airspace;
 	private final Table sidebar;
+
+	private Label aircraftLabel;
+	private Label aircraftSpeed;
 
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar) {
@@ -76,6 +81,30 @@ public class AircraftController extends InputListener implements Controller {
 
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
+
+		initSidebar();
+	}
+
+	private void initSidebar() {
+		Label label;
+
+		TextButton button = new TextButton("button", Art.getSkin());
+		button.addListener(this);
+		sidebar.add(button).width(200).colspan(2);
+
+		sidebar.row();
+
+		label = new Label("Aircraft: ", Art.getSkin(), "textStyle");
+		sidebar.add(label).width(100);
+		aircraftLabel = new Label("..", Art.getSkin(), "textStyle");
+		sidebar.add(aircraftLabel).width(100).padRight(2);
+
+		sidebar.row();
+
+		label = new Label("Coords X/Y: ", Art.getSkin(), "textStyle");
+		sidebar.add(label).width(100);
+		aircraftSpeed = new Label("0", Art.getSkin(), "textStyle");
+		sidebar.add(aircraftSpeed).width(100);
 	}
 
 	/**
@@ -103,6 +132,7 @@ public class AircraftController extends InputListener implements Controller {
 			// selected aircraft
 			generatedAircraft.addListener(new ClickListener() {
 
+				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					selectAircraft(generatedAircraft);
 				}
@@ -112,6 +142,17 @@ public class AircraftController extends InputListener implements Controller {
 			generatedAircraft.toFront();
 			airspace.addActor(generatedAircraft);
 		}
+
+		updateSidebar();
+	}
+
+	private void updateSidebar() {
+		if (selectedAircraft == null)
+			return;
+
+		this.aircraftLabel.setText(selectedAircraft.toString());
+		this.aircraftSpeed.setText(Float.toString(selectedAircraft.getX())
+				+ " " + Float.toString(selectedAircraft.getY()));
 	}
 
 	/**
@@ -316,8 +357,7 @@ public class AircraftController extends InputListener implements Controller {
 	 */
 	private void selectAircraft(Aircraft aircraft) {
 		selectedAircraft = aircraft;
-		System.out.println(aircraft);
-		// TODO: do more stuff
+		updateSidebar();
 	}
 
 	/**
