@@ -76,7 +76,7 @@ public class Aircraft extends Entity {
 				-(getY() - nextWaypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
 		// round it to 2 points after decimal so it's not rotating forever
-		float rounded = (float) Math.round(degrees * 100.0f) / 100.0f;
+		float rounded = Math.round(degrees * 100.0f) / 100.0f;
 
 		// smoothly rotate aircraft sprite
 		// if current rotation is not the one needed
@@ -110,7 +110,8 @@ public class Aircraft extends Entity {
 		coords.add(velocity);
 
 		// updating bounds to make sure the aircraft is clickable
-		this.setBounds(getX(), getY(), getWidth(), getHeight());
+		this.setBounds(getX() - getWidth() / 2, getY() - getHeight() / 2,
+				getWidth(), getHeight());
 	}
 
 	/**
