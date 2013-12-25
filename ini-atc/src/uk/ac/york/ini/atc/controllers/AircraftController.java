@@ -16,9 +16,7 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class AircraftController extends InputListener implements Controller {
@@ -40,16 +38,15 @@ public class AircraftController extends InputListener implements Controller {
 	private final GameDifficulty difficulty;
 
 	private final Airspace airspace;
-	private final Table sidebar;
 
-	private Label aircraftLabel;
-	private Label aircraftSpeed;
+	private SidebarController sidebar;
 
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar) {
 		this.difficulty = diff;
 		this.airspace = airspace;
-		this.sidebar = sidebar;
+
+		this.sidebar = new SidebarController(sidebar, this);
 	}
 
 	public void init() {
@@ -82,29 +79,7 @@ public class AircraftController extends InputListener implements Controller {
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
 
-		initSidebar();
-	}
-
-	private void initSidebar() {
-		Label label;
-
-		TextButton button = new TextButton("button", Art.getSkin());
-		button.addListener(this);
-		sidebar.add(button).width(200).colspan(2);
-
-		sidebar.row();
-
-		label = new Label("Aircraft: ", Art.getSkin(), "textStyle");
-		sidebar.add(label).width(100);
-		aircraftLabel = new Label("..", Art.getSkin(), "textStyle");
-		sidebar.add(aircraftLabel).width(100).padRight(2);
-
-		sidebar.row();
-
-		label = new Label("Coords X/Y: ", Art.getSkin(), "textStyle");
-		sidebar.add(label).width(100);
-		aircraftSpeed = new Label("0", Art.getSkin(), "textStyle");
-		sidebar.add(aircraftSpeed).width(100);
+		sidebar.init();
 	}
 
 	/**
@@ -143,16 +118,7 @@ public class AircraftController extends InputListener implements Controller {
 			airspace.addActor(generatedAircraft);
 		}
 
-		updateSidebar();
-	}
-
-	private void updateSidebar() {
-		if (selectedAircraft == null)
-			return;
-
-		this.aircraftLabel.setText(selectedAircraft.toString());
-		this.aircraftSpeed.setText(Float.toString(selectedAircraft.getX())
-				+ " " + Float.toString(selectedAircraft.getY()));
+		sidebar.update();
 	}
 
 	/**
@@ -357,7 +323,6 @@ public class AircraftController extends InputListener implements Controller {
 	 */
 	private void selectAircraft(Aircraft aircraft) {
 		selectedAircraft = aircraft;
-		updateSidebar();
 	}
 
 	/**
@@ -369,11 +334,15 @@ public class AircraftController extends InputListener implements Controller {
 		// Call selected aircrafts insertWaypoint() method.
 	}
 
+	public Aircraft getSelectedAircraft() {
+		return selectedAircraft;
+	}
+
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
 
-		if (button == Buttons.LEFT) {
+		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
 			createWaypoint(x, y, false);
 		}
 
