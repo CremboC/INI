@@ -10,7 +10,6 @@ import uk.ac.york.ini.atc.screens.MenuScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,7 +22,7 @@ import com.esotericsoftware.tablelayout.Cell;
  * @author Crembo
  * 
  */
-public class MenuController implements Controller {
+public final class MenuController extends ChangeListener implements Controller {
 
 	private final Table ui;
 	private final MenuScreen screen;
@@ -50,39 +49,19 @@ public class MenuController implements Controller {
 		ui.add(difficultylabel).width(100).center();
 
 		// create a button to start the game in easy mode
-		addButton("startButtonEasy", "Easy", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				screen.setScreen(new GameScreen(GameDifficulty.EASY));
-			}
-		}).width(100);
+		addButton("startEasy", "Easy", this).width(100);
 
 		// create a button to start the game in medium mode
-		addButton("startButtonMedium", "Medium", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				screen.setScreen(new GameScreen(GameDifficulty.MEDIUM));
-			}
-		}).width(100);
+		addButton("startMedium", "Medium", this).width(100);
 
 		// create a button to start the game in hard mode
-		addButton("startButtonHard", "Hard", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				screen.setScreen(new GameScreen(GameDifficulty.HARD));
-			}
-		}).width(100);
+		addButton("startHard", "Hard", this).width(100);
 
 		// create a new row
 		ui.row();
 
 		// create the Exit button
-		addButton("exitButton", "Exit", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.exit();
-			}
-		}).width(200).colspan(4);
+		addButton("exit", "Exit", this).width(200).colspan(4);
 
 		ui.toFront();
 	}
@@ -94,11 +73,28 @@ public class MenuController implements Controller {
 	 * @param text
 	 * @return
 	 */
-	private Cell<?> addButton(String name, String text, EventListener listener) {
+	private Cell<?> addButton(String name, String text, ChangeListener listener) {
 		TextButton button = new TextButton(text, Art.getSkin());
 		buttons.put(name, button);
 		button.addListener(listener);
 
 		return ui.add(button);
+	}
+
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+
+		if (actor.equals(buttons.get("startEasy")))
+			screen.setScreen(new GameScreen(GameDifficulty.EASY));
+
+		if (actor.equals(buttons.get("startMedium")))
+			screen.setScreen(new GameScreen(GameDifficulty.MEDIUM));
+
+		if (actor.equals(buttons.get("startHard")))
+			screen.setScreen(new GameScreen(GameDifficulty.HARD));
+
+		if (actor.equals(buttons.get("exit")))
+			Gdx.app.exit();
+
 	}
 }

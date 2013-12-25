@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.esotericsoftware.tablelayout.Cell;
 
-public class SidebarController extends ChangeListener implements Controller {
+public final class SidebarController extends ChangeListener
+		implements
+			Controller {
 
 	private final Table sidebar;
 
