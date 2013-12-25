@@ -9,7 +9,7 @@ import uk.ac.york.ini.atc.models.types.AircraftType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class Aircraft extends Entity {
+public final class Aircraft extends Entity {
 
 	private int altitude;
 	protected Vector2 velocity = new Vector2(0, 0);
@@ -32,6 +32,9 @@ public class Aircraft extends Entity {
 	private float startAngle;
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
+
+		// allows drawing debug shape of this entity
+		debugShape = true;
 
 		// initialise all of the aircraft values according to the passed
 		// aircraft type
@@ -66,7 +69,6 @@ public class Aircraft extends Entity {
 		this.setRotation(Math.round(angleToWaypoint()));
 	}
 
-	@Override
 	public void act() {
 		// Vector to next waypoint
 		Vector2 nextWaypoint = vectorToWaypoint();

@@ -22,15 +22,12 @@ public class Waypoint extends Entity {
 	}
 
 	private void init() {
+		this.debugShape = true;
 		this.texture = Art.getTextureRegion("waypoint");
 		this.size = Config.WAYPOINT_SIZE;
 
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
 		this.setBounds(getX(), getY(), getWidth(), getHeight());
-	}
-
-	@Override
-	public void act() {
 	}
 
 	public boolean isDeletable() {

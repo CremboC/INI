@@ -13,9 +13,4 @@ public class MenuAircraft extends Entity {
 		this.texture = Art.getTextureRegion("menuAircraft");
 	}
 
-	@Override
-	public void act() {
-
-	}
-
 }

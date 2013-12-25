@@ -14,8 +14,4 @@ public class Map extends Entity {
 		this.texture = Art.getTextureRegion("airspace");
 	}
 
-	@Override
-	public void act() {
-
-	}
 }

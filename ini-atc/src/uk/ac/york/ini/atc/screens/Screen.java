@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Screen {
 
@@ -28,6 +29,8 @@ public abstract class Screen {
 	 * Simple way of writing on the screen, uses 15pt Arial font by default
 	 */
 	private final static BitmapFont font = new BitmapFont();
+	
+	public final static ShapeRenderer shapeDebugger = new ShapeRenderer();
 
 	/**
 	 * Dispose of unused resources
