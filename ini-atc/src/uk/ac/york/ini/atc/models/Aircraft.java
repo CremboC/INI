@@ -69,6 +69,9 @@ public final class Aircraft extends Entity {
 		this.setRotation(Math.round(angleToWaypoint()));
 	}
 
+	/**
+	 * Update the aircraft rotation & position
+	 */
 	public void act() {
 		// Vector to next waypoint
 		Vector2 nextWaypoint = vectorToWaypoint();
@@ -100,7 +103,7 @@ public final class Aircraft extends Entity {
 
 		// checking whether aircraft is at the next waypoint (close enough =
 		// 10px)
-		if (vectorToWaypoint.len() < 10) {
+		if (vectorToWaypoint.len() < 15) {
 			isActive();
 			waypoints.remove(0);
 		}

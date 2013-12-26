@@ -43,7 +43,8 @@ public class Art {
 	public static void load() {
 		// loads the whole sprite which consists most of the game's textures
 		Texture combined = loadTexture("data/combinedgraphics.png");
-		combined.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		combined.setFilter(TextureFilter.MipMapLinearNearest,
+				TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1080, 720));
@@ -64,8 +65,10 @@ public class Art {
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-
-		skin.add("default", new BitmapFont());
+		
+		// Add the font to the skin; TODO: use a different one?
+		BitmapFont font = new BitmapFont();
+		skin.add("default", font);
 
 		// Configure a TextButtonStyle and name it "default". Skin resources are
 		// stored by type, so this doesn't overwrite the font.
@@ -113,7 +116,7 @@ public class Art {
 	 * @return Texture
 	 */
 	private static Texture loadTexture(String textureName) {
-		Texture texture = new Texture(Gdx.files.internal(textureName));
+		Texture texture = new Texture(Gdx.files.internal(textureName), true);
 		return texture;
 	}
 

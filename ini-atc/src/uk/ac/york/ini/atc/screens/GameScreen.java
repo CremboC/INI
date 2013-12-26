@@ -43,9 +43,6 @@ public class GameScreen extends Screen {
 
 		Gdx.input.setInputProcessor(root);
 
-		if (Config.DEBUG)
-			ui.debug();
-
 		// make it fill the whole screen
 		ui.setFillParent(true);
 		root.addActor(ui);
