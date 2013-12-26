@@ -176,6 +176,7 @@ public final class AircraftController extends InputListener implements
 
 		// Base case
 		if (currentWaypoint.equals(lastWaypoint)) {
+
 			return flightPlan;
 
 		} else {
