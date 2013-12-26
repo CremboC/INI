@@ -19,9 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public final class AircraftController extends InputListener
-		implements
-			Controller {
+public final class AircraftController extends InputListener implements
+		Controller {
 
 	Random rand = new Random();
 
@@ -176,8 +175,8 @@ public final class AircraftController extends InputListener
 			Waypoint lastWaypoint) {
 
 		// Base case
-		if (currentWaypoint == lastWaypoint) {
-
+		if (currentWaypoint.equals(lastWaypoint)) {
+			flightPlan.remove(currentWaypoint);
 			return flightPlan;
 
 		} else {
@@ -202,17 +201,17 @@ public final class AircraftController extends InputListener
 				// cone is set to 0.25 radians on either side, so a total size
 				// of 0.5 (aka 90 degrees).
 
-				if (vectorFromCurrentToLast.angle()
-						- vectorFromCurrentToPotential.angle() < 40
+				if (!waypoint.equals(flightPlan.get(flightPlan.size() - 2))
+						&& vectorFromCurrentToLast.angle()
+								- vectorFromCurrentToPotential.angle() < 50
 						&& vectorFromCurrentToPotential.angle()
-								- vectorFromCurrentToLast.angle() < 40) {
+								- vectorFromCurrentToLast.angle() < 50) {
 
 					flightPlan.add(flightPlan.size() - 1, waypoint);
 					chosenWaypoint = waypoint;
 
 					break;
 				}
-
 			}
 
 			if (chosenWaypoint == null) {
