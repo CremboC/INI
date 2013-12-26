@@ -36,7 +36,8 @@ public final class SidebarController extends ChangeListener
 	 * Initialise all the buttons and labels
 	 */
 	public void init() {
-		createButton("createWaypoint", "Create Waypoint").width(200).colspan(2);
+		createButton("createWaypoint", "Create Waypoint").width(100);
+		createButton("assignWaypoint", "Assign Waypoint").width(100);
 
 		sidebar.row();
 
