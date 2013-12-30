@@ -300,6 +300,7 @@ public final class AircraftController extends InputListener implements
 
 			/**
 			 * Removes a user waypoint if a user waypoint is right-clicked.
+			 * Alternatively, should call redirection method.
 			 */
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -308,6 +309,9 @@ public final class AircraftController extends InputListener implements
 				if (button == Buttons.RIGHT) {
 					userWaypointList.remove(waypoint);
 					airspace.removeActor(waypoint);
+				} else if (button == Buttons.RIGHT
+						&& (sidebar.isAllowRedirection() == true)) {
+					redirectAircraft(waypoint);
 				}
 
 				return true;
@@ -328,11 +332,17 @@ public final class AircraftController extends InputListener implements
 
 	/**
 	 * Redirects aircraft to another waypoint.
+	 * 
+	 * @param object
 	 */
-	private void redirectAircraft() {
+	private void redirectAircraft(Waypoint waypoint) {
 		// TODO if an aircraft is selected, if the user right-clicks on a
 		// waypoint redirect the aircraft to that waypoint:
 		// Call selected aircrafts insertWaypoint() method.
+		{
+			getSelectedAircraft().insertWaypoint(waypoint);
+
+		}
 	}
 
 	public Aircraft getSelectedAircraft() {
@@ -349,4 +359,5 @@ public final class AircraftController extends InputListener implements
 
 		return true;
 	}
+
 }

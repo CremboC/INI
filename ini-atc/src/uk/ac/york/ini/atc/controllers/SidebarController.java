@@ -12,9 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.esotericsoftware.tablelayout.Cell;
 
-public final class SidebarController extends ChangeListener
-		implements
-			Controller {
+public final class SidebarController extends ChangeListener implements
+		Controller {
 
 	private final Table sidebar;
 
@@ -26,6 +25,7 @@ public final class SidebarController extends ChangeListener
 	private final HashMap<String, Label> labels = new HashMap<String, Label>();
 
 	private boolean allowNewWaypoints = false;
+	private boolean allowRedirection = false;
 
 	public SidebarController(Table sidebar, AircraftController aircrafts) {
 		this.sidebar = sidebar;
@@ -59,8 +59,8 @@ public final class SidebarController extends ChangeListener
 
 		labels.get("aircraftText").setText(selectedAircraft.toString());
 		labels.get("aircraftCoordsText").setText(
-				Float.toString(selectedAircraft.getX())
-				+ " " + Float.toString(selectedAircraft.getY()));
+				Float.toString(selectedAircraft.getX()) + " "
+						+ Float.toString(selectedAircraft.getY()));
 	}
 
 	/**
@@ -68,6 +68,13 @@ public final class SidebarController extends ChangeListener
 	 */
 	private void createWaypointClicked() {
 		allowNewWaypoints = (allowNewWaypoints) ? false : true;
+	}
+
+	/**
+	 * Handles what happens after the 'assign waypoint' button has been clicked
+	 */
+	private void assignWaypointClicked() {
+		allowRedirection = (allowRedirection) ? false : true;
 	}
 
 	/**
@@ -106,11 +113,17 @@ public final class SidebarController extends ChangeListener
 
 		if (actor.equals(buttons.get("createWaypoint")))
 			createWaypointClicked();
+		else if (actor.equals(buttons.get("assignWaypoint")))
+			assignWaypointClicked();
 
 	}
 
 	public boolean allowNewWaypoints() {
 		return allowNewWaypoints;
 	}
-	
+
+	public boolean isAllowRedirection() {
+		return allowRedirection;
+	}
+
 }
