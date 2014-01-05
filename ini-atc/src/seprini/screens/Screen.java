@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Screen {
 
-	public final static int width = Gdx.graphics.getWidth();
-	public final static int height = Gdx.graphics.getHeight();
+	public final static int WIDTH = Gdx.graphics.getWidth();
+	public final static int HEIGHT = Gdx.graphics.getHeight();
 
 	/**
 	 * Instance of the main class, used for changing screen among other things

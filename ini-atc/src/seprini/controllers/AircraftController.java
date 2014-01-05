@@ -91,7 +91,7 @@ public final class AircraftController extends InputListener implements
 		createWaypoint(800, 250, true);
 		createWaypoint(700, 500, true);
 
-		// add exitpoint to waypoint list, TODO: FIXME
+		// add exitpoint to waypoint list, FIXME
 		permanentWaypointList.add(f);
 		permanentWaypointList.add(fi);
 		permanentWaypointList.add(fin);
@@ -374,10 +374,7 @@ public final class AircraftController extends InputListener implements
 		// TODO if an aircraft is selected, if the user right-clicks on a
 		// waypoint redirect the aircraft to that waypoint:
 		// Call selected aircrafts insertWaypoint() method.
-		{
-			getSelectedAircraft().insertWaypoint(waypoint);
-
-		}
+		getSelectedAircraft().insertWaypoint(waypoint);
 	}
 
 	public Aircraft getSelectedAircraft() {

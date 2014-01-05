@@ -277,9 +277,9 @@ public final class Aircraft extends Entity {
 	 * @return whether is active
 	 */
 	public boolean isActive() {
-		// TOOD: FIXME
-		if (getX() < 0 || getY() < 0 || getX() > Screen.width
-				|| getY() > Screen.height)
+		// FIXME
+		if (getX() < 0 || getY() < 0 || getX() > Screen.WIDTH
+				|| getY() > Screen.HEIGHT)
 			this.isActive = false;
 
 		if (waypoints.size() == 1)
