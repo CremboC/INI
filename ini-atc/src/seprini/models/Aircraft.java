@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import seprini.data.Config;
 import seprini.models.types.AircraftType;
+import seprini.screens.Screen;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -276,9 +277,14 @@ public final class Aircraft extends Entity {
 	 * @return whether is active
 	 */
 	public boolean isActive() {
-		if (waypoints.size() == 1) {
+		// TOOD: FIXME
+		if (getX() < 0 || getY() < 0 || getX() > Screen.width
+				|| getY() > Screen.height)
 			this.isActive = false;
-		}
+
+		if (waypoints.size() == 1)
+			this.isActive = false;
+
 		return isActive;
 	}
 

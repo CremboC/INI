@@ -12,6 +12,7 @@ import seprini.models.Map;
 import seprini.models.Waypoint;
 import seprini.models.types.AircraftType;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -32,7 +33,11 @@ public final class AircraftController extends InputListener implements
 	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
 	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
 
-	private final int maxAircraft = 1;
+	private final int maxAircraft = 5;
+
+	private float time;
+	private float lastGenerated;
+
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
 
@@ -55,20 +60,41 @@ public final class AircraftController extends InputListener implements
 		airspace.addActor(new Map());
 
 		// add entry waypoints to entryList
-		Waypoint e = new Waypoint(new Vector2(10, 10), true);
+		Waypoint e = new Waypoint(new Vector2(0, 0), true);
 		entryList.add(e);
+
+		Waypoint en = new Waypoint(new Vector2(0, 720), true);
+		entryList.add(en);
+
+		Waypoint ent = new Waypoint(new Vector2(0, 360), true);
+		entryList.add(ent);
+
+		Waypoint entr = new Waypoint(new Vector2(1080, 360), true);
+		entryList.add(entr);
+
+		Waypoint entry = new Waypoint(new Vector2(1080, 0), true);
+		entryList.add(entry);
 
 		// add exit waypoints to exitList
 		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
 		exitList.add(f);
 
+		Exitpoint fi = new Exitpoint(new Vector2(1080, 0));
+		exitList.add(fi);
+
+		Exitpoint fin = new Exitpoint(new Vector2(0, 420));
+		exitList.add(fin);
+
 		// add some waypoints
 		createWaypoint(500, 200, true);
+		createWaypoint(200, 600, true);
 		createWaypoint(800, 250, true);
 		createWaypoint(700, 500, true);
 
 		// add exitpoint to waypoint list, TODO: FIXME
 		permanentWaypointList.add(f);
+		permanentWaypointList.add(fi);
+		permanentWaypointList.add(fin);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
@@ -89,6 +115,8 @@ public final class AircraftController extends InputListener implements
 	 * 
 	 */
 	public void update() {
+
+		time += Gdx.graphics.getDeltaTime();
 
 		// removes aircraft which are no longer active
 		for (int i = 0; i < aircraftList.size(); i++) {
@@ -132,11 +160,18 @@ public final class AircraftController extends InputListener implements
 	private Aircraft generateAircraft() {
 		if (aircraftList.size() == maxAircraft)
 			return null;
+		
+		// difference between aircraft generated - 5 seconds, needs to be
+		// dependable on difficulty
+		if (time - lastGenerated < 5)
+			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
 				generateFlightPlan());
 
 		aircraftList.add(newAircraft);
+		
+		lastGenerated = time;
 
 		return newAircraft;
 	}
