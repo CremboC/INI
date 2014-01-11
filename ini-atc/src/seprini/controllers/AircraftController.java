@@ -128,6 +128,8 @@ public final class AircraftController extends InputListener implements
 	 */
 	public void update() {
 
+		Aircraft planeI, planeJ;
+
 		time += Gdx.graphics.getDeltaTime();
 
 		// Updates aircraft in turn
@@ -135,38 +137,41 @@ public final class AircraftController extends InputListener implements
 		// Manages collision detection.
 		for (int i = 0; i < aircraftList.size(); i++) {
 			// Update aircraft.
-			aircraftList.get(i).act();
+			(planeI = aircraftList.get(i)).act();
+
 			// Collision Detection + Separation breach detection.
 			for (int j = 0; j < aircraftList.size(); j++) {
+
 				// Quite simply checks if distance between the centres of both
 				// the aircraft <= the radius of aircraft i + radius of aircraft
 				// j
-				if (!aircraftList.get(i).equals(aircraftList.get(j))
+				planeJ = aircraftList.get(j);
+
+				if (!planeI.equals(planeJ)
 				// Check difference in altitude.
-						&& Math.abs(aircraftList.get(i).getHeight()
-								- aircraftList.get(j).getHeight()) < 100
+						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < 100
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCentreCoords()
-								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
-								.get(i).getRadius()
-								+ aircraftList.get(j).getRadius()) {
+						&& planeI.getCentreCoords().dst(
+								planeJ.getCentreCoords()) < planeI.getRadius()
+								+ planeJ.getRadius()) {
 					collisionHasOccured();
 				}
+
 				// Checking for breach of separation.
-				if (!aircraftList.get(i).equals(aircraftList.get(j))
+				if (!planeI.equals(aircraftList.get(j))
 						// Check difference in altitude.
-						&& Math.abs(aircraftList.get(i).getHeight()
-								- aircraftList.get(j).getHeight()) < aircraftList
-								.get(i).getSeparationRadius()
+						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < planeI
+								.getSeparationRadius()
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCentreCoords()
-								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
-								.get(i).getSeparationRadius()) {
+						&& planeI.getCentreCoords().dst(
+								planeJ.getCentreCoords()) < planeI
+								.getSeparationRadius()) {
 					separationRulesBreached();
 				}
 			}
+
 			// Remove inactive aircraft.
-			if (!aircraftList.get(i).isActive()) {
+			if (!planeI.isActive()) {
 				removeAircraft(i);
 			}
 

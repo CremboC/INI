@@ -15,22 +15,23 @@ public final class Aircraft extends Entity {
 	private int id;
 
 	private int altitude;
-	protected Vector2 velocity = new Vector2(0, 0);
+	private Vector2 velocity = new Vector2(0, 0);
 
-	protected float radius;
-	protected float separationRadius;
+	private final float radius;
+	private final float separationRadius;
 
-	protected ArrayList<Waypoint> waypoints;
+	private ArrayList<Waypoint> waypoints;
 
-	protected float maxTurningRate;
-	protected float maxClimbRate;
-	protected float maxSpeed;
+	private final float maxTurningRate;
+	private final float maxClimbRate;
+	private final float maxSpeed;
 
-	protected int sepRulesBreachCounter = 0;
-	protected int lastTimeTurned;
+	private int sepRulesBreachCounter = 0;
+	private boolean isBreaching;
+	private int lastTimeTurned;
 
-	protected boolean isActive = true;
-	protected boolean turningFlag; // May not be used
+	private boolean isActive = true;
+	private boolean turningFlag; // May not be used
 
 	// used for smooth rotation, to remember the original angle to the next
 	// waypoint
@@ -38,15 +39,6 @@ public final class Aircraft extends Entity {
 
 	// whether the aircraft is selected by the player
 	private boolean selected;
-
-	public Vector2 getCentreCoords() {
-		return new Vector2(this.getX() + this.getOriginX(), this.getY()
-				+ this.getOriginY());
-	}
-
-	public float getSeparationRadius() {
-		return separationRadius;
-	}
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
 			int id) {
@@ -297,6 +289,19 @@ public final class Aircraft extends Entity {
 		return radius;
 	}
 
+	public Vector2 getCentreCoords() {
+		return new Vector2(this.getX() + this.getOriginX(), this.getY()
+				+ this.getOriginY());
+	}
+
+	public float getSeparationRadius() {
+		return separationRadius;
+	}
+	
+	public void isBreaching(boolean is) {
+		isBreaching = is;
+	}
+
 	/**
 	 * check if its only got the exit point left to go to.
 	 * 
@@ -312,7 +317,7 @@ public final class Aircraft extends Entity {
 
 		if (waypoints.size() == 0) {
 			this.isActive = false;
-			System.out.println("Reached exit WP");
+			System.out.println("Aircraft id " + id + ": Reached exit WP");
 		}
 		return isActive;
 	}
