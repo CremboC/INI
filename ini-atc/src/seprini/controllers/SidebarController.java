@@ -28,7 +28,7 @@ public final class SidebarController extends ChangeListener implements
 	private boolean allowNewWaypoints = false;
 	private boolean allowRedirection = false;
 
-	private GameScreen screen;
+	private final GameScreen screen;
 
 	public SidebarController(Table sidebar, AircraftController aircrafts,
 			GameScreen screen) {
@@ -42,18 +42,35 @@ public final class SidebarController extends ChangeListener implements
 	 */
 
 	public void init() {
+		createLabel("", "Speed").width(100);
+		createLabel("", "Heading").width(100);
+		sidebar.row();
 		createButton("createWaypoint", "Create Waypoint").width(100);
 		createButton("assignWaypoint", "Assign Waypoint").width(100);
-
 		sidebar.row();
-
-		createLabel("aircraftLabel", "Aircraft: ").width(100);
-		createLabel("aircraftText", "..").width(100);
-
+		createButton("", "Accelerate: ").width(100);
+		createButton("", "Take Off").width(100);
 		sidebar.row();
-
-		createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
-		createLabel("aircraftCoordsText", "0").width(100);
+		createButton("", "Decelerate: ").width(100);
+		createButton("", "Land").width(100);
+		sidebar.row();
+		createButton("", "Up").width(100);
+		createButton("", "Up").width(100);
+		sidebar.row();
+		createButton("", "Left").width(100);
+		createButton("", "Right").width(100);
+		sidebar.row();
+		createButton("", "Down").width(100);
+		createButton("", "Down").width(100);
+		sidebar.row();
+		createLabel("", "Timer").width(100);
+		sidebar.row();
+		createButton("", "Menu").width(100);
+		createButton("", "Pause").width(100);
+		/**
+		 * createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
+		 * createLabel("aircraftCoordsText", "0").width(100);
+		 */
 	}
 
 	/**
