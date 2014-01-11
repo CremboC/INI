@@ -34,4 +34,8 @@ public class Waypoint extends Entity {
 		return deletable;
 	}
 
+	public String toString() {
+		return "Waypoint - x: " + getX() + " y: " + getY();
+	}
+
 }

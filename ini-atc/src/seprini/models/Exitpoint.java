@@ -9,4 +9,8 @@ public final class Exitpoint extends Waypoint {
 	public Exitpoint(Vector2 position) {
 		super(position, false);
 	}
+
+	public String toString() {
+		return "Exitpoint - x: " + getX() + " y: " + getY();
+	}
 }
