@@ -30,7 +30,12 @@ public final class Aircraft extends Entity {
 	protected boolean isActive = true;
 	protected boolean turningFlag; // May not be used
 
+	// used for smooth rotation, to remember the original angle to the next
+	// waypoint
 	private float startAngle;
+
+	// whether the aircraft is selected by the player
+	private boolean selected;
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
 
@@ -64,10 +69,13 @@ public final class Aircraft extends Entity {
 		this.setScale(0.5f);
 
 		// set bounds so the aircraft is clickable
-		this.setBounds(getX(), getY(), getWidth() / 2, getHeight() / 2);
+		this.setBounds(getX() - getWidth() / 1.5f, getY() - getWidth() / 1.5f,
+				getWidth() * 2, getHeight() * 2);
 
-		// set rotation to fit next waypoint
-		this.setRotation(Math.round(angleToWaypoint()));
+		// set rotation & velocity angle to fit next waypoint
+		float angleToWaypoint = Math.round(angleToWaypoint());
+		
+		this.setRotation(angleToWaypoint);
 	}
 
 	/**
@@ -116,8 +124,8 @@ public final class Aircraft extends Entity {
 		coords.add(velocity);
 
 		// updating bounds to make sure the aircraft is clickable
-		this.setBounds(getX() - getWidth() / 2, getY() - getHeight() / 2,
-				getWidth(), getHeight());
+		this.setBounds(getX() - getWidth() / 1.5f, getY() - getWidth() / 1.5f,
+				getWidth() * 2, getHeight() * 2);
 	}
 
 	/**
@@ -286,6 +294,16 @@ public final class Aircraft extends Entity {
 			this.isActive = false;
 
 		return isActive;
+	}
+
+	/**
+	 * Setter for selected
+	 * 
+	 * @param newSelected
+	 * @return whether is selected
+	 */
+	public boolean selected(boolean newSelected) {
+		return this.selected = newSelected;
 	}
 
 }

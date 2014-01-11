@@ -59,8 +59,8 @@ public final class SidebarController extends ChangeListener implements
 
 		labels.get("aircraftText").setText(selectedAircraft.toString());
 		labels.get("aircraftCoordsText").setText(
-				Float.toString(selectedAircraft.getX()) + " "
-						+ Float.toString(selectedAircraft.getY()));
+				Float.toString(Math.round(selectedAircraft.getX())) + " "
+						+ Float.toString(Math.round(selectedAircraft.getY())));
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import seprini.data.Art;
 import seprini.data.GameDifficulty;
+import seprini.data.GameState;
 import seprini.models.Aircraft;
 import seprini.models.Airspace;
 import seprini.models.Exitpoint;
@@ -14,6 +15,7 @@ import seprini.models.types.AircraftType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -66,7 +68,7 @@ public final class AircraftController extends InputListener implements
 		Waypoint en = new Waypoint(new Vector2(0, 720), true);
 		entryList.add(en);
 
-		Waypoint ent = new Waypoint(new Vector2(0, 360), true);
+		Waypoint ent = new Waypoint(new Vector2(0, 420), true);
 		entryList.add(ent);
 
 		Waypoint entr = new Waypoint(new Vector2(1080, 360), true);
@@ -138,6 +140,7 @@ public final class AircraftController extends InputListener implements
 
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					System.out.println("Clicked: x: " + x + " y: " + y);
 					selectAircraft(generatedAircraft);
 				}
 
@@ -362,7 +365,16 @@ public final class AircraftController extends InputListener implements
 	 * @param aircraft
 	 */
 	private void selectAircraft(Aircraft aircraft) {
+		// make sure old selected aircraft is no longer selected in its own
+		// object
+		if (selectedAircraft != null)
+			selectedAircraft.selected(false);
+
+		// set new selected aircraft
 		selectedAircraft = aircraft;
+
+		// make new aircraft know it's selected
+		selectedAircraft.selected(true);
 	}
 
 	/**
@@ -385,11 +397,22 @@ public final class AircraftController extends InputListener implements
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
 
+		System.out.println(x + " " + y);
 		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
 			createWaypoint(x, y, false);
 		}
 
-		return true;
+		return false;
+	}
+
+	@Override
+	public boolean keyDown(InputEvent event, int keycode) {
+		System.out.println(keycode);
+		if (keycode == Keys.SPACE) {
+			GameState.paused = (GameState.paused) ? false : true;
+		}
+
+		return false;
 	}
 
 }

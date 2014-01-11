@@ -28,8 +28,9 @@ public abstract class Entity extends Actor {
 				/ 2, getOriginX(), getOriginY(), getWidth(), getHeight(),
 				getScaleX(), getScaleX(), getRotation());
 
-		if (Config.DEBUG)
+		if (Config.DEBUG) {
 			drawDebug(batch);
+		}
 	}
 
 	/**
