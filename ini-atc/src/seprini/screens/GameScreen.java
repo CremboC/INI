@@ -36,6 +36,9 @@ public class GameScreen extends Screen {
 		// required info
 		Table sidebar = new Table();
 
+		if (Config.DEBUG)
+			sidebar.debug();
+
 		// create and add the Airspace group, contains aircraft and waypoints
 		Airspace airspace = new Airspace();
 
@@ -65,7 +68,6 @@ public class GameScreen extends Screen {
 
 		// move the sidebar to the top right, add it to the main table and set
 		// its size
-		sidebar.top().right();
 		ui.add(sidebar).width(Config.SIDEBAR_SIZE.x)
 				.height(Config.SIDEBAR_SIZE.y);
 
