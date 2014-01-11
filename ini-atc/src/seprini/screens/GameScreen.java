@@ -39,7 +39,7 @@ public class GameScreen extends Screen {
 		// create and add the Airspace group, contains aircraft and waypoints
 		Airspace airspace = new Airspace();
 
-		controller = new AircraftController(diff, airspace, sidebar);
+		controller = new AircraftController(diff, airspace, sidebar, this);
 		root = new Stage();
 
 		root.setKeyboardFocus(airspace);

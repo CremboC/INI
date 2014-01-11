@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import seprini.data.Art;
 import seprini.models.Aircraft;
+import seprini.screens.GameScreen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -27,14 +28,19 @@ public final class SidebarController extends ChangeListener implements
 	private boolean allowNewWaypoints = false;
 	private boolean allowRedirection = false;
 
-	public SidebarController(Table sidebar, AircraftController aircrafts) {
+	private GameScreen screen;
+
+	public SidebarController(Table sidebar, AircraftController aircrafts,
+			GameScreen screen) {
 		this.sidebar = sidebar;
 		this.aircrafts = aircrafts;
+		this.screen = screen;
 	}
 
 	/**
 	 * Initialise all the buttons and labels
 	 */
+
 	public void init() {
 		createButton("createWaypoint", "Create Waypoint").width(100);
 		createButton("assignWaypoint", "Assign Waypoint").width(100);
