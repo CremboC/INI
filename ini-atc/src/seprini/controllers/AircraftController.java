@@ -119,9 +119,8 @@ public final class AircraftController extends InputListener implements
 	}
 
 	/**
-	 * Updates the aircraft positions, generates a new aircraft and adds it to
-	 * the stage
-	 * 
+	 * Updates the aircraft positions. Generates a new aircraft and adds it to
+	 * the stage. Collision Detection. Removes aircraft if inactive.
 	 */
 	public void update() {
 
@@ -139,12 +138,17 @@ public final class AircraftController extends InputListener implements
 				// the aircraft <= the radius of aircraft i + radius of aircraft
 				// j
 				if (!aircraftList.get(i).equals(aircraftList.get(j))
+				// Check difference in altitude.
+						&& Math.abs(aircraftList.get(i).getHeight()
+								- aircraftList.get(i).getHeight()) < 100
+						// Check difference in horizontal 2d plane.
 						&& aircraftList.get(i).getCoords()
 								.dst(aircraftList.get(j).getCoords()) < aircraftList
 								.get(i).getRadius()
 								+ aircraftList.get(j).getRadius()) {
 					// End the game
-					System.out.println("collision at:");
+					// TODO remove debug code, switch screen to end game screen
+					System.out.println("collision");
 				}
 				// Checking for breach of separation rules should be done in
 				// here too.
