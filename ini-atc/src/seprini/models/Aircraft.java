@@ -24,7 +24,7 @@ public final class Aircraft extends Entity {
 	protected float maxClimbRate;
 	protected float maxSpeed;
 
-	protected int sepRulesBreachCounter;
+	protected int sepRulesBreachCounter = 0;
 	protected int lastTimeTurned;
 
 	protected boolean isActive = true;
@@ -36,6 +36,15 @@ public final class Aircraft extends Entity {
 
 	// whether the aircraft is selected by the player
 	private boolean selected;
+
+	public Vector2 getCentreCoords() {
+		return new Vector2(this.getX() + this.getOriginX(), this.getY()
+				+ this.getOriginY());
+	}
+
+	public float getSeparationRadius() {
+		return separationRadius;
+	}
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
 
@@ -115,7 +124,6 @@ public final class Aircraft extends Entity {
 		// checking whether aircraft is at the next waypoint (close enough =
 		// 10px)
 		if (vectorToWaypoint.len() < 15) {
-			isActive();
 			waypoints.remove(0);
 		}
 
@@ -185,7 +193,7 @@ public final class Aircraft extends Entity {
 	 * @param vectorToWaypoint
 	 * @return whether aicraft is at the next waypoint
 	 */
-	public boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
+	private boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
 		if (vectorToWaypoint.len() < 10) {
 			isActive();
 			waypoints.remove(0);
@@ -282,15 +290,6 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Regular regular getter for separationRadius
-	 * 
-	 * @return int radius
-	 */
-	public float getSeparationRadius() {
-		return separationRadius;
-	}
-
-	/**
 	 * check if its only got the exit point left to go to.
 	 * 
 	 * @return whether is active
@@ -298,12 +297,15 @@ public final class Aircraft extends Entity {
 	public boolean isActive() {
 		// FIXME
 		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
-				|| getY() > Screen.HEIGHT + 105)
+				|| getY() > Screen.HEIGHT + 105) {
 			this.isActive = false;
+			System.out.println("Out of bounds");
+		}
 
-		if (waypoints.size() == 1)
+		if (waypoints.size() == 0) {
 			this.isActive = false;
-
+			System.out.println("Reached exit WP");
+		}
 		return isActive;
 	}
 

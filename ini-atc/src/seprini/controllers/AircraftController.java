@@ -57,8 +57,8 @@ public final class AircraftController extends InputListener implements
 		// insert code here to initialise variables (eg max no of aircraft) to
 		// wanted value for that difficulty level.
 		case EASY:
-			maxAircraft = 2;
-			timeBetweenGenerations = 5;
+			maxAircraft = 1;
+			timeBetweenGenerations = 1;
 			break;
 		case MEDIUM:
 			maxAircraft = 2;
@@ -108,9 +108,9 @@ public final class AircraftController extends InputListener implements
 		createWaypoint(700, 500, true);
 
 		// add exitpoint to waypoint list, FIXME
-		permanentWaypointList.add(f);
-		permanentWaypointList.add(fi);
-		permanentWaypointList.add(fin);
+		// permanentWaypointList.add(f);
+		// permanentWaypointList.add(fi);
+		// permanentWaypointList.add(fin);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
@@ -149,8 +149,8 @@ public final class AircraftController extends InputListener implements
 						&& Math.abs(aircraftList.get(i).getHeight()
 								- aircraftList.get(j).getHeight()) < 100
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCoords()
-								.dst(aircraftList.get(j).getCoords()) < aircraftList
+						&& aircraftList.get(i).getCentreCoords()
+								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
 								.get(i).getRadius()
 								+ aircraftList.get(j).getRadius()) {
 					collisionHasOccured();
@@ -162,8 +162,8 @@ public final class AircraftController extends InputListener implements
 								- aircraftList.get(j).getHeight()) < aircraftList
 								.get(i).getSeparationRadius()
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCoords()
-								.dst(aircraftList.get(j).getCoords()) < aircraftList
+						&& aircraftList.get(i).getCentreCoords()
+								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
 								.get(i).getSeparationRadius()) {
 					separationRulesBreached();
 				}
@@ -203,13 +203,11 @@ public final class AircraftController extends InputListener implements
 	private void collisionHasOccured() {
 		// End the game
 		// TODO remove debug code, put in game ending code
-		System.out.println("collision");
 	}
 
 	private void separationRulesBreached() {
 		// for scoring mechanisms, if applicable
 		// TODO remove debug code.
-		System.out.println("separation");
 	}
 
 	/**
@@ -300,9 +298,9 @@ public final class AircraftController extends InputListener implements
 
 				if (!waypoint.equals(flightPlan.get(flightPlan.size() - 2))
 						&& vectorFromCurrentToLast.angle()
-								- vectorFromCurrentToPotential.angle() < 50
+								- vectorFromCurrentToPotential.angle() < 40
 						&& vectorFromCurrentToPotential.angle()
-								- vectorFromCurrentToLast.angle() < 50) {
+								- vectorFromCurrentToLast.angle() < 40) {
 
 					flightPlan.add(flightPlan.size() - 1, waypoint);
 					chosenWaypoint = waypoint;
