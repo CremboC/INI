@@ -140,7 +140,6 @@ public final class AircraftController extends InputListener implements
 
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					System.out.println("Clicked: x: " + x + " y: " + y);
 					selectAircraft(generatedAircraft);
 				}
 
@@ -396,8 +395,6 @@ public final class AircraftController extends InputListener implements
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
-
-		System.out.println(x + " " + y);
 		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
 			createWaypoint(x, y, false);
 		}
