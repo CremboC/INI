@@ -55,12 +55,15 @@ public final class AircraftController extends InputListener implements
 		case EASY:
 			maxAircraft = 2;
 			timeBetweenGenerations = 5;
+			break;
 		case MEDIUM:
 			maxAircraft = 2;
 			timeBetweenGenerations = 5;
+			break;
 		case HARD:
 			maxAircraft = 10;
 			timeBetweenGenerations = 2;
+			break;
 		}
 	}
 
@@ -132,7 +135,7 @@ public final class AircraftController extends InputListener implements
 		for (int i = 0; i < aircraftList.size(); i++) {
 			// Update aircraft.
 			aircraftList.get(i).act();
-			// Collision Detection.
+			// Collision Detection + Separation breach detection.
 			for (int j = 0; j < aircraftList.size(); j++) {
 				// Quite simply checks if distance between the centres of both
 				// the aircraft <= the radius of aircraft i + radius of aircraft
@@ -140,7 +143,7 @@ public final class AircraftController extends InputListener implements
 				if (!aircraftList.get(i).equals(aircraftList.get(j))
 				// Check difference in altitude.
 						&& Math.abs(aircraftList.get(i).getHeight()
-								- aircraftList.get(i).getHeight()) < 100
+								- aircraftList.get(j).getHeight()) < 100
 						// Check difference in horizontal 2d plane.
 						&& aircraftList.get(i).getCoords()
 								.dst(aircraftList.get(j).getCoords()) < aircraftList
@@ -150,12 +153,21 @@ public final class AircraftController extends InputListener implements
 					// TODO remove debug code, switch screen to end game screen
 					System.out.println("collision");
 				}
-				// Checking for breach of separation rules should be done in
-				// here too.
-			}
-			// Remove inactive aircraft.
-			if (!aircraftList.get(i).isActive()) {
-				removeAircraft(i);
+				// Checking for breach of separation.
+				if (!aircraftList.get(i).equals(aircraftList.get(j))
+						// Check difference in altitude.
+						&& Math.abs(aircraftList.get(i).getHeight()
+								- aircraftList.get(j).getHeight()) < aircraftList
+								.get(i).getSeparationRadius()
+						// Check difference in horizontal 2d plane.
+						&& aircraftList.get(i).getCoords()
+								.dst(aircraftList.get(j).getCoords()) < aircraftList
+								.get(i).getSeparationRadius()) {
+				}
+				// Remove inactive aircraft.
+				if (!aircraftList.get(i).isActive()) {
+					removeAircraft(i);
+				}
 			}
 		}
 
@@ -181,6 +193,7 @@ public final class AircraftController extends InputListener implements
 		}
 
 		sidebar.update();
+
 	}
 
 	/**

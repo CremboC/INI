@@ -74,7 +74,7 @@ public final class Aircraft extends Entity {
 
 		// set rotation & velocity angle to fit next waypoint
 		float angleToWaypoint = Math.round(angleToWaypoint());
-		
+
 		System.out.println(waypoints);
 
 		this.setRotation(angleToWaypoint);
@@ -279,6 +279,15 @@ public final class Aircraft extends Entity {
 	 */
 	public float getRadius() {
 		return radius;
+	}
+
+	/**
+	 * Regular regular getter for separationRadius
+	 * 
+	 * @return int radius
+	 */
+	public float getSeparationRadius() {
+		return separationRadius;
 	}
 
 	/**
