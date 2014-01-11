@@ -407,7 +407,6 @@ public final class AircraftController extends InputListener implements
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-		System.out.println(keycode);
 		if (keycode == Keys.SPACE) {
 			GameState.paused = (GameState.paused) ? false : true;
 		}
