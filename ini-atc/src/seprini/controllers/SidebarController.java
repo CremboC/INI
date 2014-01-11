@@ -6,6 +6,7 @@ import seprini.data.Art;
 import seprini.data.Config;
 import seprini.models.Aircraft;
 import seprini.screens.GameScreen;
+import seprini.screens.MenuScreen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -230,6 +231,9 @@ public final class SidebarController extends ChangeListener implements
 
 		if (actor.equals(buttons.get("down")))
 			selectedAircraft.decreaseAltitude();
+
+		if (actor.equals(buttons.get("menu")))
+			screen.setScreen(new MenuScreen());
 
 	}
 
