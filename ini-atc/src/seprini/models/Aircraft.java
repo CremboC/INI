@@ -187,23 +187,6 @@ public final class Aircraft extends Entity {
 		return nextWaypoint.angle();
 	}
 
-	/**
-	 * Checks whether the aircraft is within 10 pixels of the next waypoint
-	 * 
-	 * @param vectorToWaypoint
-	 * @return whether aicraft is at the next waypoint
-	 */
-	private boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
-		if (vectorToWaypoint.len() < 10) {
-			isActive();
-			waypoints.remove(0);
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
 	public void checkSpeed() {
 		this.velocity.clamp(0, this.maxSpeed);
 	}
