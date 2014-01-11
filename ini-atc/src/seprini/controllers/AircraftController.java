@@ -115,7 +115,7 @@ public final class AircraftController extends InputListener implements
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
 				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(0.4f)
-				.setRadius(10).setSeparationRadius(0)
+				.setRadius(10).setSeparationRadius(40)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(1, 1));
 
@@ -153,9 +153,7 @@ public final class AircraftController extends InputListener implements
 								.dst(aircraftList.get(j).getCoords()) < aircraftList
 								.get(i).getRadius()
 								+ aircraftList.get(j).getRadius()) {
-					// End the game
-					// TODO remove debug code, switch screen to end game screen
-					System.out.println("collision");
+					collisionHasOccured();
 				}
 				// Checking for breach of separation.
 				if (!aircraftList.get(i).equals(aircraftList.get(j))
@@ -167,12 +165,14 @@ public final class AircraftController extends InputListener implements
 						&& aircraftList.get(i).getCoords()
 								.dst(aircraftList.get(j).getCoords()) < aircraftList
 								.get(i).getSeparationRadius()) {
-				}
-				// Remove inactive aircraft.
-				if (!aircraftList.get(i).isActive()) {
-					removeAircraft(i);
+					separationRulesBreached();
 				}
 			}
+			// Remove inactive aircraft.
+			if (!aircraftList.get(i).isActive()) {
+				removeAircraft(i);
+			}
+
 		}
 
 		final Aircraft generatedAircraft = generateAircraft();
@@ -198,6 +198,18 @@ public final class AircraftController extends InputListener implements
 
 		sidebar.update();
 
+	}
+
+	private void collisionHasOccured() {
+		// End the game
+		// TODO remove debug code, put in game ending code
+		System.out.println("collision");
+	}
+
+	private void separationRulesBreached() {
+		// for scoring mechanisms, if applicable
+		// TODO remove debug code.
+		System.out.println("separation");
 	}
 
 	/**
@@ -452,10 +464,10 @@ public final class AircraftController extends InputListener implements
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-		if (keycode == Keys.SPACE) 
+		if (keycode == Keys.SPACE)
 			GameState.paused = (GameState.paused) ? false : true;
-		
-		if (keycode == Keys.ESCAPE) 
+
+		if (keycode == Keys.ESCAPE)
 			screen.setScreen(new EndScreen());
 
 		return false;
