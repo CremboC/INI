@@ -12,6 +12,8 @@ import seprini.models.Exitpoint;
 import seprini.models.Map;
 import seprini.models.Waypoint;
 import seprini.models.types.AircraftType;
+import seprini.screens.EndScreen;
+import seprini.screens.GameScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -41,13 +43,15 @@ public final class AircraftController extends InputListener implements
 	private final GameDifficulty difficulty;
 	private final Airspace airspace;
 	private SidebarController sidebar;
+	private GameScreen screen;
 
 	public AircraftController(GameDifficulty diff, Airspace airspace,
-			Table sidebar) {
+			Table sidebar, GameScreen screen) {
 		this.difficulty = diff;
 		this.airspace = airspace;
+		this.screen = screen;
 
-		this.sidebar = new SidebarController(sidebar, this);
+		this.sidebar = new SidebarController(sidebar, this, screen);
 
 		switch (difficulty) {
 		// insert code here to initialise variables (eg max no of aircraft) to
@@ -435,9 +439,11 @@ public final class AircraftController extends InputListener implements
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-		if (keycode == Keys.SPACE) {
+		if (keycode == Keys.SPACE) 
 			GameState.paused = (GameState.paused) ? false : true;
-		}
+		
+		if (keycode == Keys.ESCAPE) 
+			screen.setScreen(new EndScreen());
 
 		return false;
 	}
