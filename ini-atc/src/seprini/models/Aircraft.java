@@ -59,9 +59,9 @@ public final class Aircraft extends Entity {
 		size = new Vector2(76, 63);
 
 		// set the coords to the entry point, remove it from the flight plan
-		Waypoint entryPoint = flightPlan.get(0);
+		Waypoint entryPoint = waypoints.get(0);
 		coords = new Vector2(entryPoint.getX(), entryPoint.getY());
-		flightPlan.remove(0);
+		waypoints.remove(0);
 
 		// set origin to center of the aircraft, makes rotation more intuitive
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
@@ -75,6 +75,8 @@ public final class Aircraft extends Entity {
 		// set rotation & velocity angle to fit next waypoint
 		float angleToWaypoint = Math.round(angleToWaypoint());
 		
+		System.out.println(waypoints);
+
 		this.setRotation(angleToWaypoint);
 	}
 
@@ -286,8 +288,8 @@ public final class Aircraft extends Entity {
 	 */
 	public boolean isActive() {
 		// FIXME
-		if (getX() < 0 || getY() < 0 || getX() > Screen.WIDTH
-				|| getY() > Screen.HEIGHT)
+		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
+				|| getY() > Screen.HEIGHT + 105)
 			this.isActive = false;
 
 		if (waypoints.size() == 1)
@@ -306,4 +308,9 @@ public final class Aircraft extends Entity {
 		return this.selected = newSelected;
 	}
 
+	@Override
+	public String toString() {
+		return "Aircraft - x: " + getX() + " y: " + getY()
+				+ "\n\r flight plan: " + waypoints.toString();
+	}
 }
