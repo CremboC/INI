@@ -3,6 +3,7 @@ package seprini.controllers;
 import java.util.HashMap;
 
 import seprini.data.Art;
+import seprini.data.Config;
 import seprini.models.Aircraft;
 import seprini.screens.GameScreen;
 
@@ -14,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.esotericsoftware.tablelayout.Cell;
 
 public final class SidebarController extends ChangeListener implements
-		Controller {
+			Controller {
 
 	private final Table sidebar;
 
@@ -42,31 +43,78 @@ public final class SidebarController extends ChangeListener implements
 	 */
 
 	public void init() {
-		createLabel("", "Speed").width(100);
-		createLabel("", "Heading").width(100);
-		sidebar.row();
-		createButton("createWaypoint", "Create Waypoint").width(100);
-		createButton("assignWaypoint", "Assign Waypoint").width(100);
-		sidebar.row();
-		createButton("", "Accelerate: ").width(100);
-		createButton("", "Take Off").width(100);
-		sidebar.row();
-		createButton("", "Decelerate: ").width(100);
-		createButton("", "Land").width(100);
-		sidebar.row();
-		createButton("", "Up").width(100);
-		createButton("", "Up").width(100);
-		sidebar.row();
-		createButton("", "Left").width(100);
-		createButton("", "Right").width(100);
-		sidebar.row();
-		createButton("", "Down").width(100);
-		createButton("", "Down").width(100);
-		sidebar.row();
-		createLabel("", "Timer").width(100);
-		sidebar.row();
-		createButton("", "Menu").width(100);
-		createButton("", "Pause").width(100);
+
+
+		// wrapper for aicraft controls
+		Table aircraftControls = new Table();
+
+		// aircraftControls.setX(100);
+		// aircraftControls.setY(650);
+		aircraftControls.setFillParent(true);
+
+		if (Config.DEBUG)
+			aircraftControls.debug();
+
+		aircraftControls.top();
+		sidebar.addActor(aircraftControls);
+
+		// wrapper for bottom buttons
+		Table bottomButtons = new Table();
+
+		bottomButtons.setFillParent(true);
+
+		if (Config.DEBUG)
+			aircraftControls.debug();
+
+		bottomButtons.bottom();
+		sidebar.addActor(bottomButtons);
+
+		// adding labels to aircraft controls
+		createLabel("", "Speed", aircraftControls).width(100);
+		createLabel("", "Heading", aircraftControls).width(100);
+
+		aircraftControls.row().width(100);
+
+		// adding buttons to aircraft controls
+		createButton("createWaypoint", "Create Waypoint", aircraftControls)
+				.width(100);
+		createButton("assignWaypoint", "Assign Waypoint", aircraftControls)
+				.width(100);
+
+		aircraftControls.row();
+
+		createButton("accelerate", "Accelerate", aircraftControls).width(100);
+		createButton("takeOff", "Take Off", aircraftControls).width(100);
+
+		aircraftControls.row();
+
+		createButton("decelerate", "Decelerate", aircraftControls).width(100);
+		createButton("land", "Land", aircraftControls).width(100);
+
+		aircraftControls.row().spaceTop(100);
+
+		createButton("up", "Up", aircraftControls).width(100).colspan(2);
+
+		aircraftControls.row();
+
+		createButton("left", "Left", aircraftControls).width(100);
+		createButton("right", "Right", aircraftControls).width(100);
+
+		aircraftControls.row();
+
+		createButton("down", "Down", aircraftControls).width(100).colspan(2);
+
+		aircraftControls.row();
+
+		// createLabel("", "Timer").width(100);
+
+		aircraftControls.row();
+
+
+		// adding buttons to bottom
+
+		createButton("menu", "Menu", bottomButtons).width(100);
+		createButton("pause", "Pause", bottomButtons).width(100);
 		/**
 		 * createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
 		 * createLabel("aircraftCoordsText", "0").width(100);
@@ -80,10 +128,10 @@ public final class SidebarController extends ChangeListener implements
 		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null)
 			return;
 
-		labels.get("aircraftText").setText(selectedAircraft.toString());
-		labels.get("aircraftCoordsText").setText(
-				Float.toString(Math.round(selectedAircraft.getX())) + " "
-						+ Float.toString(Math.round(selectedAircraft.getY())));
+		// labels.get("aircraftText").setText(selectedAircraft.toString());
+		// labels.get("aircraftCoordsText").setText(
+		// Float.toString(Math.round(selectedAircraft.getX())) + " "
+		// + Float.toString(Math.round(selectedAircraft.getY())));
 	}
 
 	/**
@@ -117,6 +165,22 @@ public final class SidebarController extends ChangeListener implements
 	}
 
 	/**
+	 * Convinience method to create buttons and add them to the sidebar
+	 * 
+	 * @param name
+	 * @param text
+	 * @return
+	 */
+	private Cell<?> createButton(String name, String text, Table parent) {
+		TextButton button = new TextButton(text, Art.getSkin());
+		button.addListener(this);
+
+		buttons.put(name, button);
+
+		return parent.add(button);
+	}
+
+	/**
 	 * Convinience method to create labels and add them to the sidebar
 	 * 
 	 * @param name
@@ -131,13 +195,41 @@ public final class SidebarController extends ChangeListener implements
 		return sidebar.add(label);
 	}
 
+	/**
+	 * Convinience method to create labels and add them to the sidebar
+	 * 
+	 * @param name
+	 * @param text
+	 * @return
+	 */
+	private Cell<?> createLabel(String name, String text, Table parent) {
+		Label label = new Label(text, Art.getSkin());
+
+		labels.put(name, label);
+
+		return parent.add(label);
+	}
+
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 
 		if (actor.equals(buttons.get("createWaypoint")))
 			createWaypointClicked();
-		else if (actor.equals(buttons.get("assignWaypoint")))
+
+		if (actor.equals(buttons.get("assignWaypoint")))
 			assignWaypointClicked();
+
+		if (actor.equals(buttons.get("left")))
+			selectedAircraft.turnLeft();
+
+		if (actor.equals(buttons.get("right")))
+			selectedAircraft.turnRight();
+
+		if (actor.equals(buttons.get("up")))
+			selectedAircraft.increaseAltitude();
+
+		if (actor.equals(buttons.get("down")))
+			selectedAircraft.decreaseAltitude();
 
 	}
 

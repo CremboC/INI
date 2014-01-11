@@ -469,6 +469,16 @@ public final class AircraftController extends InputListener implements
 
 		if (keycode == Keys.ESCAPE)
 			screen.setScreen(new EndScreen());
+		
+		if (selectedAircraft != null) {
+
+			if (keycode == Keys.LEFT)
+				selectedAircraft.turnLeft();
+
+			if (keycode == Keys.RIGHT)
+				selectedAircraft.turnRight();
+
+		}
 
 		return false;
 	}
