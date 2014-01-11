@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
  * Loads all the requires art (textures), essentially pre-loading all the
  * required texture for later use
  * 
- * @author Crembo
+ * @author Crembo, Miguel
  * 
  */
 public class Art {
@@ -43,7 +43,7 @@ public class Art {
 	public static void load() {
 		// loads the whole sprite which consists most of the game's textures
 		Texture combined = loadTexture("data/combinedgraphics.png");
-		combined.setFilter(TextureFilter.MipMapLinearNearest,
+		combined.setFilter(TextureFilter.MipMapLinearLinear,
 				TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
@@ -65,9 +65,11 @@ public class Art {
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-		
+
 		// Add the font to the skin; TODO: use a different one?
 		BitmapFont font = new BitmapFont();
+
+		font.setScale(0.89f);
 		skin.add("default", font);
 
 		// Configure a TextButtonStyle and name it "default". Skin resources are
