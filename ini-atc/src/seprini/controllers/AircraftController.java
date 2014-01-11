@@ -26,27 +26,20 @@ public final class AircraftController extends InputListener implements
 		Controller {
 
 	Random rand = new Random();
-
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
-
 	private final ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
 	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
-
-	private final int maxAircraft = 5;
-
+	private int maxAircraft;
+	private int timeBetweenGenerations;
 	private float time;
 	private float lastGenerated;
-
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
-
 	private final GameDifficulty difficulty;
-
 	private final Airspace airspace;
-
 	private SidebarController sidebar;
 
 	public AircraftController(GameDifficulty diff, Airspace airspace,
@@ -55,6 +48,20 @@ public final class AircraftController extends InputListener implements
 		this.airspace = airspace;
 
 		this.sidebar = new SidebarController(sidebar, this);
+
+		switch (difficulty) {
+		// insert code here to initialise variables (eg max no of aircraft) to
+		// wanted value for that difficulty level.
+		case EASY:
+			maxAircraft = 2;
+			timeBetweenGenerations = 5;
+		case MEDIUM:
+			maxAircraft = 2;
+			timeBetweenGenerations = 5;
+		case HARD:
+			maxAircraft = 10;
+			timeBetweenGenerations = 2;
+		}
 	}
 
 	public void init() {
@@ -101,7 +108,7 @@ public final class AircraftController extends InputListener implements
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
 				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(0.4f)
-				.setRadius(0).setSeparationRadius(0)
+				.setRadius(10).setSeparationRadius(0)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(1, 1));
 
@@ -120,9 +127,29 @@ public final class AircraftController extends InputListener implements
 
 		time += Gdx.graphics.getDeltaTime();
 
-		// removes aircraft which are no longer active
+		// Updates aircraft in turn
+		// Removes aircraft which are no longer active from aircraftList.
+		// Manages collision detection.
 		for (int i = 0; i < aircraftList.size(); i++) {
+			// Update aircraft.
 			aircraftList.get(i).act();
+			// Collision Detection.
+			for (int j = 0; j < aircraftList.size(); j++) {
+				// Quite simply checks if distance between the centres of both
+				// the aircraft <= the radius of aircraft i + radius of aircraft
+				// j
+				if (!aircraftList.get(i).equals(aircraftList.get(j))
+						&& aircraftList.get(i).getCoords()
+								.dst(aircraftList.get(j).getCoords()) < aircraftList
+								.get(i).getRadius()
+								+ aircraftList.get(j).getRadius()) {
+					// End the game
+					System.out.println("collision at:");
+				}
+				// Checking for breach of separation rules should be done in
+				// here too.
+			}
+			// Remove inactive aircraft.
 			if (!aircraftList.get(i).isActive()) {
 				removeAircraft(i);
 			}
@@ -130,12 +157,12 @@ public final class AircraftController extends InputListener implements
 
 		final Aircraft generatedAircraft = generateAircraft();
 
-		// if the newly generated aircraft is not null (as in, it indeed
-		// generated one), add it as an actor to the stage
+		// if the newly generated aircraft is not null (ie checking one was
+		// generated), add it as an actor to the stage
 		if (generatedAircraft != null) {
 
-			// makes the aircraft clickable, once clicked, it is set as the
-			// selected aircraft
+			// makes the aircraft clickable. Once clicked it is set as the
+			// selected aircraft.
 			generatedAircraft.addListener(new ClickListener() {
 
 				@Override
@@ -162,17 +189,17 @@ public final class AircraftController extends InputListener implements
 	private Aircraft generateAircraft() {
 		if (aircraftList.size() == maxAircraft)
 			return null;
-		
+
 		// difference between aircraft generated - 5 seconds, needs to be
 		// dependable on difficulty
-		if (time - lastGenerated < 5)
+		if (time - lastGenerated < timeBetweenGenerations)
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
 				generateFlightPlan());
 
 		aircraftList.add(newAircraft);
-		
+
 		lastGenerated = time;
 
 		return newAircraft;
