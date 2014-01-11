@@ -45,6 +45,8 @@ public final class AircraftController extends InputListener implements
 	private SidebarController sidebar;
 	private GameScreen screen;
 
+	private int aircraftId = 0;
+
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar, GameScreen screen) {
 		this.difficulty = diff;
@@ -106,11 +108,6 @@ public final class AircraftController extends InputListener implements
 		createWaypoint(200, 600, true);
 		createWaypoint(800, 250, true);
 		createWaypoint(700, 500, true);
-
-		// add exitpoint to waypoint list, FIXME
-		// permanentWaypointList.add(f);
-		// permanentWaypointList.add(fi);
-		// permanentWaypointList.add(fin);
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
@@ -227,7 +224,7 @@ public final class AircraftController extends InputListener implements
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
-				generateFlightPlan());
+				generateFlightPlan(), aircraftId++);
 
 		aircraftList.add(newAircraft);
 

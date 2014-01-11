@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public final class Aircraft extends Entity {
 
+	private int id;
+
 	private int altitude;
 	protected Vector2 velocity = new Vector2(0, 0);
 
@@ -46,10 +48,13 @@ public final class Aircraft extends Entity {
 		return separationRadius;
 	}
 
-	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
+	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
+			int id) {
 
 		// allows drawing debug shape of this entity
 		debugShape = true;
+
+		this.id = id;
 
 		// initialise all of the aircraft values according to the passed
 		// aircraft type
@@ -84,6 +89,9 @@ public final class Aircraft extends Entity {
 		// set rotation & velocity angle to fit next waypoint
 		float angleToWaypoint = Math.round(angleToWaypoint());
 
+		System.out.println("Generated aircraft id " + id);
+		System.out.println("Entry point: " + coords);
+		System.out.println("Angle to first waypoint: " + angleToWaypoint);
 		System.out.println(waypoints);
 
 		this.setRotation(angleToWaypoint);
@@ -299,7 +307,7 @@ public final class Aircraft extends Entity {
 		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
 				|| getY() > Screen.HEIGHT + 105) {
 			this.isActive = false;
-			System.out.println("Out of bounds");
+			System.out.println("Aircraft id " + id + ": Out of bounds");
 		}
 
 		if (waypoints.size() == 0) {
