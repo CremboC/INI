@@ -138,6 +138,7 @@ public final class AircraftController extends InputListener implements
 		for (int i = 0; i < aircraftList.size(); i++) {
 			// Update aircraft.
 			(planeI = aircraftList.get(i)).act();
+			planeI.isBreaching(false);
 
 			// Collision Detection + Separation breach detection.
 			for (int j = 0; j < aircraftList.size(); j++) {
@@ -154,11 +155,11 @@ public final class AircraftController extends InputListener implements
 						&& planeI.getCentreCoords().dst(
 								planeJ.getCentreCoords()) < planeI.getRadius()
 								+ planeJ.getRadius()) {
-					collisionHasOccured();
+					collisionHasOccured(planeI, planeJ);
 				}
 
 				// Checking for breach of separation.
-				if (!planeI.equals(aircraftList.get(j))
+				if (!planeI.equals(planeJ)
 						// Check difference in altitude.
 						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < planeI
 								.getSeparationRadius()
@@ -166,7 +167,10 @@ public final class AircraftController extends InputListener implements
 						&& planeI.getCentreCoords().dst(
 								planeJ.getCentreCoords()) < planeI
 								.getSeparationRadius()) {
-					separationRulesBreached();
+					planeI.isBreaching(true);
+					planeJ.isBreaching(true);
+
+					separationRulesBreached(planeI, planeJ);
 				}
 			}
 
@@ -202,12 +206,12 @@ public final class AircraftController extends InputListener implements
 
 	}
 
-	private void collisionHasOccured() {
+	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
 		// TODO remove debug code, put in game ending code
 	}
 
-	private void separationRulesBreached() {
+	private void separationRulesBreached(Aircraft a, Aircraft b) {
 		// for scoring mechanisms, if applicable
 		// TODO remove debug code.
 	}

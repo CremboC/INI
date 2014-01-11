@@ -28,6 +28,8 @@ public abstract class Entity extends Actor {
 				/ 2, getOriginX(), getOriginY(), getWidth(), getHeight(),
 				getScaleX(), getScaleX(), getRotation());
 
+		additionalDraw(batch);
+
 		if (Config.DEBUG) {
 			drawDebug(batch);
 		}
@@ -50,6 +52,10 @@ public abstract class Entity extends Actor {
 		Screen.shapeDebugger.end();
 
 		batch.begin();
+	}
+
+	protected void additionalDraw(SpriteBatch batch) {
+
 	}
 
 	public TextureRegion getRegion() {

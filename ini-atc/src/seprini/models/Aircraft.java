@@ -7,6 +7,8 @@ import seprini.data.Config;
 import seprini.models.types.AircraftType;
 import seprini.screens.Screen;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -27,7 +29,7 @@ public final class Aircraft extends Entity {
 	private final float maxSpeed;
 
 	private int sepRulesBreachCounter = 0;
-	private boolean isBreaching;
+	private boolean breaching;
 	private int lastTimeTurned;
 
 	private boolean isActive = true;
@@ -87,6 +89,25 @@ public final class Aircraft extends Entity {
 		System.out.println(waypoints);
 
 		this.setRotation(angleToWaypoint);
+	}
+
+	/**
+	 * Additional drawing for if the aircraft is breaching
+	 * 
+	 * @param batch
+	 */
+	protected void additionalDraw(SpriteBatch batch) {
+		if (!breaching)
+			return;
+
+		batch.end();
+
+		Screen.shapeDebugger.begin(ShapeType.Line);
+		Screen.shapeDebugger.setColor(1, 0, 0, 0);
+		Screen.shapeDebugger.circle(getX(), getY(), getWidth() / 2 + 5);
+		Screen.shapeDebugger.end();
+
+		batch.begin();
 	}
 
 	/**
@@ -299,7 +320,7 @@ public final class Aircraft extends Entity {
 	}
 	
 	public void isBreaching(boolean is) {
-		isBreaching = is;
+		this.breaching = is;
 	}
 
 	/**
