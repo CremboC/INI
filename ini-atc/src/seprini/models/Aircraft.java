@@ -43,6 +43,9 @@ public final class Aircraft extends Entity {
 	// whether the aircraft is selected by the player
 	private boolean selected;
 
+	private Vector2 toNextWaypoint;
+	private Waypoint currentWaypoint;
+
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
 			int id) {
 
@@ -73,7 +76,7 @@ public final class Aircraft extends Entity {
 		waypoints.remove(0);
 
 		// set origin to center of the aircraft, makes rotation more intuitive
-		this.setOrigin(getWidth() / 2, getHeight() / 2);
+		this.setOrigin(size.x / 2, size.y / 2);
 
 		this.setScale(0.5f);
 
@@ -82,14 +85,15 @@ public final class Aircraft extends Entity {
 				getWidth() * 2, getHeight() * 2);
 
 		// set rotation & velocity angle to fit next waypoint
-		float angleToWaypoint = Math.round(angleToWaypoint());
+		float relativeAngle = relativeAngleToWaypoint();
 
-		Debug.msg("Generated aircraft id " + id + "\nEntry point: " + coords
-				+ "\nAngle to first waypoint: " + angleToWaypoint
-				+ "\nWaypoints: "
-				+ waypoints);
+		this.velocity.setAngle(relativeAngle);
+		this.setRotation(relativeAngle);
 
-		this.setRotation(angleToWaypoint);
+		Debug.msg("||\nGenerated aircraft id " + id + "\nEntry point: "
+				+ coords + "\nRelative angle to first waypoint: "
+				+ relativeAngle + "\nVelocity" + velocity + "\nWaypoints: "
+				+ waypoints + "\n||");
 	}
 
 	/**
@@ -118,18 +122,13 @@ public final class Aircraft extends Entity {
 		// Vector to next waypoint
 		Vector2 nextWaypoint = vectorToWaypoint();
 
-		// degrees to nextWaypoint relative to aircraft
-		float degrees = (float) ((Math.atan2(getX() - nextWaypoint.x,
-				-(getY() - nextWaypoint.y)) * 180.0f / Math.PI) + 90.0f);
-
-		// round it to 2 points after decimal so it's not rotating forever
-		float rounded = Math.round(degrees * 100.0f) / 100.0f;
+		float relativeAngle = relativeAngleToWaypoint(nextWaypoint);
 
 		// smoothly rotate aircraft sprite
 		// if current rotation is not the one needed
-		if (getRotation() != rounded) {
+		if (getRotation() != relativeAngle) {
 			// set the startAngle to remember it
-			startAngle = rounded;
+			startAngle = relativeAngle;
 
 			// making sure we rotate to the correct side, otherwise may results
 			// in a helicopter with no tail rotor
@@ -140,12 +139,9 @@ public final class Aircraft extends Entity {
 			}
 		}
 
-		// Calculating vector to waypoint to check how close we are to it
-		Vector2 vectorToWaypoint = nextWaypoint.sub(coords);
-
 		// checking whether aircraft is at the next waypoint (close enough =
-		// 10px)
-		if (vectorToWaypoint.len() < 15) {
+		// 15px)
+		if (nextWaypoint.sub(coords).len() < 15) {
 			waypoints.remove(0);
 		}
 
@@ -184,54 +180,30 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Calculate angle to the next waypoint
+	 * Calculate relative angle of the aircraft to the next waypoint
 	 * 
-	 * @return
+	 * @return relative angle in degrees, rounded to 2 points after decimal
 	 */
-	private float angleToWaypoint() {
+	private float relativeAngleToWaypoint() {
 		Vector2 nextWaypoint = vectorToWaypoint();
 
-		return angleToWaypoint(nextWaypoint);
+		return relativeAngleToWaypoint(nextWaypoint);
 	}
 
 	/**
-	 * Calculate angle to the next waypoint, use this if you already have the 3d
-	 * vector to the next waypoint
+	 * Calculate relative angle of the aircraft to a waypoint
 	 * 
-	 * @return
+	 * @param waypoint
+	 * @return angle in degrees, rounded to 2 points after decimal
 	 */
-	private static float angleToWaypoint(Vector2 nextWaypoint) {
-		// setting angle using the waypoint's size so it heads towards
-		// the centre of the waypoint
-		nextWaypoint.x += (Config.WAYPOINT_SIZE.x / 2);
-		nextWaypoint.y += (Config.WAYPOINT_SIZE.x / 2);
+	private float relativeAngleToWaypoint(Vector2 waypoint) {
 
-		return nextWaypoint.angle();
-	}
+		// degrees to nextWaypoint relative to aircraft
+		float degrees = (float) ((Math.atan2(getX() - waypoint.x,
+				-(getY() - waypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
-	/**
-	 * Checks whether the aircraft is within 10 pixels of the next waypoint
-	 * 
-	 * @param vectorToWaypoint
-	 * @return whether aicraft is at the next waypoint
-	 */
-	private boolean isAtNextWaypoint(Vector3 vectorToWaypoint) {
-		if (vectorToWaypoint.len() < 10) {
-			isActive();
-			waypoints.remove(0);
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public void checkSpeed() {
-		this.velocity.clamp(0, this.maxSpeed);
-	}
-
-	public void updateCoords() {
-		coords.add(velocity);
+		// round it to 2 points after decimal so it's not rotating forever
+		return Math.round(degrees * 100.0f) / 100.0f;
 	}
 
 	/**
@@ -339,7 +311,9 @@ public final class Aircraft extends Entity {
 		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
 				|| getY() > Screen.HEIGHT + 105) {
 			this.isActive = false;
-			Debug.msg("Aircraft id " + id + ": Out of bounds");
+
+			Debug.msg("Aircraft id " + id
+					+ ": Out of bounds, last coordinates: " + coords);
 		}
 
 		if (waypoints.size() == 0) {

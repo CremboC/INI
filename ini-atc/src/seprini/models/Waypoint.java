@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Waypoint extends Entity {
 
-	private boolean deletable;
+	private final boolean deletable;
 
 	public Waypoint(Vector2 position, boolean deletable) {
 		coords = position;
