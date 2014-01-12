@@ -5,7 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 public final class Config {
 
 	// Used for debugging all around
-	public final static boolean DEBUG = true;
+	public final static boolean DEBUG_UI = false;
+	public final static boolean DEBUG_TEXT = true;
 
 	// General, graphics related settings
 	public final static String GAME_TITLE = "Controller Concern";

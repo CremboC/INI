@@ -4,31 +4,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import seprini.data.Config;
+import seprini.data.Debug;
 import seprini.models.types.AircraftType;
 import seprini.screens.Screen;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public final class Aircraft extends Entity {
 
+	private int id;
+
 	private int altitude;
-	protected Vector2 velocity = new Vector2(0, 0);
+	private Vector2 velocity = new Vector2(0, 0);
 
-	protected float radius;
-	protected float separationRadius;
+	private final float radius;
+	private final float separationRadius;
 
-	protected ArrayList<Waypoint> waypoints;
+	private ArrayList<Waypoint> waypoints;
 
-	protected float maxTurningRate;
-	protected float maxClimbRate;
-	protected float maxSpeed;
+	private final float maxTurningRate;
+	private final float maxClimbRate;
+	private final float maxSpeed;
 
-	protected int sepRulesBreachCounter = 0;
-	protected int lastTimeTurned;
+	private int sepRulesBreachCounter = 0;
+	private boolean breaching;
+	private int lastTimeTurned;
 
-	protected boolean isActive = true;
-	protected boolean turningFlag; // May not be used
+	private boolean isActive = true;
+	private boolean turningFlag; // May not be used
 
 	// used for smooth rotation, to remember the original angle to the next
 	// waypoint
@@ -37,19 +43,13 @@ public final class Aircraft extends Entity {
 	// whether the aircraft is selected by the player
 	private boolean selected;
 
-	public Vector2 getCentreCoords() {
-		return new Vector2(this.getX() + this.getOriginX(), this.getY()
-				+ this.getOriginY());
-	}
-
-	public float getSeparationRadius() {
-		return separationRadius;
-	}
-
-	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan) {
+	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
+			int id) {
 
 		// allows drawing debug shape of this entity
 		debugShape = true;
+
+		this.id = id;
 
 		// initialise all of the aircraft values according to the passed
 		// aircraft type
@@ -84,9 +84,31 @@ public final class Aircraft extends Entity {
 		// set rotation & velocity angle to fit next waypoint
 		float angleToWaypoint = Math.round(angleToWaypoint());
 
-		System.out.println(waypoints);
+		Debug.msg("Generated aircraft id " + id + "\nEntry point: " + coords
+				+ "\nAngle to first waypoint: " + angleToWaypoint
+				+ "\nWaypoints: "
+				+ waypoints);
 
 		this.setRotation(angleToWaypoint);
+	}
+
+	/**
+	 * Additional drawing for if the aircraft is breaching
+	 * 
+	 * @param batch
+	 */
+	protected void additionalDraw(SpriteBatch batch) {
+		if (!breaching)
+			return;
+
+		batch.end();
+
+		Screen.shapeDebugger.begin(ShapeType.Line);
+		Screen.shapeDebugger.setColor(1, 0, 0, 0);
+		Screen.shapeDebugger.circle(getX(), getY(), getWidth() / 2 + 5);
+		Screen.shapeDebugger.end();
+
+		batch.begin();
 	}
 
 	/**
@@ -209,6 +231,9 @@ public final class Aircraft extends Entity {
 	 * 2000ms
 	 */
 	public void turnRight() {
+
+		Debug.msg("Aircraft id " + id + ": turn right");
+
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
 		if (delay())
@@ -221,6 +246,8 @@ public final class Aircraft extends Entity {
 	 * 2000ms
 	 */
 	public void turnLeft() {
+		Debug.msg("Aircraft id " + id + ": turn left");
+
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
 		if (delay())
@@ -272,6 +299,19 @@ public final class Aircraft extends Entity {
 		return radius;
 	}
 
+	public Vector2 getCentreCoords() {
+		return new Vector2(this.getX() + this.getOriginX(), this.getY()
+				+ this.getOriginY());
+	}
+
+	public float getSeparationRadius() {
+		return separationRadius;
+	}
+	
+	public void isBreaching(boolean is) {
+		this.breaching = is;
+	}
+
 	/**
 	 * check if its only got the exit point left to go to.
 	 * 
@@ -282,13 +322,14 @@ public final class Aircraft extends Entity {
 		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
 				|| getY() > Screen.HEIGHT + 105) {
 			this.isActive = false;
-			System.out.println("Out of bounds");
+			Debug.msg("Aircraft id " + id + ": Out of bounds");
 		}
 
 		if (waypoints.size() == 0) {
 			this.isActive = false;
-			System.out.println("Reached exit WP");
+			Debug.msg("Aircraft id " + id + ": Reached exit WP");
 		}
+
 		return isActive;
 	}
 

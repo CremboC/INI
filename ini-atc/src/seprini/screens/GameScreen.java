@@ -36,7 +36,7 @@ public class GameScreen extends Screen {
 		// required info
 		Table sidebar = new Table();
 
-		if (Config.DEBUG)
+		if (Config.DEBUG_UI)
 			sidebar.debug();
 
 		// create and add the Airspace group, contains aircraft and waypoints
@@ -78,7 +78,7 @@ public class GameScreen extends Screen {
 	public void render() {
 		root.draw();
 
-		if (Config.DEBUG) {
+		if (Config.DEBUG_UI) {
 			Table.drawDebug(root);
 			drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
 					Color.BLACK, root.getSpriteBatch());

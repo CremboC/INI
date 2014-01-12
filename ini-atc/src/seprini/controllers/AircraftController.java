@@ -45,6 +45,8 @@ public final class AircraftController extends InputListener implements
 	private SidebarController sidebar;
 	private GameScreen screen;
 
+	private int aircraftId = 0;
+
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar, GameScreen screen) {
 		this.difficulty = diff;
@@ -107,11 +109,6 @@ public final class AircraftController extends InputListener implements
 		createWaypoint(800, 250, true);
 		createWaypoint(700, 500, true);
 
-		// add exitpoint to waypoint list, FIXME
-		// permanentWaypointList.add(f);
-		// permanentWaypointList.add(fi);
-		// permanentWaypointList.add(fin);
-
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
 				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(0.4f)
@@ -131,6 +128,8 @@ public final class AircraftController extends InputListener implements
 	 */
 	public void update() {
 
+		Aircraft planeI, planeJ;
+
 		time += Gdx.graphics.getDeltaTime();
 
 		// Updates aircraft in turn
@@ -138,38 +137,45 @@ public final class AircraftController extends InputListener implements
 		// Manages collision detection.
 		for (int i = 0; i < aircraftList.size(); i++) {
 			// Update aircraft.
-			aircraftList.get(i).act();
+			(planeI = aircraftList.get(i)).act();
+			planeI.isBreaching(false);
+
 			// Collision Detection + Separation breach detection.
 			for (int j = 0; j < aircraftList.size(); j++) {
+
 				// Quite simply checks if distance between the centres of both
 				// the aircraft <= the radius of aircraft i + radius of aircraft
 				// j
-				if (!aircraftList.get(i).equals(aircraftList.get(j))
+				planeJ = aircraftList.get(j);
+
+				if (!planeI.equals(planeJ)
 				// Check difference in altitude.
-						&& Math.abs(aircraftList.get(i).getHeight()
-								- aircraftList.get(j).getHeight()) < 100
+						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < 100
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCentreCoords()
-								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
-								.get(i).getRadius()
-								+ aircraftList.get(j).getRadius()) {
-					collisionHasOccured();
+						&& planeI.getCentreCoords().dst(
+								planeJ.getCentreCoords()) < planeI.getRadius()
+								+ planeJ.getRadius()) {
+					collisionHasOccured(planeI, planeJ);
 				}
+
 				// Checking for breach of separation.
-				if (!aircraftList.get(i).equals(aircraftList.get(j))
+				if (!planeI.equals(planeJ)
 						// Check difference in altitude.
-						&& Math.abs(aircraftList.get(i).getHeight()
-								- aircraftList.get(j).getHeight()) < aircraftList
-								.get(i).getSeparationRadius()
+						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < planeI
+								.getSeparationRadius()
 						// Check difference in horizontal 2d plane.
-						&& aircraftList.get(i).getCentreCoords()
-								.dst(aircraftList.get(j).getCentreCoords()) < aircraftList
-								.get(i).getSeparationRadius()) {
-					separationRulesBreached();
+						&& planeI.getCentreCoords().dst(
+								planeJ.getCentreCoords()) < planeI
+								.getSeparationRadius()) {
+					planeI.isBreaching(true);
+					planeJ.isBreaching(true);
+
+					separationRulesBreached(planeI, planeJ);
 				}
 			}
+
 			// Remove inactive aircraft.
-			if (!aircraftList.get(i).isActive()) {
+			if (!planeI.isActive()) {
 				removeAircraft(i);
 			}
 
@@ -200,12 +206,13 @@ public final class AircraftController extends InputListener implements
 
 	}
 
-	private void collisionHasOccured() {
+	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
 		// TODO remove debug code, put in game ending code
+		screen.setScreen(new EndScreen());
 	}
 
-	private void separationRulesBreached() {
+	private void separationRulesBreached(Aircraft a, Aircraft b) {
 		// for scoring mechanisms, if applicable
 		// TODO remove debug code.
 	}
@@ -227,7 +234,7 @@ public final class AircraftController extends InputListener implements
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
-				generateFlightPlan());
+				generateFlightPlan(), aircraftId++);
 
 		aircraftList.add(newAircraft);
 
