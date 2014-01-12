@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.esotericsoftware.tablelayout.Cell;
 
 public final class SidebarController extends ChangeListener implements
-			Controller {
+		Controller {
 
 	private final Table sidebar;
 
@@ -44,7 +44,6 @@ public final class SidebarController extends ChangeListener implements
 	 */
 
 	public void init() {
-
 
 		// wrapper for aicraft controls
 		Table aircraftControls = new Table();
@@ -111,12 +110,12 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.row();
 
-
 		// adding buttons to bottom
 
 		createButton("menu", "Menu", bottomButtons).width(100);
 		createButton("pause", "Pause", bottomButtons).width(100);
 		/**
+		 * Currently not needed, not in specifications
 		 * createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
 		 * createLabel("aircraftCoordsText", "0").width(100);
 		 */
