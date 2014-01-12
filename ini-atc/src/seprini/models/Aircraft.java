@@ -202,6 +202,7 @@ public final class Aircraft extends Entity {
 		float degrees = (float) ((Math.atan2(getX() - waypoint.x,
 				-(getY() - waypoint.y)) * 180.0f / Math.PI) + 90.0f);
 
+
 		// round it to 2 points after decimal so it's not rotating forever
 		return Math.round(degrees * 100.0f) / 100.0f;
 	}
