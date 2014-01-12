@@ -246,83 +246,38 @@ public final class AircraftController extends InputListener implements
 	private ArrayList<Waypoint> generateFlightPlan() {
 
 		ArrayList<Waypoint> flightPlan = new ArrayList<Waypoint>();
-
-		flightPlan.add(setStartpoint());
-		flightPlan.add(setEndpoint());
-
-		Waypoint currentWaypoint = flightPlan.get(0);
-		Waypoint lastWaypoint = flightPlan.get(flightPlan.size() - 1);
-
-		return recurseFlightPlanGen(flightPlan, currentWaypoint, lastWaypoint);
+		Waypoint entryWaypoint = setStartpoint();
+		Waypoint lastWaypoint = setEndpoint(entryWaypoint);
+		flightPlan.add(entryWaypoint);
+		flightPlan.add(lastWaypoint);
+		return flightPlan;
+		// return FlightPlanGenerator(flightPlan, currentWaypoint,
+		// lastWaypoint);
 	}
 
-	/**
-	 * Recursive function to generate sensible flightplan. <br>
-	 * 1. Generates flightplan between currentWaypoint and exitpoint. Initially,
-	 * currentWaypoint will be the entryWaypoint. <br>
-	 * 2. Calculates angle between currentWaypoint and exitWaypoint, then
-	 * chooses a waypoint within 0.25 radians of that angle. <br>
-	 * 3. Adds that waypoint to the flightplan, between existing waypoints and
-	 * exitWaypoint. <br>
-	 * 4. Recurse, using chosen waypoint as currentWaypoint.
-	 * 
-	 * 
-	 * @param flightPlan
-	 * @param currentWaypoint
-	 * @param lastWaypoint
-	 * @return ArrayList<Waypoint>
-	 */
-	private ArrayList<Waypoint> recurseFlightPlanGen(
+	private ArrayList<Waypoint> FlightPlanGenerator(
 			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint,
 			Waypoint lastWaypoint) {
 
-		// Base case
 		if (currentWaypoint.equals(lastWaypoint)) {
-
 			return flightPlan;
-
-		} else {
-			// I get the feeling the vectors below should be normalised first; I
-			// suppose we'll find out the hard way.
-
-			Vector2 vectorFromCurrentToLast = lastWaypoint.getCoords().cpy()
-					.sub(currentWaypoint.getCoords());
-
-			Waypoint chosenWaypoint = null;
-
-			ArrayList<Waypoint> tempList = permanentWaypointList;
-			tempList.addAll(userWaypointList);
-
-			for (Waypoint waypoint : tempList) {
-
-				Vector2 vectorFromCurrentToPotential = waypoint.getCoords()
-						.cpy().sub(currentWaypoint.getCoords());
-
-				// The following chooses the first waypoint that is found to be
-				// within the 'cone' of selectable waypoints. Currently this
-				// cone is set to 0.25 radians on either side, so a total size
-				// of 0.5 (aka 90 degrees).
-
-				if (!waypoint.equals(flightPlan.get(flightPlan.size() - 2))
-						&& vectorFromCurrentToLast.angle()
-								- vectorFromCurrentToPotential.angle() < 40
-						&& vectorFromCurrentToPotential.angle()
-								- vectorFromCurrentToLast.angle() < 40) {
-
-					flightPlan.add(flightPlan.size() - 1, waypoint);
-					chosenWaypoint = waypoint;
-
-					break;
-				}
-			}
-
-			if (chosenWaypoint == null) {
-				chosenWaypoint = lastWaypoint;
-			}
-
-			return recurseFlightPlanGen(flightPlan, chosenWaypoint,
-					lastWaypoint);
 		}
+
+		else {
+
+			Vector2 vectorFromCurrentToLast = new Vector2(lastWaypoint
+					.getCoords().sub(currentWaypoint.getCoords()));
+
+			ArrayList<Waypoint> waypointSelectionList = permanentWaypointList;
+			waypointSelectionList.addAll(exitList);
+
+			for (Waypoint waypoint : waypointSelectionList) {
+
+			}
+
+		}
+
+		return flightPlan;
 	}
 
 	/**
@@ -339,8 +294,13 @@ public final class AircraftController extends InputListener implements
 	 * 
 	 * @return Exitpoint
 	 */
-	private Exitpoint setEndpoint() {
-		return exitList.get(rand.nextInt(exitList.size()));
+	private Exitpoint setEndpoint(Waypoint entryWaypoint) {
+		Exitpoint chosenExitPoint = exitList.get(rand.nextInt(exitList.size()));
+		if (chosenExitPoint.getCoords().dst(entryWaypoint.getCoords()) < 500) {
+			chosenExitPoint = setEndpoint(entryWaypoint);
+		}
+
+		return chosenExitPoint;
 	}
 
 	/**
@@ -474,7 +434,7 @@ public final class AircraftController extends InputListener implements
 
 		if (keycode == Keys.ESCAPE)
 			screen.setScreen(new EndScreen());
-		
+
 		if (selectedAircraft != null) {
 
 			if (keycode == Keys.LEFT)
