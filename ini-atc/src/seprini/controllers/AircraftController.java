@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import seprini.data.Art;
+import seprini.data.Config;
+import seprini.data.Debug;
 import seprini.data.GameDifficulty;
 import seprini.data.GameState;
 import seprini.models.Aircraft;
@@ -28,19 +30,28 @@ public final class AircraftController extends InputListener implements
 		Controller {
 
 	Random rand = new Random();
+
+	// aircraft and aircraft type lists
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
+
+	// waypoint lists
 	private final ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
 	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
 	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
-	private int maxAircraft;
-	private int timeBetweenGenerations;
+
+	private final int maxAircraft;
+	private final int timeBetweenGenerations;
 	private float time;
 	private float lastGenerated;
+
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
+
 	private final GameDifficulty difficulty;
+
+	// ui related
 	private final Airspace airspace;
 	private SidebarController sidebar;
 	private GameScreen screen;
@@ -55,21 +66,25 @@ public final class AircraftController extends InputListener implements
 
 		this.sidebar = new SidebarController(sidebar, this, screen);
 
-		switch (difficulty) {
 		// insert code here to initialise variables (eg max no of aircraft) to
 		// wanted value for that difficulty level.
-		case EASY:
-			maxAircraft = 1;
-			timeBetweenGenerations = 1;
-			break;
-		case MEDIUM:
-			maxAircraft = 2;
-			timeBetweenGenerations = 5;
-			break;
-		case HARD:
-			maxAircraft = 10;
-			timeBetweenGenerations = 2;
-			break;
+		switch (difficulty) {
+			case EASY :
+				maxAircraft = 1;
+				timeBetweenGenerations = 1;
+				break;
+			case MEDIUM :
+				maxAircraft = 2;
+				timeBetweenGenerations = 5;
+				break;
+			case HARD :
+				maxAircraft = 10;
+				timeBetweenGenerations = 2;
+				break;
+			default :
+				maxAircraft = 1;
+				timeBetweenGenerations = 1;
+				break;
 		}
 	}
 
@@ -341,7 +356,14 @@ public final class AircraftController extends InputListener implements
 	 * @param y
 	 * @param permanent
 	 */
-	private void createWaypoint(float x, float y, boolean permanent) {
+	private boolean createWaypoint(float x, float y, boolean permanent) {
+		
+		Debug.msg("Creating waypoint at: " + x + ":" + y);
+
+		if (userWaypointList.size() == Config.USER_WAYPOINT_LIMIT && !permanent)
+			return false;
+
+		Debug.msg("Waypoint at: " + x + ":" + y + " created");
 
 		final Waypoint waypoint = new Waypoint(x, y, permanent);
 
@@ -356,7 +378,7 @@ public final class AircraftController extends InputListener implements
 
 		// if it's permanent it doesn't need a listener, return;
 		if (permanent)
-			return;
+			return true;
 
 		waypoint.addListener(new ClickListener() {
 
@@ -380,7 +402,7 @@ public final class AircraftController extends InputListener implements
 			}
 		});
 
-		return;
+		return true;
 	}
 
 	/**
