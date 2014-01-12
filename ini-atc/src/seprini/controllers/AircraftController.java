@@ -209,6 +209,7 @@ public final class AircraftController extends InputListener implements
 	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
 		// TODO remove debug code, put in game ending code
+		screen.setScreen(new EndScreen());
 	}
 
 	private void separationRulesBreached(Aircraft a, Aircraft b) {
