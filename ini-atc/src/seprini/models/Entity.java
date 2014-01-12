@@ -30,7 +30,7 @@ public abstract class Entity extends Actor {
 
 		additionalDraw(batch);
 
-		if (Config.DEBUG) {
+		if (Config.DEBUG_UI) {
 			drawDebug(batch);
 		}
 	}

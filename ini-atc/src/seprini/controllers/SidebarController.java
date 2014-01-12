@@ -45,7 +45,6 @@ public final class SidebarController extends ChangeListener implements
 
 	public void init() {
 
-
 		// wrapper for aicraft controls
 		Table aircraftControls = new Table();
 
@@ -53,7 +52,7 @@ public final class SidebarController extends ChangeListener implements
 		// aircraftControls.setY(650);
 		aircraftControls.setFillParent(true);
 
-		if (Config.DEBUG)
+		if (Config.DEBUG_UI)
 			aircraftControls.debug();
 
 		aircraftControls.top();
@@ -64,7 +63,7 @@ public final class SidebarController extends ChangeListener implements
 
 		bottomButtons.setFillParent(true);
 
-		if (Config.DEBUG)
+		if (Config.DEBUG_UI)
 			aircraftControls.debug();
 
 		bottomButtons.bottom();

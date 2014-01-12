@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import seprini.data.Config;
+import seprini.data.Debug;
 import seprini.models.types.AircraftType;
 import seprini.screens.Screen;
 
@@ -83,10 +84,10 @@ public final class Aircraft extends Entity {
 		// set rotation & velocity angle to fit next waypoint
 		float angleToWaypoint = Math.round(angleToWaypoint());
 
-		System.out.println("Generated aircraft id " + id);
-		System.out.println("Entry point: " + coords);
-		System.out.println("Angle to first waypoint: " + angleToWaypoint);
-		System.out.println(waypoints);
+		Debug.msg("Generated aircraft id " + id + "\nEntry point: " + coords
+				+ "\nAngle to first waypoint: " + angleToWaypoint
+				+ "\nWaypoints: "
+				+ waypoints);
 
 		this.setRotation(angleToWaypoint);
 	}
@@ -247,6 +248,9 @@ public final class Aircraft extends Entity {
 	 * 2000ms
 	 */
 	public void turnRight() {
+
+		Debug.msg("Aircraft id " + id + ": turn right");
+
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
 		if (delay())
@@ -259,6 +263,8 @@ public final class Aircraft extends Entity {
 	 * 2000ms
 	 */
 	public void turnLeft() {
+		Debug.msg("Aircraft id " + id + ": turn left");
+
 		Vector3 zAxis = new Vector3();
 		zAxis.set(0, 0, 1);
 		if (delay())
@@ -333,13 +339,14 @@ public final class Aircraft extends Entity {
 		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
 				|| getY() > Screen.HEIGHT + 105) {
 			this.isActive = false;
-			System.out.println("Aircraft id " + id + ": Out of bounds");
+			Debug.msg("Aircraft id " + id + ": Out of bounds");
 		}
 
 		if (waypoints.size() == 0) {
 			this.isActive = false;
-			System.out.println("Aircraft id " + id + ": Reached exit WP");
+			Debug.msg("Aircraft id " + id + ": Reached exit WP");
 		}
+
 		return isActive;
 	}
 
