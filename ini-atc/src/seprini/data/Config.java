@@ -23,4 +23,7 @@ public final class Config {
 	// UI related
 	public final static Vector2 SIDEBAR_SIZE = new Vector2(200, SCREEN_HEIGHT);
 
+	// Game related
+	public final static int USER_WAYPOINT_LIMIT = 10;
+
 }
