@@ -70,8 +70,8 @@ public final class SidebarController extends ChangeListener implements
 		sidebar.addActor(bottomButtons);
 
 		// adding labels to aircraft controls
-		createLabel("", "Speed", aircraftControls).width(100);
-		createLabel("", "Heading", aircraftControls).width(100);
+		createLabel("speed", "Speed", aircraftControls).width(100);
+		createLabel("altitude", "Altitude", aircraftControls).width(100);
 
 		aircraftControls.row().width(100);
 
@@ -81,7 +81,7 @@ public final class SidebarController extends ChangeListener implements
 		createButton("assignWaypoint", "Assign Waypoint", aircraftControls)
 				.width(100);
 
-		aircraftControls.row();
+		aircraftControls.row().spaceTop(50);
 
 		createButton("accelerate", "Accelerate", aircraftControls).width(100);
 		createButton("takeOff", "Take Off", aircraftControls).width(100);
@@ -128,6 +128,12 @@ public final class SidebarController extends ChangeListener implements
 		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null)
 			return;
 
+		// update aircraft altitude text
+		labels.get("altitude").setText("" + selectedAircraft.getAltitude());
+
+		// update aircraft speed text
+		labels.get("speed").setText("" + selectedAircraft.getSpeed());
+
 		// labels.get("aircraftText").setText(selectedAircraft.toString());
 		// labels.get("aircraftCoordsText").setText(
 		// Float.toString(Math.round(selectedAircraft.getX())) + " "
@@ -157,6 +163,7 @@ public final class SidebarController extends ChangeListener implements
 	 */
 	private Cell<?> createButton(String name, String text) {
 		TextButton button = new TextButton(text, Art.getSkin());
+		button.pad(2);
 		button.addListener(this);
 
 		buttons.put(name, button);
@@ -173,6 +180,7 @@ public final class SidebarController extends ChangeListener implements
 	 */
 	private Cell<?> createButton(String name, String text, Table parent) {
 		TextButton button = new TextButton(text, Art.getSkin());
+		button.pad(3);
 		button.addListener(this);
 
 		buttons.put(name, button);
