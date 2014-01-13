@@ -11,7 +11,6 @@ import seprini.screens.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 public final class Aircraft extends Entity {
 
@@ -20,21 +19,19 @@ public final class Aircraft extends Entity {
 	private int altitude;
 	private Vector2 velocity = new Vector2(0, 0);
 
-	private final float radius;
-	private final float separationRadius;
+	private final float radius, separationRadius;
 
 	private ArrayList<Waypoint> waypoints;
 
-	private final float maxTurningRate;
-	private final float maxClimbRate;
-	private final float maxSpeed;
+	private final float maxTurningRate, maxClimbRate, maxSpeed;
 
 	private int sepRulesBreachCounter = 0;
 	private boolean breaching;
 	private int lastTimeTurned;
 
 	private boolean isActive = true;
-	private boolean turningFlag; // May not be used
+	private boolean ignorePath = false; // When user has taken control of the
+										// aircraft
 
 	// used for smooth rotation, to remember the original angle to the next
 	// waypoint
@@ -42,6 +39,8 @@ public final class Aircraft extends Entity {
 
 	// whether the aircraft is selected by the player
 	private boolean selected;
+
+	private boolean turnRight, turnLeft;
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
 			int id) {
@@ -116,39 +115,49 @@ public final class Aircraft extends Entity {
 	 * Update the aircraft rotation & position
 	 */
 	public void act() {
-		// Vector to next waypoint
-		Vector2 nextWaypoint = vectorToWaypoint();
+		if (turnRight)
+			turnRight();
 
-		float relativeAngle = relativeAngleToWaypoint(nextWaypoint);
+		if (turnLeft)
+			turnLeft();
 
-		// smoothly rotate aircraft sprite
-		// if current rotation is not the one needed
-		if (getRotation() != relativeAngle) {
-			// set the startAngle to remember it
-			startAngle = relativeAngle;
+		if (!ignorePath) {
+			// Vector to next waypoint
+			Vector2 nextWaypoint = vectorToWaypoint();
 
-			// making sure we rotate to the correct side, otherwise may results
-			// in a helicopter with no tail rotor
-			if (startAngle < getRotation()) {
-				rotate(-maxTurningRate);
-			} else {
-				rotate(maxTurningRate);
+			float relativeAngle = relativeAngleToWaypoint(nextWaypoint);
+
+			// smoothly rotate aircraft sprite
+			// if current rotation is not the one needed
+			if (getRotation() != relativeAngle) {
+				// set the startAngle to remember it
+				startAngle = relativeAngle;
+
+				// making sure we rotate to the correct side, otherwise may
+				// results
+				// in a helicopter with no tail rotor
+				if (startAngle < getRotation()) {
+					rotate(-maxTurningRate);
+				} else {
+					rotate(maxTurningRate);
+				}
 			}
+
+			// checking whether aircraft is at the next waypoint. Whether it's
+			// close enough is dictated by the WP size in the config.
+
+			if (nextWaypoint.sub(coords).len() < Config.WAYPOINT_SIZE.x / 2) {
+				waypoints.remove(0);
+			}
+
+			// set velocity angle to fit rotation, allows for smooth turning
+			velocity.setAngle(getRotation());
 		}
 
-		// checking whether aircraft is at the next waypoint. Whether it's close enough is dictated by the WP size in the config.
-
-		if (nextWaypoint.sub(coords).len() < Config.WAYPOINT_SIZE.x/2) {
-			waypoints.remove(0);
-		}
-		
 		// For when the user takes control of the aircraft. Allows the aircraft to detect when it is at its designated exit WP.
 		if (waypoints.get(waypoints.size()-1).getCoords().sub(coords).len() < Config.EXIT_WAYPOINT_SIZE.x/2){
 			waypoints.clear();
 		}
-
-		// set velocity angle to fit rotation, allows for smooth turning
-		velocity.setAngle(getRotation());
 
 		// finally updating coordinates
 		coords.add(velocity);
@@ -222,29 +231,22 @@ public final class Aircraft extends Entity {
 	 * Turns right by 5 degrees if the user presses the right key for more than
 	 * 2000ms
 	 */
-	public void turnRight() {
+	private void turnRight() {
+		ignorePath = true;
 
-		Debug.msg("Aircraft id " + id + ": turn right");
-
-		Vector3 zAxis = new Vector3();
-		zAxis.set(0, 0, 1);
-		if (delay())
-			;
-		velocity.rotate(5);
+		this.rotate(-maxTurningRate * 5);
+		velocity.setAngle(getRotation());
 	}
 
 	/**
 	 * Turns left by 5 degrees if the user presses the right key for more than
 	 * 2000ms
 	 */
-	public void turnLeft() {
-		Debug.msg("Aircraft id " + id + ": turn left");
+	private void turnLeft() {
+		ignorePath = true;
 
-		Vector3 zAxis = new Vector3();
-		zAxis.set(0, 0, 1);
-		if (delay())
-			;
-		velocity.rotate(-5);
+		this.rotate(maxTurningRate * 5);
+		velocity.setAngle(getRotation());
 	}
 
 	/**
@@ -280,6 +282,14 @@ public final class Aircraft extends Entity {
 		// this.velocity.z = -maxClimbRate;
 		// }
 
+	}
+
+	public void turnRight(boolean set) {
+		turnRight = set;
+	}
+
+	public void turnLeft(boolean set) {
+		turnLeft = set;
 	}
 
 	/**

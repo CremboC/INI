@@ -537,10 +537,26 @@ public final class AircraftController extends InputListener implements
 		if (selectedAircraft != null) {
 
 			if (keycode == Keys.LEFT)
-				selectedAircraft.turnLeft();
+				selectedAircraft.turnLeft(true);
 
 			if (keycode == Keys.RIGHT)
-				selectedAircraft.turnRight();
+				selectedAircraft.turnRight(true);
+
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(InputEvent event, int keycode) {
+
+		if (selectedAircraft != null) {
+
+			if (keycode == Keys.LEFT)
+				selectedAircraft.turnLeft(false);
+
+			if (keycode == Keys.RIGHT)
+				selectedAircraft.turnRight(false);
 
 		}
 

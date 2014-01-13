@@ -134,10 +134,6 @@ public final class SidebarController extends ChangeListener implements
 		// update aircraft speed text
 		labels.get("speed").setText("" + selectedAircraft.getSpeed());
 
-		// labels.get("aircraftText").setText(selectedAircraft.toString());
-		// labels.get("aircraftCoordsText").setText(
-		// Float.toString(Math.round(selectedAircraft.getX())) + " "
-		// + Float.toString(Math.round(selectedAircraft.getY())));
 	}
 
 	/**
@@ -228,10 +224,10 @@ public final class SidebarController extends ChangeListener implements
 			assignWaypointClicked();
 
 		if (actor.equals(buttons.get("left")))
-			selectedAircraft.turnLeft();
+			selectedAircraft.turnLeft(true);
 
 		if (actor.equals(buttons.get("right")))
-			selectedAircraft.turnRight();
+			selectedAircraft.turnRight(false);
 
 		if (actor.equals(buttons.get("up")))
 			selectedAircraft.increaseAltitude();
