@@ -42,7 +42,6 @@ public final class AircraftController extends InputListener implements
 
 	private final int maxAircraft;
 	private final int timeBetweenGenerations;
-	private float time;
 	private float lastGenerated;
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;

@@ -17,7 +17,7 @@ public class AircraftType {
 	private boolean isActive;
 
 	public Vector2 getCoords() {
-		return coords;
+		return coords.cpy();
 	}
 
 	public AircraftType setCoords(Vector2 coords) {
@@ -26,7 +26,7 @@ public class AircraftType {
 	}
 
 	public Vector2 getVelocity() {
-		return velocity;
+		return velocity.cpy();
 	}
 
 	public AircraftType setVelocity(Vector2 velocity) {
