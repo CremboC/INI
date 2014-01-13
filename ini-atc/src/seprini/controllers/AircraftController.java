@@ -486,8 +486,14 @@ public final class AircraftController extends InputListener implements
 	private void selectAircraft(Aircraft aircraft) {
 		// make sure old selected aircraft is no longer selected in its own
 		// object
-		if (selectedAircraft != null)
+		if (selectedAircraft != null) {
 			selectedAircraft.selected(false);
+
+			// make sure the old aircraft stops turning after selecting a new
+			// aircraft; prevents it from going in circles
+			selectedAircraft.turnLeft(false);
+			selectedAircraft.turnRight(false);
+		}
 
 		// set new selected aircraft
 		selectedAircraft = aircraft;
