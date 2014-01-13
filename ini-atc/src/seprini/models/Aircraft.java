@@ -43,9 +43,6 @@ public final class Aircraft extends Entity {
 	// whether the aircraft is selected by the player
 	private boolean selected;
 
-	private Vector2 toNextWaypoint;
-	private Waypoint currentWaypoint;
-
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
 			int id) {
 
@@ -102,7 +99,7 @@ public final class Aircraft extends Entity {
 	 * @param batch
 	 */
 	protected void additionalDraw(SpriteBatch batch) {
-		if (!breaching)
+		if (!selected && !breaching)
 			return;
 
 		batch.end();
@@ -300,6 +297,18 @@ public final class Aircraft extends Entity {
 	
 	public void isBreaching(boolean is) {
 		this.breaching = is;
+	}
+
+	public int getAltitude() {
+		return altitude;
+	}
+
+	public int getSpeed() {
+		float speed;
+
+		speed = velocity.x * 700f;
+
+		return Math.abs(Math.round(speed));
 	}
 
 	/**
