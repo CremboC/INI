@@ -306,8 +306,8 @@ public final class AircraftController extends InputListener implements
 
 			// Call selectNextWaypoint.
 			Waypoint nextWaypoint = selectNextWaypoint(currentWaypoint,
-					flightPlan, normalVectorFromCurrentToLast,
-					waypointSelectionList, 50, 100);
+					lastWaypoint, flightPlan, normalVectorFromCurrentToLast,
+					waypointSelectionList, 50, 300);
 			// Recurse with updated flightPlan and nextWaypoint.
 			return flightPlanWaypointGenerator(flightPlan, nextWaypoint,
 					lastWaypoint);
@@ -325,12 +325,12 @@ public final class AircraftController extends InputListener implements
 	 *            - minimum angle from currentWaypoint to nextWaypoint, where 0
 	 *            degrees is the angle from currentWaypoint to lastWaypoint
 	 * @param minDistance
-	 *            - minimum distance from currentWaypoint to nextWaypoint
-	 * 
+	 *            - minimum distance from currentWaypoint to nextWaypoint. Ideal
+	 *            value = diameter of the turning circle of the aircraft.
 	 * @return nextWaypoint
 	 */
 	private Waypoint selectNextWaypoint(Waypoint currentWaypoint,
-			ArrayList<Waypoint> flightPlan,
+			Waypoint lastWaypoint, ArrayList<Waypoint> flightPlan,
 			Vector2 normalVectorFromCurrentToLast,
 			ArrayList<Waypoint> waypointSelectionList, int maxAngle,
 			int minDistance) {
@@ -349,12 +349,16 @@ public final class AircraftController extends InputListener implements
 			if (!flightPlan.contains(waypoint)
 					&& Math.abs(normalVectorFromCurrentToPotential.angle()
 							- normalVectorFromCurrentToLast.angle()) < maxAngle
-					&& waypoint.getCoords().dst(currentWaypoint.getCoords()) > minDistance) {
+					&& waypoint.getCoords().dst(currentWaypoint.getCoords()) > minDistance
+					&& waypoint.getCoords().dst(lastWaypoint.getCoords()) > minDistance) {
 				// If all conditions are met, choose this waypoint as the
 				// nextWaypoint.
 				nextWaypoint = waypoint;
 				break;
 			}
+		}
+		if (nextWaypoint == null) {
+			nextWaypoint = lastWaypoint;
 		}
 
 		// add nextWaypoint to flightPlan.
