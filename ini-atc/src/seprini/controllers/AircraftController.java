@@ -7,7 +7,7 @@ import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.Debug;
 import seprini.data.GameDifficulty;
-import seprini.data.GameState;
+import seprini.data.State;
 import seprini.models.Aircraft;
 import seprini.models.Airspace;
 import seprini.models.Exitpoint;
@@ -17,7 +17,6 @@ import seprini.models.types.AircraftType;
 import seprini.screens.EndScreen;
 import seprini.screens.GameScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -143,8 +142,6 @@ public final class AircraftController extends InputListener implements
 
 		Aircraft planeI, planeJ;
 
-		time += Gdx.graphics.getDeltaTime();
-
 		// Updates aircraft in turn
 		// Removes aircraft which are no longer active from aircraftList.
 		// Manages collision detection.
@@ -243,7 +240,7 @@ public final class AircraftController extends InputListener implements
 
 		// difference between aircraft generated - 5 seconds, needs to be
 		// dependable on difficulty
-		if (time - lastGenerated < timeBetweenGenerations)
+		if (State.time - lastGenerated < timeBetweenGenerations)
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
@@ -251,7 +248,7 @@ public final class AircraftController extends InputListener implements
 
 		aircraftList.add(newAircraft);
 
-		lastGenerated = time;
+		lastGenerated = State.time;
 
 		return newAircraft;
 	}
@@ -529,7 +526,7 @@ public final class AircraftController extends InputListener implements
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
 		if (keycode == Keys.SPACE)
-			GameState.paused = (GameState.paused) ? false : true;
+			State.paused = (State.paused) ? false : true;
 
 		if (keycode == Keys.ESCAPE)
 			screen.setScreen(new EndScreen());

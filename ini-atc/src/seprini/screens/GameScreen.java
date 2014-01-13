@@ -3,7 +3,7 @@ package seprini.screens;
 import seprini.controllers.AircraftController;
 import seprini.data.Config;
 import seprini.data.GameDifficulty;
-import seprini.data.GameState;
+import seprini.data.State;
 import seprini.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
@@ -87,8 +87,10 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void update() {
-		if (GameState.paused)
+		if (State.paused)
 			return;
+
+		State.tick();
 
 		controller.update();
 		root.act();

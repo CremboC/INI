@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import seprini.data.Art;
 import seprini.data.Config;
+import seprini.data.State;
 import seprini.models.Aircraft;
 import seprini.screens.GameScreen;
 import seprini.screens.MenuScreen;
@@ -106,7 +107,8 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.row();
 
-		// createLabel("", "Timer").width(100);
+		createLabel("", "Time:").width(100);
+		createLabel("timer", "..").width(100);
 
 		aircraftControls.row();
 
@@ -133,6 +135,9 @@ public final class SidebarController extends ChangeListener implements
 
 		// update aircraft speed text
 		labels.get("speed").setText("" + selectedAircraft.getSpeed());
+
+		// update timer
+		labels.get("timer").setText("" + Math.round(State.time));
 
 	}
 
