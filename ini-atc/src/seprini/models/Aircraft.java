@@ -139,10 +139,15 @@ public final class Aircraft extends Entity {
 			}
 		}
 
-		// checking whether aircraft is at the next waypoint (close enough =
-		// 15px)
-		if (nextWaypoint.sub(coords).len() < 15) {
+		// checking whether aircraft is at the next waypoint. Whether it's close enough is dictated by the WP size in the config.
+
+		if (nextWaypoint.sub(coords).len() < Config.WAYPOINT_SIZE.x/2) {
 			waypoints.remove(0);
+		}
+		
+		// For when the user takes control of the aircraft. Allows the aircraft to detect when it is at its designated exit WP.
+		if (waypoints.get(waypoints.size()-1).getCoords().sub(coords).len() < Config.EXIT_WAYPOINT_SIZE.x/2){
+			waypoints.clear();
 		}
 
 		// set velocity angle to fit rotation, allows for smooth turning
@@ -303,7 +308,7 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * check if its only got the exit point left to go to.
+	 * Returns false if aircraft flightplan is empty, true otherwise. 
 	 * 
 	 * @return whether is active
 	 */
