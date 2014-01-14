@@ -73,10 +73,12 @@ public class AircraftTest {
 
 	@Test
 	public void testGetRadius() {
-		//fail("Not yet implemented");
+		fail("Not yet implemented");
+		/*
 		doul result = Aircraft.getRadius("5.00", result);
 		assertEquals("5.00", result);
-		}
+		} 
+		*/
 
 
 	@Test
