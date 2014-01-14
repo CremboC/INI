@@ -87,8 +87,8 @@ public final class SidebarController extends ChangeListener implements
 		sidebar.addActor(bottomButtons);
 
 		// adding labels to aircraft controls
-		createLabel("speed", "Speed", aircraftControls).width(100);
-		createLabel("altitude", "Altitude", aircraftControls).width(100);
+		createLabel("speed", "Speed: ", aircraftControls).width(100);
+		createLabel("altitude", "Altitude: ", aircraftControls).width(100);
 
 		aircraftControls.row().width(100);
 
@@ -154,10 +154,12 @@ public final class SidebarController extends ChangeListener implements
 			return;
 
 		// update aircraft altitude text
-		labels.get("altitude").setText("" + selectedAircraft.getAltitude());
+		labels.get("altitude").setText(
+				"Altitude: " + selectedAircraft.getAltitude() + "m");
 
 		// update aircraft speed text
-		labels.get("speed").setText("" + selectedAircraft.getSpeed());
+		labels.get("speed").setText(
+				"Speed: " + Math.round(selectedAircraft.getSpeed()) + "km/h");
 	}
 
 	/**
