@@ -1,6 +1,7 @@
 package seprini.screens;
 
 import seprini.ATC;
+import seprini.data.Art;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -19,16 +20,6 @@ public abstract class Screen {
 	 * Instance of the main class, used for changing screen among other things
 	 */
 	private ATC atc;
-
-	/**
-	 * A sprite batch, used to draw textures
-	 */
-	protected final static SpriteBatch spriteBatch = new SpriteBatch();
-
-	/**
-	 * Simple way of writing on the screen, uses 15pt Arial font by default
-	 */
-	private final static BitmapFont font = new BitmapFont();
 	
 	public final static ShapeRenderer shapeDebugger = new ShapeRenderer();
 
@@ -36,7 +27,7 @@ public abstract class Screen {
 	 * Dispose of unused resources
 	 */
 	public void removed() {
-		spriteBatch.dispose();
+
 	}
 
 	/**
@@ -63,7 +54,7 @@ public abstract class Screen {
 	 * @param x
 	 * @param y
 	 */
-	public void draw(TextureRegion region, int x, int y) {
+	public void draw(TextureRegion region, int x, int y, SpriteBatch batch) {
 		if (region == null)
 			Gdx.app.error("Screen", "Region drawing is null");
 
@@ -72,7 +63,7 @@ public abstract class Screen {
 		if (width < 0)
 			width = -width;
 
-		spriteBatch.draw(region, x, y, width, region.getRegionHeight());
+		batch.draw(region, x, y, width, region.getRegionHeight());
 	}
 
 	/**
@@ -80,8 +71,8 @@ public abstract class Screen {
 	 * 
 	 * @param sprite
 	 */
-	public void drawSprite(Sprite sprite) {
-		sprite.draw(spriteBatch);
+	public void drawSprite(Sprite sprite, SpriteBatch batch) {
+		sprite.draw(batch);
 	}
 
 	/**
@@ -95,6 +86,7 @@ public abstract class Screen {
 	public void drawString(CharSequence str, float x, float y, Color color,
 			SpriteBatch batch) {
 		batch.begin();
+		BitmapFont font = Art.getSkin().get(BitmapFont.class);
 		font.setColor(color);
 		font.draw(batch, str, x, y);
 		batch.end();

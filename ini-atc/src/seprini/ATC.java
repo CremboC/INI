@@ -1,6 +1,7 @@
 package seprini;
 
 import seprini.data.Art;
+import seprini.data.State;
 import seprini.screens.MenuScreen;
 import seprini.screens.Screen;
 
@@ -37,7 +38,11 @@ public class ATC implements ApplicationListener {
 	public void setScreen(Screen newScreen) {
 		if (screen != null)
 			screen.removed();
+
 		screen = newScreen;
+
+		State.reset();
+
 		if (screen != null)
 			screen.init(this);
 	}

@@ -122,10 +122,10 @@ public final class AircraftController extends InputListener implements
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(1).setMaxTurningSpeed(0.4f)
-				.setRadius(10).setSeparationRadius(40)
+				.setMaxClimbRate(0).setMaxSpeed(0.8f).setMaxTurningSpeed(0.4f)
+				.setRadius(15).setSeparationRadius(100)
 				.setTexture(Art.getTextureRegion("aircraft"))
-				.setVelocity(new Vector2(1, 1));
+				.setVelocity(new Vector2(0.8f, 0.8f));
 
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
@@ -218,7 +218,7 @@ public final class AircraftController extends InputListener implements
 	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
 		// TODO remove debug code, put in game ending code
-		// screen.setScreen(new EndScreen());
+		screen.setScreen(new EndScreen());
 	}
 
 	private void separationRulesBreached(Aircraft a, Aircraft b) {
@@ -239,7 +239,7 @@ public final class AircraftController extends InputListener implements
 
 		// difference between aircraft generated - 5 seconds, needs to be
 		// dependable on difficulty
-		if (State.time - lastGenerated < timeBetweenGenerations)
+		if (State.time() - lastGenerated < timeBetweenGenerations)
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
@@ -247,7 +247,7 @@ public final class AircraftController extends InputListener implements
 
 		aircraftList.add(newAircraft);
 
-		lastGenerated = State.time;
+		lastGenerated = State.time();
 
 		return newAircraft;
 	}
@@ -538,10 +538,10 @@ public final class AircraftController extends InputListener implements
 
 		if (selectedAircraft != null) {
 
-			if (keycode == Keys.LEFT)
+			if (keycode == Keys.LEFT || keycode == Keys.A)
 				selectedAircraft.turnLeft(true);
 
-			if (keycode == Keys.RIGHT)
+			if (keycode == Keys.RIGHT || keycode == Keys.D)
 				selectedAircraft.turnRight(true);
 
 		}
@@ -554,11 +554,12 @@ public final class AircraftController extends InputListener implements
 
 		if (selectedAircraft != null) {
 
-			if (keycode == Keys.LEFT)
+			if (keycode == Keys.LEFT || keycode == Keys.A)
 				selectedAircraft.turnLeft(false);
 
-			if (keycode == Keys.RIGHT)
+			if (keycode == Keys.RIGHT || keycode == Keys.D)
 				selectedAircraft.turnRight(false);
+
 
 		}
 

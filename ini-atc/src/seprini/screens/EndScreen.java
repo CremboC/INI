@@ -1,5 +1,6 @@
 package seprini.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,14 +14,13 @@ public class EndScreen extends Screen {
 
 	public EndScreen() {
 		root = new Stage();
+		Gdx.input.setInputProcessor(root);
 
 		Table ui = new Table();
 
 		root.addActor(ui);
 
-		root.setKeyboardFocus(ui);
-
-		root.addListener(new InputListener() {
+		ui.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Keys.ESCAPE)
@@ -29,12 +29,16 @@ public class EndScreen extends Screen {
 				return false;
 			}
 		});
+
+		root.setKeyboardFocus(ui);
 	}
 
 	@Override
 	public void render() {
 		root.draw();
-		drawString("PLANES HAVE COLLIDED OMG", Screen.WIDTH / 2,
+		drawString(
+				"PLANES HAVE COLLIDED OMG\nPRESS ESC TO RETURN TO MAIN MENU",
+				Screen.WIDTH / 2,
 				Screen.HEIGHT / 2, Color.BLACK, root.getSpriteBatch());
 	}
 
