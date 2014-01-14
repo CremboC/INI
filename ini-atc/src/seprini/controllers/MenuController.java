@@ -29,6 +29,16 @@ public final class MenuController extends ChangeListener implements Controller {
 
 	private HashMap<String, TextButton> buttons;
 
+	/**
+	 * Initiate variables, set the screen and ui, add all of the buttons to the
+	 * screen
+	 * 
+	 * @param screen
+	 *            required so the controller could change the screen after
+	 *            clicking the appropriate button
+	 * @param ui
+	 *            required for actually adding the buttons
+	 */
 	public MenuController(MenuScreen screen, Table ui) {
 		this.ui = ui;
 		this.screen = screen;
@@ -81,9 +91,14 @@ public final class MenuController extends ChangeListener implements Controller {
 		return ui.add(button);
 	}
 
+	/**
+	 * Handles what happens once one of the buttons have been clicked
+	 */
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 
+		// Pass difficulty to the newly created GameScreen so the game can
+		// change variables depending on it
 		if (actor.equals(buttons.get("startEasy")))
 			screen.setScreen(new GameScreen(GameDifficulty.EASY));
 
