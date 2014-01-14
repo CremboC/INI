@@ -1,5 +1,7 @@
 package seprini.screens;
 
+import seprini.data.Config;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -38,8 +40,8 @@ public class EndScreen extends Screen {
 		root.draw();
 		drawString(
 				"PLANES HAVE COLLIDED OMG\nPRESS ESC TO RETURN TO MAIN MENU",
-				Screen.WIDTH / 2,
-				Screen.HEIGHT / 2, Color.BLACK, root.getSpriteBatch());
+				Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2, Color.BLACK,
+				root.getSpriteBatch());
 	}
 
 	@Override

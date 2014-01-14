@@ -386,8 +386,8 @@ public final class Aircraft extends Entity {
 	 */
 	public boolean isActive() {
 		// FIXME
-		if (getX() < -10 || getY() < -10 || getX() > Screen.WIDTH - 190
-				|| getY() > Screen.HEIGHT + 105) {
+		if (getX() < -10 || getY() < -10 || getX() > Config.SCREEN_WIDTH - 190
+				|| getY() > Config.SCREEN_HEIGHT + 105) {
 			this.isActive = false;
 
 			Debug.msg("Aircraft id " + id
