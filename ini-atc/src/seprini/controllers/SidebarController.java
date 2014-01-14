@@ -16,6 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.esotericsoftware.tablelayout.Cell;
 
+/**
+ * Controls the sidebar in the GameScreen
+ * 
+ * @author Paulius, Miguel
+ * 
+ */
 public final class SidebarController extends ChangeListener implements
 		Controller {
 
@@ -33,6 +39,17 @@ public final class SidebarController extends ChangeListener implements
 
 	private final GameScreen screen;
 
+	/**
+	 * 
+	 * 
+	 * @param sidebar
+	 *            the sidebar layout, so the controller can add all of the
+	 *            buttons
+	 * @param aircrafts
+	 *            so this can get the selected aircraft
+	 * @param screen
+	 *            for changing screens once Menu or Pause have been clicked
+	 */
 	public SidebarController(Table sidebar, AircraftController aircrafts,
 			GameScreen screen) {
 		this.sidebar = sidebar;
@@ -43,7 +60,6 @@ public final class SidebarController extends ChangeListener implements
 	/**
 	 * Initialise all the buttons and labels
 	 */
-
 	public void init() {
 
 		// wrapper for aicraft controls
@@ -116,6 +132,7 @@ public final class SidebarController extends ChangeListener implements
 
 		createButton("menu", "Menu", bottomButtons).width(100);
 		createButton("pause", "Pause", bottomButtons).width(100);
+
 		/**
 		 * Currently not needed, not in specifications
 		 * createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
@@ -130,6 +147,9 @@ public final class SidebarController extends ChangeListener implements
 		// update timer
 		labels.get("timer").setText("" + Math.round(State.time()));
 
+		// if there is no selected aircraft, return immediately to avoid errors
+		// otherwise set it to the local selectedAircraft variable and update
+		// the text
 		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null)
 			return;
 
@@ -152,23 +172,6 @@ public final class SidebarController extends ChangeListener implements
 	 */
 	private void assignWaypointClicked() {
 		allowRedirection = (allowRedirection) ? false : true;
-	}
-
-	/**
-	 * Convinience method to create buttons and add them to the sidebar
-	 * 
-	 * @param name
-	 * @param text
-	 * @return
-	 */
-	private Cell<?> createButton(String name, String text) {
-		TextButton button = new TextButton(text, Art.getSkin());
-		button.pad(2);
-		button.addListener(this);
-
-		buttons.put(name, button);
-
-		return sidebar.add(button);
 	}
 
 	/**
@@ -244,10 +247,22 @@ public final class SidebarController extends ChangeListener implements
 
 	}
 
+	/**
+	 * This is true when the button to create new waypoints has clicked, false
+	 * otherwise
+	 * 
+	 * @return
+	 */
 	public boolean allowNewWaypoints() {
 		return allowNewWaypoints;
 	}
 
+	/**
+	 * True when then button to redirect aircraft has been clicked, false
+	 * otherwise
+	 * 
+	 * @return
+	 */
 	public boolean isAllowRedirection() {
 		return allowRedirection;
 	}

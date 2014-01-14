@@ -54,6 +54,17 @@ public final class AircraftController extends InputListener implements
 
 	private int aircraftId = 0;
 
+	/**
+	 * 
+	 * @param diff
+	 *            game difficulty, changes number of aircraft and time between
+	 *            them
+	 * @param airspace
+	 *            the group where all of the waypoints and aircraft will be
+	 *            added
+	 * @param sidebar the
+	 * @param screen
+	 */
 	public AircraftController(GameDifficulty diff, Airspace airspace,
 			Table sidebar, GameScreen screen) {
 		this.difficulty = diff;
