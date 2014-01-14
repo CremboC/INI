@@ -79,6 +79,7 @@ public class GameScreen extends Screen {
 	public void render() {
 		root.draw();
 
+		// draw the altitude for each aircraft
 		for (Aircraft craft : controller.getAircraftList()) {
 			
 			Color color;
@@ -101,7 +102,7 @@ public class GameScreen extends Screen {
 					break;
 			}
 			
-			drawString("Alt: " + craft.getAltitude(), craft.getX() - 20,
+			drawString("Alt: " + craft.getAltitude(), craft.getX() - 25,
 					craft.getY() - 20, color, root.getSpriteBatch());
 		}
 
