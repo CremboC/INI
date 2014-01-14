@@ -49,8 +49,8 @@ public final class AircraftController extends InputListener implements
 
 	// ui related
 	private final Airspace airspace;
-	private SidebarController sidebar;
-	private GameScreen screen;
+	private final SidebarController sidebar;
+	private final GameScreen screen;
 
 	private int aircraftId = 0;
 
@@ -543,6 +543,12 @@ public final class AircraftController extends InputListener implements
 
 			if (keycode == Keys.RIGHT || keycode == Keys.D)
 				selectedAircraft.turnRight(true);
+
+			if (keycode == Keys.UP || keycode == Keys.W)
+				selectedAircraft.increaseAltitude();
+
+			if (keycode == Keys.DOWN || keycode == Keys.S)
+				selectedAircraft.decreaseAltitude();
 
 		}
 

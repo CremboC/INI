@@ -1,7 +1,6 @@
 package seprini.models;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import seprini.data.Config;
 import seprini.data.Debug;
@@ -14,18 +13,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public final class Aircraft extends Entity {
 
-	private int id;
+	private final int id;
 
 	private int altitude;
 	private Vector2 velocity = new Vector2(0, 0);
 
 	private final float radius, separationRadius;
 
-	private ArrayList<Waypoint> waypoints;
+	private final ArrayList<Waypoint> waypoints;
 
 	private final float maxTurningRate, maxClimbRate, maxSpeed;
 
-	private int sepRulesBreachCounter = 0;
+	private final int sepRulesBreachCounter = 0;
 	private boolean breaching;
 	private int lastTimeTurned;
 
@@ -97,6 +96,7 @@ public final class Aircraft extends Entity {
 	 * 
 	 * @param batch
 	 */
+	@Override
 	protected void additionalDraw(SpriteBatch batch) {
 		if (!selected && !breaching)
 			return;
@@ -234,7 +234,7 @@ public final class Aircraft extends Entity {
 	private void turnRight() {
 		ignorePath = true;
 
-		this.rotate(-maxTurningRate * 5);
+		this.rotate(-maxTurningRate * 2);
 		velocity.setAngle(getRotation());
 	}
 
@@ -245,43 +245,25 @@ public final class Aircraft extends Entity {
 	private void turnLeft() {
 		ignorePath = true;
 
-		this.rotate(maxTurningRate * 5);
+		this.rotate(maxTurningRate * 2);
 		velocity.setAngle(getRotation());
-	}
-
-	/**
-	 * Calculates the time for which the buttons have been pressed.
-	 * 
-	 * @return
-	 */
-	public boolean delay() {
-		Calendar cal = Calendar.getInstance();
-		long currentTime = cal.getTimeInMillis();
-		long previousTime = currentTime;
-		if (currentTime - previousTime >= 2000)
-			;
-		return true;
 	}
 
 	/**
 	 * Increases rate of altitude change
 	 */
 	public void increaseAltitude() {
-		// this.altitude += 5;
-		// if (this.altitude > maxClimbRate) {
-		// this.velocity.z = maxClimbRate;
-		// }
+		this.altitude += 5;
 	}
 
 	/**
 	 * Decreasing rate of altitude change
 	 */
 	public void decreaseAltitude() {
-		// this.velocity.add(0, 0, -5);
-		// if (this.velocity.z > -maxClimbRate) {
-		// this.velocity.z = -maxClimbRate;
-		// }
+		if (altitude - 5 < 0)
+			return;
 
+		altitude -= 5;
 	}
 
 	public void turnRight(boolean set) {
