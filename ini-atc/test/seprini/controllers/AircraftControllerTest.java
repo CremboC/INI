@@ -30,14 +30,14 @@ public class AircraftControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		
+	
 		GameDifficulty diff = GameDifficulty.MEDIUM;
 		Airspace airspace = new Airspace();
 		Table sidebar = new Table();
 		GameScreen screen = new GameScreen(diff);
 		
-		aircraftcontroller = new AircraftController(diff, airspace, Table sidebar, screen);
-		
+		aircraftcontroller = new AircraftController(diff, airspace, sidebar, screen);
+	
 	}
 
 	@After
