@@ -8,6 +8,7 @@ import seprini.models.types.AircraftType;
 import seprini.screens.Screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
@@ -98,17 +99,39 @@ public final class Aircraft extends Entity {
 	 */
 	@Override
 	protected void additionalDraw(SpriteBatch batch) {
-		if (!selected && !breaching)
+		
+		if (!ignorePath && !selected && !breaching)
 			return;
 
-		batch.end();
+		ShapeRenderer drawer = Screen.shapeDebugger;
 
-		Screen.shapeDebugger.begin(ShapeType.Line);
-		Screen.shapeDebugger.setColor(1, 0, 0, 0);
-		Screen.shapeDebugger.circle(getX(), getY(), getWidth() / 2 + 5);
-		Screen.shapeDebugger.end();
+		if (ignorePath) {
+			Waypoint exitpoint = waypoints.get(waypoints.size() - 1);
 
-		batch.begin();
+			Debug.msg(waypoints);
+
+			batch.end();
+
+			drawer.begin(ShapeType.Line);
+			drawer.setColor(1, 0, 0, 0);
+			drawer.line(getX(), getY(), exitpoint.getX(),
+					exitpoint.getY());
+			drawer.end();
+
+			batch.begin();
+		}
+			
+		if (selected || breaching) {
+			batch.end();
+
+			drawer.begin(ShapeType.Line);
+			drawer.setColor(1, 0, 0, 0);
+			drawer.circle(getX(), getY(), getWidth() / 2 + 5);
+			drawer.end();
+
+			batch.begin();
+		}
+
 	}
 
 	/**
@@ -155,7 +178,8 @@ public final class Aircraft extends Entity {
 		}
 
 		// For when the user takes control of the aircraft. Allows the aircraft to detect when it is at its designated exit WP.
-		if (waypoints.get(waypoints.size()-1).getCoords().sub(coords).len() < Config.EXIT_WAYPOINT_SIZE.x/2){
+		if (waypoints.get(waypoints.size() - 1).cpy().getCoords().sub(coords)
+				.len() < Config.EXIT_WAYPOINT_SIZE.x / 2) {
 			waypoints.clear();
 		}
 

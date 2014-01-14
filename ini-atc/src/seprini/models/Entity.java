@@ -66,18 +66,22 @@ public abstract class Entity extends Actor {
 		return coords;
 	}
 
+	@Override
 	public float getX() {
 		return coords.x;
 	}
 
+	@Override
 	public float getY() {
 		return coords.y;
 	}
 
+	@Override
 	public float getWidth() {
 		return size.x;
 	}
 
+	@Override
 	public float getHeight() {
 		return size.y;
 	}
