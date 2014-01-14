@@ -122,7 +122,7 @@ public final class AircraftController extends InputListener implements
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(0.8f).setMaxTurningSpeed(0.4f)
+				.setMaxClimbRate(0).setMaxSpeed(1.5f).setMaxTurningSpeed(0.4f)
 				.setRadius(15).setSeparationRadius(100)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(0.8f, 0.8f));
@@ -549,6 +549,12 @@ public final class AircraftController extends InputListener implements
 
 			if (keycode == Keys.DOWN || keycode == Keys.S)
 				selectedAircraft.decreaseAltitude();
+
+			if (keycode == Keys.E)
+				selectedAircraft.increaseSpeed();
+
+			if (keycode == Keys.Q)
+				selectedAircraft.decreaseSpeed();
 
 		}
 
