@@ -4,6 +4,7 @@ import seprini.controllers.AircraftController;
 import seprini.data.Config;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
+import seprini.models.Aircraft;
 import seprini.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
@@ -77,6 +78,32 @@ public class GameScreen extends Screen {
 	@Override
 	public void render() {
 		root.draw();
+
+		for (Aircraft craft : controller.getAircraftList()) {
+			
+			Color color;
+			
+			switch (craft.getAltitude()) {
+				case 1000 :
+					color = Color.GREEN;
+					break;
+					
+				case 2000 :
+					color = Color.ORANGE;
+					break;
+					
+				case 3000 :
+					color = Color.RED;
+					break;
+
+				default :
+					color = Color.BLACK;
+					break;
+			}
+			
+			drawString("Alt: " + craft.getAltitude(), craft.getX() - 20,
+					craft.getY() - 20, color, root.getSpriteBatch());
+		}
 
 		if (Config.DEBUG_UI) {
 			Table.drawDebug(root);

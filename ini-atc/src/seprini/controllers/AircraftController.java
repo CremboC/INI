@@ -529,6 +529,10 @@ public final class AircraftController extends InputListener implements
 		return selectedAircraft;
 	}
 
+	public ArrayList<Aircraft> getAircraftList() {
+		return aircraftList;
+	}
+
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {

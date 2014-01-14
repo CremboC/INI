@@ -17,7 +17,7 @@ public final class Aircraft extends Entity {
 	private final int id;
 
 	private static final float SPEED_CHANGE = 0.1f;
-	private static final int ALTITUDE_CHANGE = 5;
+	private static final int ALTITUDE_CHANGE = 100;
 
 	private int altitude;
 	private Vector2 velocity = new Vector2(0, 0);
