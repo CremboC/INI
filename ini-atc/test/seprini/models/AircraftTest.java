@@ -55,93 +55,126 @@ public class AircraftTest {
 
 	@Test
 	public void testAdditionalDraw() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testAircraft() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testAct() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testInsertWaypoint() {
 		fail("Not yet implemented");
+		/*
+		Waypoint newWaypoint = new Waypoint(7 , 8, true);
+		aircraft.insertWaypoint(newWaypoint);
+		assertEquals(aircraft.waypoints(1), newWaypoint);
+		*/
 	}
 
 	@Test
-	public void testDelay() {
-		fail("Not yet implemented");
+	public void testIncreaseSpeed() {
+		// fail("Not yet implemented");
+		aircraft.increaseSpeed();
+		assertEquals(1.1f*700f, aircraft.getSpeed(), 100);
+	}
+	
+	@Test
+	public void testDecreaseSpeed() {
+		aircraft.decreaseSpeed();
+		assertEquals(0.9f*700f, aircraft.getSpeed(), 0);
 	}
 
 	@Test
 	public void testIncreaseAltitude() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
+		aircraft.increaseAltitude();
+		float result = aircraft.getAltitude();
+		assertEquals(5f, result, 0);
 	}
 
 	@Test
 	public void testDecreaseAltitude() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
+		aircraft.increaseAltitude();
+		aircraft.decreaseAltitude();
+		float result = aircraft.getAltitude();
+		assertEquals(0f, result, 0);
 	}
 
 	@Test
 	public void testTurnRight() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testTurnLeft() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetRadius() {
 		
-	assertEquals(15f, aircraft.getRadius(), 100);
+	assertEquals(15f, aircraft.getRadius(), 0);
 	}
 
 	@Test
 	public void testGetCentreCoords() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
+		Vector2 result = aircraft.getCentreCoords();
+		Vector2 testAnswer = new Vector2(41f, 36.5f);
+		assertEquals(testAnswer.x, result.x, 0);
+		assertEquals(testAnswer.y, result.y, 0);
 	}
 
 	@Test
 	public void testGetSeparationRadius() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
+		float result = aircraft.getSeparationRadius();
+		assertEquals(result, 100, 0);
 	}
 
 	@Test
 	public void testIsBreaching() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetAltitude() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
+		float result = aircraft.getAltitude();
+		assertEquals(0f, result, 0);
 	}
 
 	@Test
 	public void testGetSpeed() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
+		float result = aircraft.getSpeed();
+		assertEquals(700f, result, 0);	
 	}
 
 	@Test
-	public void testIsActive() {
+	public void testIsActive() { // Not done yet, code not fixed
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSelected() {
-		fail("Not yet implemented");
+		// fail("Not yet implemented");
 	}
 
 	@Test
-	public void testToString() {
-		fail("Not yet implemented");
+	public void testToString() { // NOT WORKING YET, Strings don't match
+		// fail("Not yet implemented");
+		ArrayList<Waypoint> plan = new ArrayList<Waypoint>();
+		plan.add(new Waypoint(3 , 5, true));
+		assertEquals("Aircraft - x: " + 3 + " y: " + 5 + "\n\r flight plan: " + plan.toString(), aircraft.toString(), 100);
 	}
 
 }
