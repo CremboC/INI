@@ -127,6 +127,9 @@ public final class SidebarController extends ChangeListener implements
 	 * Update the sidebar according to changes in the AircraftController
 	 */
 	public void update() {
+		// update timer
+		labels.get("timer").setText("" + Math.round(State.time()));
+
 		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null)
 			return;
 
@@ -135,10 +138,6 @@ public final class SidebarController extends ChangeListener implements
 
 		// update aircraft speed text
 		labels.get("speed").setText("" + selectedAircraft.getSpeed());
-
-		// update timer
-		labels.get("timer").setText("" + Math.round(State.time));
-
 	}
 
 	/**
