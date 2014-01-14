@@ -265,7 +265,7 @@ public final class SidebarController extends ChangeListener implements
 	 * 
 	 * @return
 	 */
-	public boolean isAllowRedirection() {
+	public boolean allowRedirection() {
 		return allowRedirection;
 	}
 

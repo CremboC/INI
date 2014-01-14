@@ -474,12 +474,11 @@ public final class AircraftController extends InputListener implements
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				if (button == Buttons.RIGHT) {
+				if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
+					redirectAircraft(waypoint);
+				} else if (button == Buttons.RIGHT) {
 					userWaypointList.remove(waypoint);
 					airspace.removeActor(waypoint);
-				} else if (button == Buttons.RIGHT
-						&& (sidebar.isAllowRedirection() == true)) {
-					redirectAircraft(waypoint);
 				}
 
 				return true;
@@ -519,9 +518,11 @@ public final class AircraftController extends InputListener implements
 	 * @param object
 	 */
 	private void redirectAircraft(Waypoint waypoint) {
-		// TODO if an aircraft is selected, if the user right-clicks on a
-		// waypoint redirect the aircraft to that waypoint:
-		// Call selected aircrafts insertWaypoint() method.
+		Debug.msg("Redirecting aircraft " + 0 + " to " + waypoint);
+
+		if (getSelectedAircraft() == null)
+			return;
+
 		getSelectedAircraft().insertWaypoint(waypoint);
 	}
 
