@@ -69,7 +69,6 @@ public class Art {
 		// Add the font to the skin; TODO: use a different one?
 		BitmapFont font = new BitmapFont();
 
-		font.setScale(0.89f);
 		skin.add("default", font);
 
 		// Configure a TextButtonStyle and name it "default". Skin resources are

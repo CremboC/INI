@@ -1,6 +1,7 @@
 package seprini.screens;
 
 import seprini.controllers.AircraftController;
+import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
@@ -29,6 +30,9 @@ public class GameScreen extends Screen {
 	private final AircraftController controller;
 
 	public GameScreen(GameDifficulty diff) {
+
+		// make font smaller
+		Art.getSkin().getFont("default").setScale(0.89f);
 
 		// create a table layout, main ui
 		Table ui = new Table();
