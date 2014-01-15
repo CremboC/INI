@@ -233,16 +233,22 @@ public final class SidebarController extends ChangeListener implements
 			assignWaypointClicked();
 
 		if (actor.equals(buttons.get("left")))
-			selectedAircraft.turnLeft(true);
+			selectedAircraft.turnLeft();
 
 		if (actor.equals(buttons.get("right")))
-			selectedAircraft.turnRight(false);
+			selectedAircraft.turnRight();
 
 		if (actor.equals(buttons.get("up")))
 			selectedAircraft.increaseAltitude();
 
 		if (actor.equals(buttons.get("down")))
 			selectedAircraft.decreaseAltitude();
+		
+		if (actor.equals(buttons.get("accelerate")))
+			selectedAircraft.increaseSpeed();
+		
+		if (actor.equals(buttons.get("decelerate")))
+			selectedAircraft.decreaseSpeed();
 
 		if (actor.equals(buttons.get("menu")))
 			screen.setScreen(new MenuScreen());

@@ -16,6 +16,7 @@ public final class Aircraft extends Entity {
 
 	private final int id;
 
+	private static final float INITIAL_VELOCITY_SCALAR = 1f;
 	private static final float SPEED_CHANGE = 0.1f;
 	private static final int ALTITUDE_CHANGE = 100;
 
@@ -63,7 +64,7 @@ public final class Aircraft extends Entity {
 		maxClimbRate = aircraftType.getMaxClimbRate();
 		maxSpeed = aircraftType.getMaxSpeed();
 		minSpeed = maxSpeed - 1;
-		velocityScalar = 1.0f;
+		velocityScalar = INITIAL_VELOCITY_SCALAR;
 		velocity = aircraftType.getVelocity();
 		altitude = 1000;
 
@@ -262,7 +263,7 @@ public final class Aircraft extends Entity {
 	 * Turns right by 5 degrees if the user presses the right key for more than
 	 * 2000ms
 	 */
-	private void turnRight() {
+	public void turnRight() {
 		ignorePath = true;
 
 		this.rotate(-maxTurningRate * 2);
@@ -273,7 +274,7 @@ public final class Aircraft extends Entity {
 	 * Turns left by 5 degrees if the user presses the right key for more than
 	 * 2000ms
 	 */
-	private void turnLeft() {
+	public void turnLeft() {
 		ignorePath = true;
 
 		this.rotate(maxTurningRate * 2);
