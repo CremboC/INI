@@ -17,7 +17,7 @@ public class Main {
 		cfg.resizable = Config.RESIZABLE;
 
 		cfg.vSyncEnabled = Config.VSYNC;
-
+ 
 		new LwjglApplication(new ATC(), cfg);
 	}
 }
