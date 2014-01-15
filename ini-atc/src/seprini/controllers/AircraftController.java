@@ -62,7 +62,8 @@ public final class AircraftController extends InputListener implements
 	 * @param airspace
 	 *            the group where all of the waypoints and aircraft will be
 	 *            added
-	 * @param sidebar the
+	 * @param sidebar
+	 *            the
 	 * @param screen
 	 */
 	public AircraftController(GameDifficulty diff, Airspace airspace,
@@ -539,8 +540,14 @@ public final class AircraftController extends InputListener implements
 			int button) {
 		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
 			createWaypoint(x, y, false);
+		} else if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
+			// * Currently, creates a new waypoint where you right click and
+			// then calls the
+			// * redirectAircraft method. Not sure how to select existing
+			// waypoint.
+			Waypoint waypoint = new Waypoint(x, y, true);
+			redirectAircraft(waypoint);
 		}
-
 		return false;
 	}
 
@@ -587,7 +594,6 @@ public final class AircraftController extends InputListener implements
 
 			if (keycode == Keys.RIGHT || keycode == Keys.D)
 				selectedAircraft.turnRight(false);
-
 
 		}
 
