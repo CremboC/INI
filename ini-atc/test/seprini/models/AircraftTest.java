@@ -81,13 +81,14 @@ public class AircraftTest {
 	public void testIncreaseSpeed() {
 		// fail("Not yet implemented");
 		aircraft.increaseSpeed();
-		assertEquals(1.1f * 700f, aircraft.getSpeed(), 100);
+		assertEquals(1.1f, aircraft.getSpeed(), 100);
+
 	}
 
 	@Test
 	public void testDecreaseSpeed() {
 		aircraft.decreaseSpeed();
-		assertEquals(0.9f * 700f, aircraft.getSpeed(), 0);
+		assertEquals(0.9f, aircraft.getSpeed(), 0);
 	}
 
 	@Test
@@ -154,7 +155,7 @@ public class AircraftTest {
 	public void testGetSpeed() {
 		// fail("Not yet implemented");
 		float result = aircraft.getSpeed();
-		assertEquals(700f, result, 0);
+		assertEquals(1f, result, 0);
 	}
 
 	@Test
