@@ -356,6 +356,10 @@ public final class Aircraft extends Entity {
 		turnLeft = set;
 	}
 
+	public ArrayList<Waypoint> getFlightPlan() {
+		return waypoints;
+	}
+
 	/**
 	 * Regular regular getter for radius
 	 * 
