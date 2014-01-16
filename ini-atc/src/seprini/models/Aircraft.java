@@ -388,7 +388,7 @@ public final class Aircraft extends Entity {
 	 * @return
 	 */
 	public float getSpeed() {
-		return velocityScalar * 700f;
+		return velocityScalar;
 	}
 
 	/**

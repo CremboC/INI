@@ -159,7 +159,9 @@ public final class SidebarController extends ChangeListener implements
 
 		// update aircraft speed text
 		labels.get("speed").setText(
-				"Speed: " + Math.round(selectedAircraft.getSpeed()) + "km/h");
+				"Speed: "
+						+ Math.round(selectedAircraft.getSpeed()
+								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
 	}
 
 	/**
