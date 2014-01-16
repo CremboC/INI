@@ -159,7 +159,7 @@ public class AircraftTest {
 
 	@Test
 	public void testIsActive() { // Not done yet, code not fixed
-		fail("Not yet implemented");
+		fail("Not yet implemented");//
 	}
 
 	@Test
