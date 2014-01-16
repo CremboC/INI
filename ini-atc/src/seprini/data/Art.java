@@ -48,9 +48,9 @@ public class Art {
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1080, 720));
-		textures.put("aircraft", split(combined, 1080, 0, 75, 63));
-		textures.put("waypoint", split(combined, 1155, 0, 20, 20));
-		textures.put("menuAircraft", split(combined, 1080, 64, 727, 249));
+		textures.put("aircraft", split(combined, 1081, 0, 75, 63));
+		textures.put("waypoint", split(combined, 0, 720, 20, 20));
+		textures.put("menuAircraft", split(combined, 1081, 64, 727, 249));
 
 		// load the default skin
 		loadSkin();
