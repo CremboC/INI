@@ -6,7 +6,6 @@ import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.State;
 import seprini.models.Aircraft;
-import seprini.models.Waypoint;
 import seprini.screens.GameScreen;
 import seprini.screens.MenuScreen;
 
@@ -167,18 +166,18 @@ public final class SidebarController extends ChangeListener implements
 						+ Math.round(selectedAircraft.getSpeed()
 								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
 
-		for (Waypoint wp : selectedAircraft.getFlightPlan()) {
-			String wpName = "wp" + wp.getX() + "" + wp.getY();
-
-			if (labels.get(wpName) != null)
-				continue;
-
-			createLabel("wp" + wp.getX() + "" + wp.getY(),
-					"Waypoint: " + wp.getX() + ":" + wp.getY(), waypointWrapper)
-					.width(200);
-
-			waypointWrapper.row();
-		}
+		// for (Waypoint wp : selectedAircraft.getFlightPlan()) {
+		// String wpName = "wp" + wp.getX() + "" + wp.getY();
+		//
+		// if (labels.get(wpName) != null)
+		// continue;
+		//
+		// createLabel("wp" + wp.getX() + "" + wp.getY(),
+		// "Waypoint: " + wp.getX() + ":" + wp.getY(), waypointWrapper)
+		// .width(200);
+		//
+		// waypointWrapper.row();
+		// }
 	}
 
 	/**
