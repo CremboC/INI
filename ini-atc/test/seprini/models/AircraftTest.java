@@ -76,7 +76,6 @@ public class AircraftTest {
 
 	@Test
 	public void testIncreaseSpeed() {
-		// fail("Not yet implemented");
 		aircraft.increaseSpeed();
 		assertEquals(1.1f, aircraft.getSpeed(), 100);
 
@@ -90,7 +89,6 @@ public class AircraftTest {
 
 	@Test
 	public void testIncreaseAltitude() {
-		// fail("Not yet implemented");
 		aircraft.increaseAltitude();
 		float result = aircraft.getAltitude();
 		assertEquals(1100f, result, 0);
@@ -98,7 +96,6 @@ public class AircraftTest {
 
 	@Test
 	public void testDecreaseAltitude() {
-		// fail("Not yet implemented");
 		aircraft.decreaseAltitude();
 		float result = aircraft.getAltitude();
 		assertEquals(900f, result, 0);
@@ -122,7 +119,6 @@ public class AircraftTest {
 
 	@Test
 	public void testGetCentreCoords() {
-		// fail("Not yet implemented");
 		Vector2 result = aircraft.getCentreCoords();
 		Vector2 testAnswer = new Vector2(41f, 36.5f);
 		assertEquals(testAnswer.x, result.x, 0);
@@ -131,7 +127,6 @@ public class AircraftTest {
 
 	@Test
 	public void testGetSeparationRadius() {
-		// fail("Not yet implemented");
 		float result = aircraft.getSeparationRadius();
 		assertEquals(result, 100, 0);
 	}
@@ -143,21 +138,18 @@ public class AircraftTest {
 
 	@Test
 	public void testGetAltitude() {
-		// fail("Not yet implemented");
 		float result = aircraft.getAltitude();
 		assertEquals(1000f, result, 0);
 	}
 
 	@Test
 	public void testGetSpeed() {
-		// fail("Not yet implemented");
 		float result = aircraft.getSpeed();
 		assertEquals(1f, result, 0);
 	}
 
 	@Test
 	public void testIsActive() {
-		// fail("Not yet implemented");
 		assertTrue(aircraft.isActive());
 	}
 

@@ -99,11 +99,11 @@ public class GameScreen extends Screen {
 			 * default : color = Color.BLACK; break; }
 			 */
 
-			if (craft.getAltitude() <= 1000) {
+			if (craft.getAltitude() <= 6000) {
 				color = Color.GREEN;
-			} else if (craft.getAltitude() <= 2000) {
+			} else if (craft.getAltitude() <= 12000) {
 				color = Color.ORANGE;
-			} else if (craft.getAltitude() > 2000) {
+			} else if (craft.getAltitude() > 12000) {
 				color = Color.RED;
 			} else {
 				color = Color.BLACK;
