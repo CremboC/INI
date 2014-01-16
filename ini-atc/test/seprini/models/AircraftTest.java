@@ -70,11 +70,11 @@ public class AircraftTest {
 	@Test
 	public void testInsertWaypoint() {
 		fail("Not yet implemented");
-		/*
-		 * Waypoint newWaypoint = new Waypoint(7 , 8, true);
-		 * aircraft.insertWaypoint(newWaypoint);
-		 * assertEquals(aircraft.waypoints(1), newWaypoint);
-		 */
+
+		Waypoint newWaypoint = new Waypoint(7, 8, true);
+		aircraft.insertWaypoint(newWaypoint);
+		// assertEquals(aircraft.waypoints.get(0), newWaypoint);
+
 	}
 
 	@Test
@@ -159,8 +159,9 @@ public class AircraftTest {
 	}
 
 	@Test
-	public void testIsActive() { // Not done yet, code not fixed
-		fail("Not yet implemented");//
+	public void testIsActive() {
+		// fail("Not yet implemented");
+		assertTrue(aircraft.isActive());
 	}
 
 	@Test
