@@ -39,6 +39,8 @@ public final class SidebarController extends ChangeListener implements
 
 	private final GameScreen screen;
 
+	private Table aircraftControls, waypointWrapper, bottomButtons;
+
 	/**
 	 * 
 	 * 
@@ -63,10 +65,7 @@ public final class SidebarController extends ChangeListener implements
 	public void init() {
 
 		// wrapper for aicraft controls
-		Table aircraftControls = new Table();
-
-		// aircraftControls.setX(100);
-		// aircraftControls.setY(650);
+		aircraftControls = new Table();
 		aircraftControls.setFillParent(true);
 
 		if (Config.DEBUG_UI)
@@ -75,8 +74,14 @@ public final class SidebarController extends ChangeListener implements
 		aircraftControls.top();
 		sidebar.addActor(aircraftControls);
 
+		// wrapper for waypoint list
+		waypointWrapper = new Table();
+		waypointWrapper.setFillParent(true);
+
+		sidebar.addActor(waypointWrapper);
+
 		// wrapper for bottom buttons
-		Table bottomButtons = new Table();
+		bottomButtons = new Table();
 
 		bottomButtons.setFillParent(true);
 
@@ -126,8 +131,6 @@ public final class SidebarController extends ChangeListener implements
 		createLabel("", "Time:").width(100);
 		createLabel("timer", "..").width(100);
 
-		aircraftControls.row();
-
 		// adding buttons to bottom
 
 		createButton("menu", "Menu", bottomButtons).width(100);
@@ -162,6 +165,19 @@ public final class SidebarController extends ChangeListener implements
 				"Speed: "
 						+ Math.round(selectedAircraft.getSpeed()
 								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
+
+		// for (Waypoint wp : selectedAircraft.getFlightPlan()) {
+		// String wpName = "wp" + wp.getX() + "" + wp.getY();
+		//
+		// if (labels.get(wpName) != null)
+		// continue;
+		//
+		// createLabel("wp" + wp.getX() + "" + wp.getY(),
+		// "Waypoint: " + wp.getX() + ":" + wp.getY(), waypointWrapper)
+		// .width(200);
+		//
+		// waypointWrapper.row();
+		// }
 	}
 
 	/**
@@ -234,23 +250,25 @@ public final class SidebarController extends ChangeListener implements
 		if (actor.equals(buttons.get("assignWaypoint")))
 			assignWaypointClicked();
 
-		if (actor.equals(buttons.get("left")))
-			selectedAircraft.turnLeft();
+		if (selectedAircraft != null) {
+			if (actor.equals(buttons.get("left")))
+				selectedAircraft.turnLeft();
 
-		if (actor.equals(buttons.get("right")))
-			selectedAircraft.turnRight();
+			if (actor.equals(buttons.get("right")))
+				selectedAircraft.turnRight();
 
-		if (actor.equals(buttons.get("up")))
-			selectedAircraft.increaseAltitude();
+			if (actor.equals(buttons.get("up")))
+				selectedAircraft.increaseAltitude();
 
-		if (actor.equals(buttons.get("down")))
-			selectedAircraft.decreaseAltitude();
-		
-		if (actor.equals(buttons.get("accelerate")))
-			selectedAircraft.increaseSpeed();
-		
-		if (actor.equals(buttons.get("decelerate")))
-			selectedAircraft.decreaseSpeed();
+			if (actor.equals(buttons.get("down")))
+				selectedAircraft.decreaseAltitude();
+
+			if (actor.equals(buttons.get("accelerate")))
+				selectedAircraft.increaseSpeed();
+
+			if (actor.equals(buttons.get("decelerate")))
+				selectedAircraft.decreaseSpeed();
+		}
 
 		if (actor.equals(buttons.get("menu")))
 			screen.setScreen(new MenuScreen());

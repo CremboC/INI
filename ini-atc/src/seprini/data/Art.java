@@ -48,9 +48,9 @@ public class Art {
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1080, 720));
-		textures.put("aircraft", split(combined, 1080, 0, 75, 63));
-		textures.put("waypoint", split(combined, 1155, 0, 20, 20));
-		textures.put("menuAircraft", split(combined, 1080, 64, 727, 249));
+		textures.put("aircraft", split(combined, 1081, 0, 75, 63));
+		textures.put("waypoint", split(combined, 0, 720, 20, 20));
+		textures.put("menuAircraft", split(combined, 1081, 64, 727, 249));
 
 		// load the default skin
 		loadSkin();
@@ -76,8 +76,7 @@ public class Art {
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", 0.07f, 0.1f, 0.22f, 1);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", 0.07f, 0.1f, 0.22f,
-				1);
+		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);

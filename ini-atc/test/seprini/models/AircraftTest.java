@@ -2,7 +2,6 @@ package seprini.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -69,30 +68,27 @@ public class AircraftTest {
 
 	@Test
 	public void testInsertWaypoint() {
-		fail("Not yet implemented");
-		/*
-		 * Waypoint newWaypoint = new Waypoint(7 , 8, true);
-		 * aircraft.insertWaypoint(newWaypoint);
-		 * assertEquals(aircraft.waypoints(1), newWaypoint);
-		 */
+		Waypoint newWaypoint = new Waypoint(7, 8, true);
+		aircraft.insertWaypoint(newWaypoint);
+		assertEquals(aircraft.getFlightPlan().get(0), newWaypoint);
+
 	}
 
 	@Test
 	public void testIncreaseSpeed() {
-		// fail("Not yet implemented");
 		aircraft.increaseSpeed();
-		assertEquals(1.1f * 700f, aircraft.getSpeed(), 100);
+		assertEquals(1.1f, aircraft.getSpeed(), 100);
+
 	}
 
 	@Test
 	public void testDecreaseSpeed() {
 		aircraft.decreaseSpeed();
-		assertEquals(0.9f * 700f, aircraft.getSpeed(), 0);
+		assertEquals(0.9f, aircraft.getSpeed(), 0);
 	}
 
 	@Test
 	public void testIncreaseAltitude() {
-		// fail("Not yet implemented");
 		aircraft.increaseAltitude();
 		float result = aircraft.getAltitude();
 		assertEquals(1100f, result, 0);
@@ -100,7 +96,6 @@ public class AircraftTest {
 
 	@Test
 	public void testDecreaseAltitude() {
-		// fail("Not yet implemented");
 		aircraft.decreaseAltitude();
 		float result = aircraft.getAltitude();
 		assertEquals(900f, result, 0);
@@ -124,7 +119,6 @@ public class AircraftTest {
 
 	@Test
 	public void testGetCentreCoords() {
-		// fail("Not yet implemented");
 		Vector2 result = aircraft.getCentreCoords();
 		Vector2 testAnswer = new Vector2(41f, 36.5f);
 		assertEquals(testAnswer.x, result.x, 0);
@@ -133,7 +127,6 @@ public class AircraftTest {
 
 	@Test
 	public void testGetSeparationRadius() {
-		// fail("Not yet implemented");
 		float result = aircraft.getSeparationRadius();
 		assertEquals(result, 100, 0);
 	}
@@ -145,21 +138,19 @@ public class AircraftTest {
 
 	@Test
 	public void testGetAltitude() {
-		// fail("Not yet implemented");
 		float result = aircraft.getAltitude();
 		assertEquals(1000f, result, 0);
 	}
 
 	@Test
 	public void testGetSpeed() {
-		// fail("Not yet implemented");
 		float result = aircraft.getSpeed();
-		assertEquals(700f, result, 0);
+		assertEquals(1f, result, 0);
 	}
 
 	@Test
-	public void testIsActive() { // Not done yet, code not fixed
-		fail("Not yet implemented");
+	public void testIsActive() {
+		assertTrue(aircraft.isActive());
 	}
 
 	@Test

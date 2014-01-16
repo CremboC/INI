@@ -27,7 +27,8 @@ public class Waypoint extends Entity {
 		this.size = Config.WAYPOINT_SIZE;
 
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
-		this.setBounds(getX(), getY(), getWidth(), getHeight());
+		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
+				getWidth(), getHeight());
 	}
 
 	public boolean isDeletable() {
