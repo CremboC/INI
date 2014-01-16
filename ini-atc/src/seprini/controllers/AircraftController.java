@@ -441,7 +441,7 @@ public final class AircraftController extends InputListener implements
 	 * @param y
 	 * @param permanent
 	 */
-	private boolean createWaypoint(float x, float y, boolean permanent) {
+	private boolean createWaypoint(float x, float y, final boolean permanent) {
 
 		Debug.msg("Creating waypoint at: " + x + ":" + y);
 
@@ -461,10 +461,6 @@ public final class AircraftController extends InputListener implements
 
 		airspace.addActor(waypoint);
 
-		// if it's permanent it doesn't need a listener, return;
-		if (permanent)
-			return true;
-
 		waypoint.addListener(new ClickListener() {
 
 			/**
@@ -475,11 +471,15 @@ public final class AircraftController extends InputListener implements
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
+				if (button == Buttons.LEFT && sidebar.allowRedirection()) {
 					redirectAircraft(waypoint);
-				} else if (button == Buttons.RIGHT) {
+					return true;
+				}
+
+				if (button == Buttons.RIGHT && !permanent) {
 					userWaypointList.remove(waypoint);
 					airspace.removeActor(waypoint);
+					return true;
 				}
 
 				return true;
@@ -538,16 +538,22 @@ public final class AircraftController extends InputListener implements
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
+
 		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
 			createWaypoint(x, y, false);
-		} else if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
-			// * Currently, creates a new waypoint where you right click and
-			// then calls the
-			// * redirectAircraft method. Not sure how to select existing
-			// waypoint.
-			Waypoint waypoint = new Waypoint(x, y, true);
-			redirectAircraft(waypoint);
+			return true;
 		}
+
+		// if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
+		// // * Currently, creates a new waypoint where you right click and
+		// // then calls the
+		// // * redirectAircraft method. Not sure how to select existing
+		// // waypoint.
+		// Waypoint waypoint = new Waypoint(x, y, true);
+		// redirectAircraft(waypoint);
+		// return true;
+		// }
+
 		return false;
 	}
 
