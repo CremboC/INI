@@ -42,6 +42,7 @@ public final class AircraftController extends InputListener implements
 
 	private final int maxAircraft;
 	private final int timeBetweenGenerations;
+	private final int separationRadius;
 	private float lastGenerated;
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
@@ -80,18 +81,22 @@ public final class AircraftController extends InputListener implements
 		case EASY:
 			maxAircraft = 1;
 			timeBetweenGenerations = 1;
+			separationRadius = 150;
 			break;
 		case MEDIUM:
 			maxAircraft = 2;
 			timeBetweenGenerations = 5;
+			separationRadius = 100;
 			break;
 		case HARD:
 			maxAircraft = 10;
 			timeBetweenGenerations = 2;
+			separationRadius = 50;
 			break;
 		default:
 			maxAircraft = 1;
 			timeBetweenGenerations = 1;
+			separationRadius = 100;
 			break;
 		}
 	}
@@ -135,7 +140,7 @@ public final class AircraftController extends InputListener implements
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
 				.setMaxClimbRate(0).setMaxSpeed(1.5f).setMaxTurningSpeed(0.4f)
-				.setRadius(10).setSeparationRadius(90)
+				.setRadius(10).setSeparationRadius(separationRadius)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(0.8f, 0.8f));
 
