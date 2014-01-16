@@ -85,8 +85,9 @@ public final class Aircraft extends Entity {
 		this.setScale(0.5f);
 
 		// set bounds so the aircraft is clickable
-		this.setBounds(getX() - getWidth() / 1.5f, getY() - getWidth() / 1.5f,
-				getWidth() * 2, getHeight() * 2);
+		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
+				getWidth(),
+				getHeight());
 
 		// set rotation & velocity angle to fit next waypoint
 		float relativeAngle = relativeAngleToWaypoint();
@@ -208,8 +209,8 @@ public final class Aircraft extends Entity {
 		coords.add(velocity.cpy().scl(velocityScalar));
 
 		// updating bounds to make sure the aircraft is clickable
-		this.setBounds(getX() - getWidth() / 1.5f, getY() - getWidth() / 1.5f,
-				getWidth() * 2, getHeight() * 2);
+		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
+				getWidth(), getHeight());
 	}
 
 	/**
