@@ -135,7 +135,7 @@ public final class Aircraft extends Entity {
 			batch.end();
 
 			drawer.begin(ShapeType.Line);
-			drawer.setColor(1, 0, 0, 0);
+			drawer.setColor(1, 1, 1, 0);
 			drawer.line(getX(), getY(), exitpoint.getX(), exitpoint.getY());
 			drawer.end();
 
@@ -146,7 +146,7 @@ public final class Aircraft extends Entity {
 			batch.end();
 
 			drawer.begin(ShapeType.Line);
-			drawer.setColor(1, 0, 0, 0);
+			drawer.setColor(1, 0.64f, 0, 0);
 			drawer.circle(getX(), getY(), getWidth() / 2 + 5);
 			drawer.end();
 
@@ -270,28 +270,6 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Turns right by 5 degrees if the user presses the right key for more than
-	 * 2000ms
-	 */
-	public void turnRight() {
-		ignorePath = true;
-
-		this.rotate(-maxTurningRate * 2);
-		velocity.setAngle(getRotation());
-	}
-
-	/**
-	 * Turns left by 5 degrees if the user presses the right key for more than
-	 * 2000ms
-	 */
-	public void turnLeft() {
-		ignorePath = true;
-
-		this.rotate(maxTurningRate * 2);
-		velocity.setAngle(getRotation());
-	}
-
-	/**
 	 * Increase speed of the aircraft <br>
 	 * Actually changes a scalar which is later multiplied by the velocity
 	 * vector
@@ -357,6 +335,28 @@ public final class Aircraft extends Entity {
 
 	public void turnLeft(boolean set) {
 		turnLeft = set;
+	}
+
+	/**
+	 * Turns right by 5 degrees if the user presses the right key for more than
+	 * 2000ms
+	 */
+	public void turnRight() {
+		ignorePath = true;
+
+		this.rotate(-maxTurningRate * 2);
+		velocity.setAngle(getRotation());
+	}
+
+	/**
+	 * Turns left by 5 degrees if the user presses the right key for more than
+	 * 2000ms
+	 */
+	public void turnLeft() {
+		ignorePath = true;
+
+		this.rotate(maxTurningRate * 2);
+		velocity.setAngle(getRotation());
 	}
 
 	public ArrayList<Waypoint> getFlightPlan() {

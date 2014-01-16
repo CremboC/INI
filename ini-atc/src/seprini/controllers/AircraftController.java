@@ -420,6 +420,9 @@ public final class AircraftController extends InputListener implements
 	private void removeAircraft(int i) {
 		Aircraft aircraft = aircraftList.get(i);
 
+		if (selectedAircraft.equals(aircraft))
+			selectedAircraft = null;
+
 		// removes the aircraft from the list of aircrafts on screen
 		aircraftList.remove(i);
 
