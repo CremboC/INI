@@ -85,27 +85,31 @@ public class GameScreen extends Screen {
 
 		// draw the altitude for each aircraft
 		for (Aircraft craft : controller.getAircraftList()) {
-			
-			Color color;
-			
-			switch (craft.getAltitude()) {
-				case 1000 :
-					color = Color.GREEN;
-					break;
-					
-				case 2000 :
-					color = Color.ORANGE;
-					break;
-					
-				case 3000 :
-					color = Color.RED;
-					break;
 
-				default :
-					color = Color.BLACK;
-					break;
+			Color color;
+
+			/*
+			 * switch (craft.getAltitude()) { case 1000 : color = Color.GREEN;
+			 * break;
+			 * 
+			 * case 2000 : color = Color.ORANGE; break;
+			 * 
+			 * case 3000 : color = Color.RED; break;
+			 * 
+			 * default : color = Color.BLACK; break; }
+			 */
+
+			if (craft.getAltitude() <= 1000) {
+				color = Color.GREEN;
+			} else if (craft.getAltitude() <= 2000) {
+				color = Color.ORANGE;
+			} else if (craft.getAltitude() > 2000) {
+				color = Color.RED;
+			} else {
+				color = Color.BLACK;
 			}
-			
+			;
+
 			drawString("Alt: " + craft.getAltitude(), craft.getX() - 25,
 					craft.getY() - 20, color, root.getSpriteBatch());
 		}
