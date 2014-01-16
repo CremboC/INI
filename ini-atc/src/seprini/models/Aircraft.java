@@ -36,7 +36,7 @@ public final class Aircraft extends Entity {
 
 	private boolean isActive = true;
 	private boolean ignorePath = false; // When user has taken control of the
-										// aircraft
+	// aircraft
 
 	// used for smooth rotation, to remember the original angle to the next
 	// waypoint
@@ -109,11 +109,22 @@ public final class Aircraft extends Entity {
 	 */
 	@Override
 	protected void additionalDraw(SpriteBatch batch) {
-		
+
 		if (!ignorePath && !selected && !breaching)
 			return;
 
 		ShapeRenderer drawer = Screen.shapeDebugger;
+
+		Vector2 nextWaypoint = vectorToWaypoint();
+
+		batch.end();
+
+		drawer.begin(ShapeType.Line);
+		drawer.setColor(1, 0, 0, 0);
+		drawer.line(getX(), getY(), nextWaypoint.x, nextWaypoint.y);
+		drawer.end();
+
+		batch.begin();
 
 		if (ignorePath) {
 			Waypoint exitpoint = waypoints.get(waypoints.size() - 1);
@@ -122,13 +133,12 @@ public final class Aircraft extends Entity {
 
 			drawer.begin(ShapeType.Line);
 			drawer.setColor(1, 0, 0, 0);
-			drawer.line(getX(), getY(), exitpoint.getX(),
-					exitpoint.getY());
+			drawer.line(getX(), getY(), exitpoint.getX(), exitpoint.getY());
 			drawer.end();
 
 			batch.begin();
 		}
-			
+
 		if (selected || breaching) {
 			batch.end();
 
@@ -176,7 +186,6 @@ public final class Aircraft extends Entity {
 
 			// checking whether aircraft is at the next waypoint. Whether it's
 			// close enough is dictated by the WP size in the config.
-
 			if (nextWaypoint.sub(coords).len() < Config.WAYPOINT_SIZE.x / 2) {
 				waypoints.remove(0);
 			}
@@ -185,7 +194,8 @@ public final class Aircraft extends Entity {
 			velocity.setAngle(getRotation());
 		}
 
-		// For when the user takes control of the aircraft. Allows the aircraft to detect when it is at its designated exit WP.
+		// For when the user takes control of the aircraft. Allows the aircraft
+		// to detect when it is at its designated exit WP.
 		if (waypoints.get(waypoints.size() - 1).cpy().getCoords().sub(coords)
 				.len() < Config.EXIT_WAYPOINT_SIZE.x / 2) {
 			waypoints.clear();
@@ -210,12 +220,10 @@ public final class Aircraft extends Entity {
 
 		// converts waypoints coordinates into 3d vectors to enabled
 		// subtraction.
-		nextWaypoint.x = waypoints.get(0).getCoords().x
-				+ (Config.WAYPOINT_SIZE.x / 2);
-		nextWaypoint.y = waypoints.get(0).getCoords().y
-				+ (Config.WAYPOINT_SIZE.y / 2);
+		nextWaypoint.x = waypoints.get(0).getCoords().x;
+		nextWaypoint.y = waypoints.get(0).getCoords().y;
 
-		// round it to 2 points after decimal, makes it more mangeable later
+		// round it to 2 points after decimal, makes it more manageable later
 		nextWaypoint.x = (float) (Math.round(nextWaypoint.x * 100.0) / 100.0);
 		nextWaypoint.y = (float) (Math.round(nextWaypoint.y * 100.0) / 100.0);
 
@@ -244,7 +252,6 @@ public final class Aircraft extends Entity {
 		// degrees to nextWaypoint relative to aircraft
 		float degrees = (float) ((Math.atan2(getX() - waypoint.x,
 				-(getY() - waypoint.y)) * 180.0f / Math.PI) + 90.0f);
-
 
 		// round it to 2 points after decimal so it's not rotating forever
 		return Math.round(degrees * 100.0f) / 100.0f;
@@ -363,7 +370,7 @@ public final class Aircraft extends Entity {
 	public float getSeparationRadius() {
 		return separationRadius;
 	}
-	
+
 	public void isBreaching(boolean is) {
 		this.breaching = is;
 	}
@@ -382,7 +389,7 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Returns false if aircraft flightplan is empty, true otherwise. 
+	 * Returns false if aircraft flightplan is empty, true otherwise.
 	 * 
 	 * @return whether is active
 	 */
