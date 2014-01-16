@@ -26,5 +26,6 @@ public final class Config {
 
 	// Game related
 	public final static int USER_WAYPOINT_LIMIT = 10;
+	public final static float AIRCRAFT_SPEED_MULTIPLIER = 800f;
 
 }
