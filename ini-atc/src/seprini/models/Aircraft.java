@@ -115,16 +115,19 @@ public final class Aircraft extends Entity {
 
 		ShapeRenderer drawer = Screen.shapeDebugger;
 
-		Vector2 nextWaypoint = vectorToWaypoint();
+		// debug line from aircraft centre to waypoint centre
+		if (Config.DEBUG_UI) {
+			Vector2 nextWaypoint = vectorToWaypoint();
 
-		batch.end();
+			batch.end();
 
-		drawer.begin(ShapeType.Line);
-		drawer.setColor(1, 0, 0, 0);
-		drawer.line(getX(), getY(), nextWaypoint.x, nextWaypoint.y);
-		drawer.end();
+			drawer.begin(ShapeType.Line);
+			drawer.setColor(1, 0, 0, 0);
+			drawer.line(getX(), getY(), nextWaypoint.x, nextWaypoint.y);
+			drawer.end();
 
-		batch.begin();
+			batch.begin();
+		}
 
 		if (ignorePath) {
 			Waypoint exitpoint = waypoints.get(waypoints.size() - 1);
