@@ -95,16 +95,15 @@ public class AircraftTest {
 		// fail("Not yet implemented");
 		aircraft.increaseAltitude();
 		float result = aircraft.getAltitude();
-		assertEquals(5f, result, 0);
+		assertEquals(1100f, result, 0);
 	}
 
 	@Test
 	public void testDecreaseAltitude() {
 		// fail("Not yet implemented");
-		aircraft.increaseAltitude();
 		aircraft.decreaseAltitude();
 		float result = aircraft.getAltitude();
-		assertEquals(0f, result, 0);
+		assertEquals(900f, result, 0);
 	}
 
 	@Test
@@ -148,7 +147,7 @@ public class AircraftTest {
 	public void testGetAltitude() {
 		// fail("Not yet implemented");
 		float result = aircraft.getAltitude();
-		assertEquals(0f, result, 0);
+		assertEquals(1000f, result, 0);
 	}
 
 	@Test
