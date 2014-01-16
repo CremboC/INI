@@ -48,7 +48,8 @@ public abstract class Entity extends Actor {
 
 		Screen.shapeDebugger.begin(ShapeType.Line);
 		Screen.shapeDebugger.setColor(1, 0, 0, 0);
-		Screen.shapeDebugger.circle(getX(), getY(), getWidth() / 2 + 5);
+		Screen.shapeDebugger.box(getX() - getWidth() / 2, getY() - getHeight()
+				/ 2, 0, getWidth(), getHeight(), 0);
 		Screen.shapeDebugger.end();
 
 		batch.begin();

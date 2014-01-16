@@ -269,10 +269,10 @@ public final class SidebarController extends ChangeListener implements
 
 			if (actor.equals(buttons.get("decelerate")))
 				selectedAircraft.decreaseSpeed();
-
-			if (actor.equals(buttons.get("menu")))
-				screen.setScreen(new MenuScreen());
 		}
+
+		if (actor.equals(buttons.get("menu")))
+			screen.setScreen(new MenuScreen());
 
 	}
 
