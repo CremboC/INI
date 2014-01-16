@@ -2,7 +2,6 @@ package seprini.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -69,11 +68,9 @@ public class AircraftTest {
 
 	@Test
 	public void testInsertWaypoint() {
-		fail("Not yet implemented");
-
 		Waypoint newWaypoint = new Waypoint(7, 8, true);
 		aircraft.insertWaypoint(newWaypoint);
-		// assertEquals(aircraft.waypoints.get(0), newWaypoint);
+		assertEquals(aircraft.getFlightPlan().get(0), newWaypoint);
 
 	}
 
