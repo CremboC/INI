@@ -16,6 +16,7 @@ import seprini.models.Waypoint;
 import seprini.models.types.AircraftType;
 import seprini.screens.EndScreen;
 import seprini.screens.GameScreen;
+import seprini.data.WaypointData;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -33,13 +34,7 @@ public final class AircraftController extends InputListener implements
 	// aircraft and aircraft type lists
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
-
 	// waypoint lists
-	private final ArrayList<Waypoint> permanentWaypointList = new ArrayList<Waypoint>();
-	private final ArrayList<Waypoint> userWaypointList = new ArrayList<Waypoint>();
-	private final ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
-	private final ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
-
 	private final int maxAircraft;
 	private final int timeBetweenGenerations;
 	private final int separationRadius;
@@ -47,7 +42,8 @@ public final class AircraftController extends InputListener implements
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
 	private final GameDifficulty difficulty;
-
+	private final WaypointData waypointData= new WaypointData();
+	//private static AircraftGenerator aircraftGenerator;
 	// ui related
 	private final Airspace airspace;
 	private final SidebarController sidebar;
@@ -105,41 +101,9 @@ public final class AircraftController extends InputListener implements
 		// add the background
 		airspace.addActor(new Map());
 
-		// add entry waypoints to entryList
-		Waypoint e = new Waypoint(new Vector2(0, 0), true);
-		entryList.add(e);
-
-		Waypoint en = new Waypoint(new Vector2(0, 720), true);
-		entryList.add(en);
-
-		Waypoint ent = new Waypoint(new Vector2(0, 420), true);
-		entryList.add(ent);
-
-		Waypoint entr = new Waypoint(new Vector2(1080, 360), true);
-		entryList.add(entr);
-
-		Waypoint entry = new Waypoint(new Vector2(1080, 0), true);
-		entryList.add(entry);
-
-		// add exit waypoints to exitList
-		Exitpoint f = new Exitpoint(new Vector2(1080, 720));
-		exitList.add(f);
-
-		Exitpoint fi = new Exitpoint(new Vector2(1080, 0));
-		exitList.add(fi);
-
-		Exitpoint fin = new Exitpoint(new Vector2(0, 420));
-		exitList.add(fin);
-
-		// add some waypoints
-		createWaypoint(500, 200, true);
-		createWaypoint(200, 600, true);
-		createWaypoint(800, 250, true);
-		createWaypoint(700, 500, true);
-
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(1.5f).setMaxTurningSpeed(0.4f)
+				.setMaxClimbRate(0).setMaxSpeed(1.5f).setMaxTurningSpeed(0.7f)
 				.setRadius(10).setSeparationRadius(separationRadius)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(0.8f, 0.8f));
@@ -260,152 +224,13 @@ public final class AircraftController extends InputListener implements
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
-				generateFlightPlan(), aircraftId++);
+				AircraftGenerator.generateFlightPlan(), aircraftId++);
 
 		aircraftList.add(newAircraft);
 
 		lastGenerated = State.time();
 
 		return newAircraft;
-	}
-
-	/**
-	 * Generates a flight plan - a list of waypoints - for aircraft. Aircraft
-	 * with the same entry and exit points will always follow the same route.
-	 * 
-	 * @return completeFlightPlan
-	 */
-	private ArrayList<Waypoint> generateFlightPlan() {
-
-		// Initialisation of parameters required by flightPlanWaypointGenerator.
-		ArrayList<Waypoint> flightPlan = new ArrayList<Waypoint>();
-		Waypoint entryWaypoint = setStartpoint();
-		Waypoint lastWaypoint = setEndpoint(entryWaypoint, 500);
-		// entryWaypoint immediately added to aircrafts flightPlan.
-		flightPlan.add(entryWaypoint);
-
-		return flightPlanWaypointGenerator(flightPlan, entryWaypoint,
-				lastWaypoint);
-	}
-
-	/**
-	 * Adds a selection of waypoints + lastWaypoint to flighPlan.
-	 * 
-	 * @param flightPlan
-	 * @param currentWaypoint
-	 * @param lastWaypoint
-	 * @return completeFlightPlan
-	 */
-	private ArrayList<Waypoint> flightPlanWaypointGenerator(
-			ArrayList<Waypoint> flightPlan, Waypoint currentWaypoint,
-			Waypoint lastWaypoint) {
-
-		// Base Case; self explanatory.
-		if (currentWaypoint.equals(lastWaypoint)) {
-			return flightPlan;
-		}
-
-		else {
-			// Find normal vector from currentWaypoint to lastWaypoint and
-			// normalise.
-			Vector2 normalVectorFromCurrentToLast = lastWaypoint.getCoords()
-					.cpy().sub(currentWaypoint.getCoords()).nor();
-
-			// Create the list of waypoints for the generator to choose from,
-			// including the final waypoint so that the base case can be
-			// satisfied;
-			ArrayList<Waypoint> waypointSelectionList = permanentWaypointList;
-			waypointSelectionList.add(lastWaypoint);
-
-			// Call selectNextWaypoint.
-			Waypoint nextWaypoint = selectNextWaypoint(currentWaypoint,
-					lastWaypoint, flightPlan, normalVectorFromCurrentToLast,
-					waypointSelectionList, 50, 300);
-			// Recurse with updated flightPlan and nextWaypoint.
-			return flightPlanWaypointGenerator(flightPlan, nextWaypoint,
-					lastWaypoint);
-		}
-	}
-
-	/**
-	 * Selects a waypoint to insert into flightPlan, under certain constraints.
-	 * 
-	 * @param currentWaypoint
-	 * @param flightPlan
-	 * @param normalVectorFromCurrentToLast
-	 * @param waypointSelectionList
-	 * @param maxAngle
-	 *            - minimum angle from currentWaypoint to nextWaypoint, where 0
-	 *            degrees is the angle from currentWaypoint to lastWaypoint
-	 * @param minDistance
-	 *            - minimum distance from currentWaypoint to nextWaypoint. Ideal
-	 *            value = diameter of the turning circle of the aircraft.
-	 * @return nextWaypoint
-	 */
-	private Waypoint selectNextWaypoint(Waypoint currentWaypoint,
-			Waypoint lastWaypoint, ArrayList<Waypoint> flightPlan,
-			Vector2 normalVectorFromCurrentToLast,
-			ArrayList<Waypoint> waypointSelectionList, int maxAngle,
-			int minDistance) {
-		Waypoint nextWaypoint = null;
-
-		for (Waypoint waypoint : waypointSelectionList) {
-			// Find normal vector from current item in waypointSelectionList to
-			// lastWaypoint.
-			Vector2 normalVectorFromCurrentToPotential = new Vector2(waypoint
-					.getCoords().cpy().sub(currentWaypoint.getCoords())).nor();
-			// Check that waypoint in waypointSelectoinList:
-			// 1. Is not already in flighPlan
-			// 2. Angle between normalVectorFromCurrentToPotential and
-			// normalVectorFromCurrentToLast is less than specified maxAngle.
-			// 3. Is minDistance away from currentWaypoint
-			if (!flightPlan.contains(waypoint)
-					&& Math.abs(normalVectorFromCurrentToPotential.angle()
-							- normalVectorFromCurrentToLast.angle()) < maxAngle
-					&& waypoint.getCoords().dst(currentWaypoint.getCoords()) > minDistance
-					&& waypoint.getCoords().dst(lastWaypoint.getCoords()) > minDistance) {
-				// If all conditions are met, choose this waypoint as the
-				// nextWaypoint.
-				nextWaypoint = waypoint;
-				break;
-			}
-		}
-		if (nextWaypoint == null) {
-			nextWaypoint = lastWaypoint;
-		}
-
-		// add nextWaypoint to flightPlan.
-		flightPlan.add(nextWaypoint);
-		return nextWaypoint;
-	}
-
-	/**
-	 * Selects random waypoint from entrypointList.
-	 * 
-	 * @return Waypoint
-	 */
-	private Waypoint setStartpoint() {
-		return entryList.get(rand.nextInt(entryList.size()));
-	}
-
-	/**
-	 * Selects random exitpoint from exitpointList, that is at least minDistance
-	 * away from the aircrafts entryWaypoint
-	 * 
-	 * @param entryWaypoint
-	 *            - where this aircraft entered the game
-	 * @param minDistance
-	 *            - desired minimum distance between aircrafts entryWaypoint and
-	 *            its exitWaypoint.
-	 * @return Exitpoint
-	 */
-	private Exitpoint setEndpoint(Waypoint entryWaypoint, int minDistance) {
-		Exitpoint chosenExitPoint = exitList.get(rand.nextInt(exitList.size()));
-		if (chosenExitPoint.getCoords().dst(entryWaypoint.getCoords()) < minDistance) {
-			chosenExitPoint = setEndpoint(entryWaypoint, minDistance);
-		}
-
-		return chosenExitPoint;
 	}
 
 	/**
@@ -446,11 +271,11 @@ public final class AircraftController extends InputListener implements
 	 * @param y
 	 * @param permanent
 	 */
-	private boolean createWaypoint(float x, float y, boolean permanent) {
+	public boolean createWaypoint(float x, float y, boolean permanent) {
 
 		Debug.msg("Creating waypoint at: " + x + ":" + y);
 
-		if (userWaypointList.size() == Config.USER_WAYPOINT_LIMIT && !permanent)
+		if (WaypointData.userWaypointList.size() == Config.USER_WAYPOINT_LIMIT && !permanent)
 			return false;
 
 		Debug.msg("Waypoint at: " + x + ":" + y + " created");
@@ -460,9 +285,9 @@ public final class AircraftController extends InputListener implements
 		// add it to the correct list according to whether it is user created or
 		// not
 		if (permanent)
-			permanentWaypointList.add(waypoint);
+			WaypointData.permanentWaypointList.add(waypoint);
 		else
-			userWaypointList.add(waypoint);
+			WaypointData.userWaypointList.add(waypoint);
 
 		airspace.addActor(waypoint);
 
@@ -483,7 +308,7 @@ public final class AircraftController extends InputListener implements
 				if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
 					redirectAircraft(waypoint);
 				} else if (button == Buttons.RIGHT) {
-					userWaypointList.remove(waypoint);
+					WaypointData.userWaypointList.remove(waypoint);
 					airspace.removeActor(waypoint);
 				}
 
