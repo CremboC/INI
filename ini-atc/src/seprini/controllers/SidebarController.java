@@ -92,36 +92,36 @@ public final class SidebarController extends ChangeListener implements
 		sidebar.addActor(bottomButtons);
 
 		// adding labels to aircraft controls
-		createLabel("speed", "Speed: ", aircraftControls).width(100);
+		createLabel("speed", " Speed: ", aircraftControls).width(100);
 		createLabel("altitude", "Altitude: ", aircraftControls).width(100);
 
 		aircraftControls.row().width(100);
 
 		// adding buttons to aircraft controls
-		createButton("createWaypoint", "Create Waypoint", aircraftControls)
+		createButton("createWaypoint", " Create Waypoint", aircraftControls)
 				.width(100);
-		createButton("assignWaypoint", "Assign Waypoint", aircraftControls)
+		createButton("assignWaypoint", " Assign Waypoint", aircraftControls)
 				.width(100);
 
 		aircraftControls.row().spaceTop(50);
 
-		createButton("accelerate", "Accelerate", aircraftControls).width(200)
+		createButton("accelerate", " Accelerate", aircraftControls).width(200)
 				.colspan(2);
 		// createButton("takeOff", "Take Off", aircraftControls).width(100);
 
 		aircraftControls.row();
 
-		createButton("decelerate", "Decelerate", aircraftControls).width(200)
+		createButton("decelerate", " Decelerate", aircraftControls).width(200)
 				.colspan(2);
 		// createButton("land", "Land", aircraftControls).width(100);
 
 		aircraftControls.row().spaceTop(100);
 
-		createButton("up", "Up", aircraftControls).width(100).colspan(2);
+		createButton("up", " Up", aircraftControls).width(100).colspan(2);
 
 		aircraftControls.row();
 
-		createButton("left", "Left", aircraftControls).width(100);
+		createButton("left", " Left", aircraftControls).width(100);
 		createButton("right", "Right", aircraftControls).width(100);
 
 		aircraftControls.row();
@@ -135,8 +135,8 @@ public final class SidebarController extends ChangeListener implements
 
 		// adding buttons to bottom
 
-		createButton("menu", "Menu", bottomButtons).width(100);
-		createButton("pause", "Pause", bottomButtons).width(100);
+		createButton("menu", " Menu", bottomButtons).width(100);
+		createButton("pause", " Pause", bottomButtons).width(100);
 
 		/**
 		 * Currently not needed, not in specifications
