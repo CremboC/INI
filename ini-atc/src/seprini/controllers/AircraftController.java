@@ -8,15 +8,14 @@ import seprini.data.Config;
 import seprini.data.Debug;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
+import seprini.data.WaypointData;
 import seprini.models.Aircraft;
 import seprini.models.Airspace;
-import seprini.models.Exitpoint;
 import seprini.models.Map;
 import seprini.models.Waypoint;
 import seprini.models.types.AircraftType;
 import seprini.screens.EndScreen;
 import seprini.screens.GameScreen;
-import seprini.data.WaypointData;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -42,8 +41,8 @@ public final class AircraftController extends InputListener implements
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
 	private final GameDifficulty difficulty;
-	private final WaypointData waypointData= new WaypointData();
-	//private static AircraftGenerator aircraftGenerator;
+	private final WaypointData waypointData = new WaypointData();
+	// private static AircraftGenerator aircraftGenerator;
 	// ui related
 	private final Airspace airspace;
 	private final SidebarController sidebar;
@@ -139,19 +138,21 @@ public final class AircraftController extends InputListener implements
 				planeJ = aircraftList.get(j);
 
 				if (!planeI.equals(planeJ)
-				// Check difference in altitude.
-						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < 100
+						// Check difference in altitude.
+						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < 100
 						// Check difference in horizontal 2d plane.
 						&& planeI.getCentreCoords().dst(
 								planeJ.getCentreCoords()) < planeI.getRadius()
 								+ planeJ.getRadius()) {
 					collisionHasOccured(planeI, planeJ);
+					System.out.println(planeI.getHeight());
+					System.out.println(planeJ.getHeight());
 				}
 
 				// Checking for breach of separation.
 				if (!planeI.equals(planeJ)
 						// Check difference in altitude.
-						&& Math.abs(planeI.getHeight() - planeJ.getHeight()) < planeI
+						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < planeI
 								.getSeparationRadius()
 						// Check difference in horizontal 2d plane.
 						&& planeI.getCentreCoords().dst(
@@ -278,7 +279,8 @@ public final class AircraftController extends InputListener implements
 	private boolean createWaypoint(float x, float y, final boolean permanent) {
 		Debug.msg("Creating waypoint at: " + x + ":" + y);
 
-		if (WaypointData.userWaypointList.size() == Config.USER_WAYPOINT_LIMIT && !permanent)
+		if (WaypointData.userWaypointList.size() == Config.USER_WAYPOINT_LIMIT
+				&& !permanent)
 			return false;
 
 		Debug.msg("Waypoint at: " + x + ":" + y + " created");
