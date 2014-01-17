@@ -149,7 +149,8 @@ public final class Aircraft extends Entity {
 
 			drawer.begin(ShapeType.Line);
 			drawer.setColor(1, 0.64f, 0, 0);
-			drawer.circle(getX(), getY(), getWidth() / 2 + 5);
+			// drawer.circle(getX(), getY(), getWidth() / 2 + 5);
+			drawer.circle(getX(), getY(), getSeparationRadius() * 0.5f);
 			drawer.end();
 
 			batch.begin();
