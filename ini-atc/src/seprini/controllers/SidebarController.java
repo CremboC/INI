@@ -105,13 +105,15 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.row().spaceTop(50);
 
-		createButton("accelerate", "Accelerate", aircraftControls).width(100);
-		createButton("takeOff", "Take Off", aircraftControls).width(100);
+		createButton("accelerate", "Accelerate", aircraftControls).width(200)
+				.colspan(2);
+		// createButton("takeOff", "Take Off", aircraftControls).width(100);
 
 		aircraftControls.row();
 
-		createButton("decelerate", "Decelerate", aircraftControls).width(100);
-		createButton("land", "Land", aircraftControls).width(100);
+		createButton("decelerate", "Decelerate", aircraftControls).width(200)
+				.colspan(2);
+		// createButton("land", "Land", aircraftControls).width(100);
 
 		aircraftControls.row().spaceTop(100);
 
