@@ -1,5 +1,4 @@
-To access textures:
-- Airspace start: 0,0 size 1080,720
-- Airplane top down: start 1080,0 size 75,62
-- Waypoint marker: start 1155,0 size 20,20
-- Side view of airplane: start 1080, 75, size 727, 249
+		textures.put("airspace", split(combined, 0, 0, 1079, 720));
+		textures.put("aircraft", split(combined, 1081, 0, 75, 63));
+		textures.put("waypoint", split(combined, 0, 720, 20, 20));
+		textures.put("menuAircraft", split(combined, 1080, 64, 727, 249));
