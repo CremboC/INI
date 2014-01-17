@@ -70,8 +70,7 @@ public final class AircraftController extends InputListener implements
 		this.airspace = airspace;
 		this.screen = screen;
 
-		// add the background and move to the back so it doesn't block the
-		// waypoints which are created beforehand
+		// add the background
 		airspace.addActor(new Map());
 
 		// manages the sidebar
@@ -255,7 +254,7 @@ public final class AircraftController extends InputListener implements
 	private void removeAircraft(int i) {
 		Aircraft aircraft = aircraftList.get(i);
 
-		if (selectedAircraft.equals(aircraft))
+		if (aircraft.equals(selectedAircraft))
 			selectedAircraft = null;
 
 		// removes the aircraft from the list of aircrafts on screen
