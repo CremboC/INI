@@ -75,8 +75,6 @@ public class GameScreen extends Screen {
 		// its size
 		ui.add(sidebar).width(Config.SIDEBAR_SIZE.x)
 				.height(Config.SIDEBAR_SIZE.y);
-
-		controller.init();
 	}
 
 	@Override
@@ -88,24 +86,6 @@ public class GameScreen extends Screen {
 
 			Color color;
 
-			// switch (craft.getAltitude()) {
-			// case 5000:
-			// color = Color.GREEN;
-			// break;
-			//
-			// case 10000:
-			// color = Color.ORANGE;
-			// break;
-			//
-			// case 15000:
-			// color = Color.RED;
-			// break;
-			//
-			// default:
-			// color = Color.BLACK;
-			// break;
-			// }
-
 			if (craft.getAltitude() <= 7500) {
 				color = Color.GREEN;
 			} else if (craft.getAltitude() <= 12500) {
@@ -115,7 +95,6 @@ public class GameScreen extends Screen {
 			} else {
 				color = Color.BLACK;
 			}
-			;
 
 			drawString("Alt: " + craft.getAltitude(), craft.getX() - 25,
 					craft.getY() - 20, color, root.getSpriteBatch());

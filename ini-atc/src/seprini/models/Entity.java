@@ -46,11 +46,11 @@ public abstract class Entity extends Actor {
 
 		batch.end();
 
-		Screen.shapeDebugger.begin(ShapeType.Line);
-		Screen.shapeDebugger.setColor(1, 0, 0, 0);
-		Screen.shapeDebugger.box(getX() - getWidth() / 2, getY() - getHeight()
+		Screen.shapeRenderer.begin(ShapeType.Line);
+		Screen.shapeRenderer.setColor(1, 0, 0, 0);
+		Screen.shapeRenderer.box(getX() - getWidth() / 2, getY() - getHeight()
 				/ 2, 0, getWidth(), getHeight(), 0);
-		Screen.shapeDebugger.end();
+		Screen.shapeRenderer.end();
 
 		batch.begin();
 	}

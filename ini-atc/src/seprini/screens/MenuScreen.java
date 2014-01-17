@@ -2,7 +2,6 @@ package seprini.screens;
 
 import seprini.controllers.MenuController;
 import seprini.data.Art;
-import seprini.data.WaypointData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -47,9 +46,6 @@ public class MenuScreen extends Screen {
 		// add the table UI
 		root.addActor(ui);
 
-		// Reset user waypoints, useful when going from the GamesScreen to the
-		// menu
-		WaypointData.reset();
 	}
 
 	@Override

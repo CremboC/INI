@@ -137,12 +137,6 @@ public final class SidebarController extends ChangeListener implements
 
 		createButton("menu", " Menu", bottomButtons).width(100);
 		createButton("pause", " Pause", bottomButtons).width(100);
-
-		/**
-		 * Currently not needed, not in specifications
-		 * createLabel("aircraftCoordsLabel", "Coords X/Y: ").width(100);
-		 * createLabel("aircraftCoordsText", "0").width(100);
-		 */
 	}
 
 	/**
@@ -167,19 +161,6 @@ public final class SidebarController extends ChangeListener implements
 				"Speed: "
 						+ Math.round(selectedAircraft.getSpeed()
 								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
-
-		// for (Waypoint wp : selectedAircraft.getFlightPlan()) {
-		// String wpName = "wp" + wp.getX() + "" + wp.getY();
-		//
-		// if (labels.get(wpName) != null)
-		// continue;
-		//
-		// createLabel("wp" + wp.getX() + "" + wp.getY(),
-		// "Waypoint: " + wp.getX() + ":" + wp.getY(), waypointWrapper)
-		// .width(200);
-		//
-		// waypointWrapper.row();
-		// }
 	}
 
 	/**

@@ -18,7 +18,7 @@ public abstract class Screen {
 	 */
 	private ATC atc;
 	
-	public final static ShapeRenderer shapeDebugger = new ShapeRenderer();
+	public final static ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 	/**
 	 * Dispose of unused resources

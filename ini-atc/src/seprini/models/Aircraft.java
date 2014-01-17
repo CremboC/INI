@@ -115,7 +115,7 @@ public final class Aircraft extends Entity {
 		if (!ignorePath && !selected && !breaching)
 			return;
 
-		ShapeRenderer drawer = Screen.shapeDebugger;
+		ShapeRenderer drawer = Screen.shapeRenderer;
 
 		// debug line from aircraft centre to waypoint centre
 		if (Config.DEBUG_UI) {

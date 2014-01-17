@@ -3,12 +3,12 @@ package seprini.controllers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import seprini.controllers.components.FlightPlanComponent;
+import seprini.controllers.components.WaypointComponent;
 import seprini.data.Art;
-import seprini.data.Config;
 import seprini.data.Debug;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
-import seprini.data.WaypointData;
 import seprini.models.Aircraft;
 import seprini.models.Airspace;
 import seprini.models.Map;
@@ -33,16 +33,19 @@ public final class AircraftController extends InputListener implements
 	// aircraft and aircraft type lists
 	private final ArrayList<AircraftType> aircraftTypeList = new ArrayList<AircraftType>();
 	private final ArrayList<Aircraft> aircraftList = new ArrayList<Aircraft>();
-	// waypoint lists
-	private final int maxAircraft;
-	private final int timeBetweenGenerations;
-	private final int separationRadius;
+
+	private final int maxAircraft, timeBetweenGenerations, separationRadius;
+
 	private float lastGenerated;
+
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
+
 	private final GameDifficulty difficulty;
-	private final WaypointData waypointData = new WaypointData();
-	// private static AircraftGenerator aircraftGenerator;
+
+	private final WaypointComponent waypoints;
+	private final FlightPlanComponent flightplan;
+
 	// ui related
 	private final Airspace airspace;
 	private final SidebarController sidebar;
@@ -59,7 +62,6 @@ public final class AircraftController extends InputListener implements
 	 *            the group where all of the waypoints and aircraft will be
 	 *            added
 	 * @param sidebar
-	 *            the
 	 * @param screen
 	 */
 	public AircraftController(GameDifficulty diff, Airspace airspace,
@@ -68,37 +70,43 @@ public final class AircraftController extends InputListener implements
 		this.airspace = airspace;
 		this.screen = screen;
 
+		// add the background and move to the back so it doesn't block the
+		// waypoints which are created beforehand
+		airspace.addActor(new Map());
+
+		// manages the sidebar
 		this.sidebar = new SidebarController(sidebar, this, screen);
+
+		// manages the waypoints
+		this.waypoints = new WaypointComponent(this, this.sidebar);
+
+		// helper for creating the flight plan of an aircraft
+		this.flightplan = new FlightPlanComponent(waypoints);
 
 		// insert code here to initialise variables (eg max no of aircraft) to
 		// wanted value for that difficulty level.
 		switch (difficulty) {
-		case EASY:
-			maxAircraft = 1;
-			timeBetweenGenerations = 1;
-			separationRadius = 150;
-			break;
-		case MEDIUM:
-			maxAircraft = 2;
-			timeBetweenGenerations = 5;
-			separationRadius = 100;
-			break;
-		case HARD:
-			maxAircraft = 10;
-			timeBetweenGenerations = 2;
-			separationRadius = 50;
-			break;
-		default:
-			maxAircraft = 1;
-			timeBetweenGenerations = 1;
-			separationRadius = 100;
-			break;
+			case EASY :
+				maxAircraft = 1;
+				timeBetweenGenerations = 1;
+				separationRadius = 150;
+				break;
+			case MEDIUM :
+				maxAircraft = 2;
+				timeBetweenGenerations = 5;
+				separationRadius = 100;
+				break;
+			case HARD :
+				maxAircraft = 10;
+				timeBetweenGenerations = 2;
+				separationRadius = 50;
+				break;
+			default :
+				maxAircraft = 1;
+				timeBetweenGenerations = 1;
+				separationRadius = 100;
+				break;
 		}
-	}
-
-	public void init() {
-		// add the background
-		airspace.addActor(new Map());
 
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
@@ -110,7 +118,7 @@ public final class AircraftController extends InputListener implements
 		// add aircraft types to airplaneTypes array.
 		aircraftTypeList.add(defaultAircraft);
 
-		sidebar.init();
+		this.sidebar.init();
 	}
 
 	/**
@@ -118,7 +126,6 @@ public final class AircraftController extends InputListener implements
 	 * the stage. Collision Detection. Removes aircraft if inactive.
 	 */
 	public void update() {
-
 		Aircraft planeI, planeJ;
 
 		// Updates aircraft in turn
@@ -197,13 +204,12 @@ public final class AircraftController extends InputListener implements
 
 	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
-		// TODO remove debug code, put in game ending code
 		screen.setScreen(new EndScreen());
 	}
 
 	private void separationRulesBreached(Aircraft a, Aircraft b) {
 		// for scoring mechanisms, if applicable
-		// TODO remove debug code.
+		// TODO code for separation rules breach
 	}
 
 	/**
@@ -223,7 +229,7 @@ public final class AircraftController extends InputListener implements
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
-				AircraftGenerator.generateFlightPlan(), aircraftId++);
+				flightplan.generate(), aircraftId++);
 
 		aircraftList.add(newAircraft);
 
@@ -261,66 +267,7 @@ public final class AircraftController extends InputListener implements
 		return;
 	}
 
-	/**
-	 * Creates a new waypoint.
-	 * <p>
-	 * Creates a new user waypoint when the user left-clicks within the airspace
-	 * window.
-	 * 
-	 * Also is convinience method for generated permanent waypoints
-	 * 
-	 * @param x
-	 * @param y
-	 * @param permanent
-	 */
 
-	private boolean createWaypoint(float x, float y, final boolean permanent) {
-		Debug.msg("Creating waypoint at: " + x + ":" + y);
-
-		if (WaypointData.userWaypointList.size() == Config.USER_WAYPOINT_LIMIT
-				&& !permanent)
-			return false;
-
-		Debug.msg("Waypoint at: " + x + ":" + y + " created");
-
-		final Waypoint waypoint = new Waypoint(x, y, permanent);
-
-		// add it to the correct list according to whether it is user created or
-		// not
-		if (permanent)
-			WaypointData.permanentWaypointList.add(waypoint);
-		else
-			WaypointData.userWaypointList.add(waypoint);
-
-		airspace.addActor(waypoint);
-
-		waypoint.addListener(new ClickListener() {
-
-			/**
-			 * Removes a user waypoint if a user waypoint is right-clicked.
-			 * Alternatively, should call redirection method.
-			 */
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-
-				if (button == Buttons.LEFT && sidebar.allowRedirection()) {
-					redirectAircraft(waypoint);
-					return true;
-				}
-
-				if (button == Buttons.RIGHT && !permanent) {
-					WaypointData.userWaypointList.remove(waypoint);
-					airspace.removeActor(waypoint);
-					return true;
-				}
-
-				return true;
-			}
-		});
-
-		return true;
-	}
 
 	/**
 	 * Selects an aircraft.
@@ -351,7 +298,7 @@ public final class AircraftController extends InputListener implements
 	 * 
 	 * @param object
 	 */
-	private void redirectAircraft(Waypoint waypoint) {
+	public void redirectAircraft(Waypoint waypoint) {
 		Debug.msg("Redirecting aircraft " + 0 + " to " + waypoint);
 
 		if (getSelectedAircraft() == null)
@@ -368,24 +315,18 @@ public final class AircraftController extends InputListener implements
 		return aircraftList;
 	}
 
+	public Airspace getAirspace() {
+		return airspace;
+	}
+
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
 
 		if (button == Buttons.LEFT && sidebar.allowNewWaypoints()) {
-			createWaypoint(x, y, false);
+			waypoints.createWaypoint(x, y, false);
 			return true;
 		}
-
-		// if (button == Buttons.RIGHT && sidebar.allowRedirection()) {
-		// // * Currently, creates a new waypoint where you right click and
-		// // then calls the
-		// // * redirectAircraft method. Not sure how to select existing
-		// // waypoint.
-		// Waypoint waypoint = new Waypoint(x, y, true);
-		// redirectAircraft(waypoint);
-		// return true;
-		// }
 
 		return false;
 	}
