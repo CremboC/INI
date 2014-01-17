@@ -88,34 +88,34 @@ public class GameScreen extends Screen {
 
 			Color color;
 
-			switch (craft.getAltitude()) {
-			case 5000:
-				color = Color.GREEN;
-				break;
-
-			case 10000:
-				color = Color.ORANGE;
-				break;
-
-			case 15000:
-				color = Color.RED;
-				break;
-
-			default:
-				color = Color.BLACK;
-				break;
-			}
-
-			// if (craft.getAltitude() <= 6000) {
+			// switch (craft.getAltitude()) {
+			// case 5000:
 			// color = Color.GREEN;
-			// } else if (craft.getAltitude() <= 12000) {
+			// break;
+			//
+			// case 10000:
 			// color = Color.ORANGE;
-			// } else if (craft.getAltitude() > 12000) {
+			// break;
+			//
+			// case 15000:
 			// color = Color.RED;
-			// } else {
+			// break;
+			//
+			// default:
 			// color = Color.BLACK;
+			// break;
 			// }
-			// ;
+
+			if (craft.getAltitude() <= 7500) {
+				color = Color.GREEN;
+			} else if (craft.getAltitude() <= 12500) {
+				color = Color.ORANGE;
+			} else if (craft.getAltitude() > 12500) {
+				color = Color.RED;
+			} else {
+				color = Color.BLACK;
+			}
+			;
 
 			drawString("Alt: " + craft.getAltitude(), craft.getX() - 25,
 					craft.getY() - 20, color, root.getSpriteBatch());

@@ -20,6 +20,8 @@ public final class Aircraft extends Entity {
 	private static final float SPEED_CHANGE = 0.1f;
 	private static final int ALTITUDE_CHANGE = 5000;
 
+	private int desiredAltitude = 10000;
+
 	private int altitude;
 	private Vector2 velocity = new Vector2(0, 0);
 
@@ -210,6 +212,12 @@ public final class Aircraft extends Entity {
 		// updating bounds to make sure the aircraft is clickable
 		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
 				getWidth(), getHeight());
+
+		if (altitude > desiredAltitude) {
+			this.altitude -= this.maxClimbRate;
+		} else if (altitude < desiredAltitude) {
+			this.altitude += this.maxClimbRate;
+		}
 	}
 
 	/**
@@ -316,7 +324,7 @@ public final class Aircraft extends Entity {
 		if (altitude + ALTITUDE_CHANGE > 15000)
 			return;
 
-		this.altitude += ALTITUDE_CHANGE;
+		this.desiredAltitude += ALTITUDE_CHANGE;
 	}
 
 	/**
@@ -326,7 +334,7 @@ public final class Aircraft extends Entity {
 		if (altitude - ALTITUDE_CHANGE < 5000)
 			return;
 
-		altitude -= ALTITUDE_CHANGE;
+		this.desiredAltitude -= ALTITUDE_CHANGE;
 	}
 
 	public void turnRight(boolean set) {
