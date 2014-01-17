@@ -145,8 +145,6 @@ public final class AircraftController extends InputListener implements
 								planeJ.getCentreCoords()) < planeI.getRadius()
 								+ planeJ.getRadius()) {
 					collisionHasOccured(planeI, planeJ);
-					System.out.println(planeI.getHeight());
-					System.out.println(planeJ.getHeight());
 				}
 
 				// Checking for breach of separation.
