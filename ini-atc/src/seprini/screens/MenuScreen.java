@@ -6,7 +6,6 @@ import seprini.data.Art;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.audio.Sound;
 /**
  * Menu Screen, displays the menu with buttons to start and exit the game
  * 
@@ -45,8 +44,8 @@ public class MenuScreen extends Screen {
 
 		// add the table UI
 		root.addActor(ui);
-		Sound National = Gdx.audio.newSound(Gdx.files.internal("data/National.mp3"));
-		National.play();
+
+		Art.getSound("national").play(1.0f);
 	}
 
 	@Override

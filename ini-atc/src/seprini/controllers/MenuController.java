@@ -93,6 +93,9 @@ public final class MenuController extends ChangeListener implements Controller {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 
+		// stop the anthem after entering the game
+		Art.getSound("national").stop();
+
 		// Pass difficulty to the newly created GameScreen so the game can
 		// change variables depending on it
 		if (actor.equals(buttons.get("startEasy")))

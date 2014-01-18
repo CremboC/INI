@@ -75,6 +75,8 @@ public class GameScreen extends Screen {
 		// its size
 		ui.add(sidebar).width(Config.SIDEBAR_SIZE.x)
 				.height(Config.SIDEBAR_SIZE.y);
+
+		// Art.getSound("ambience").play(1.0f);
 	}
 
 	@Override

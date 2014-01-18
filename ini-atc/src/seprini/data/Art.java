@@ -3,6 +3,7 @@ package seprini.data;
 import java.util.Hashtable;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -27,6 +28,11 @@ public class Art {
 	 * A hashtable which stores all of the textures
 	 */
 	private final static Hashtable<String, TextureRegion> textures = new Hashtable<String, TextureRegion>();
+
+	/**
+	 * A hashtable which stores all of the sounds
+	 */
+	private final static Hashtable<String, Sound> sounds = new Hashtable<String, Sound>();
 
 	/**
 	 * A skin can be loaded via JSON or defined programmatically, either is
@@ -55,6 +61,15 @@ public class Art {
 
 		// load the default skin
 		loadSkin();
+
+		// load the sound effects
+		loadSounds();
+	}
+
+	private static void loadSounds() {
+		sounds.put("ding", loadSound("ding.wav"));
+		sounds.put("national", loadSound("National.mp3"));
+		// sounds.put("ambience", loadSound("ambience.wav"));
 	}
 
 	/**
@@ -122,6 +137,10 @@ public class Art {
 		return texture;
 	}
 
+	private static Sound loadSound(String soundName) {
+		return Gdx.audio.newSound(Gdx.files.internal("sounds/" + soundName));
+	}
+
 	/**
 	 * Loads a texture and returns a TextureRegion from taken from 0, 0
 	 * 
@@ -147,6 +166,19 @@ public class Art {
 			return null;
 
 		return textures.get(key);
+	}
+
+	/**
+	 * Get a sound from the sound pool
+	 * 
+	 * @param key
+	 * @return the required sound or null if key doesn't exist
+	 */
+	public static Sound getSound(String key) {
+		if (!sounds.containsKey(key))
+			return null;
+
+		return sounds.get(key);
 	}
 
 	public static Skin getSkin() {

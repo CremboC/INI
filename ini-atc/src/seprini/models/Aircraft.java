@@ -3,6 +3,7 @@ package seprini.models;
 import java.util.ArrayList;
 import java.util.Random;
 
+import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.Debug;
 import seprini.models.types.AircraftType;
@@ -69,7 +70,6 @@ public final class Aircraft extends Entity {
 		minSpeed = maxSpeed - 1;
 		velocityScalar = INITIAL_VELOCITY_SCALAR;
 		velocity = aircraftType.getVelocity();
-		altitude = 10000;
 
 		Random rand = new Random();
 		altitude = Config.ALTITUDES[rand.nextInt(Config.ALTITUDES.length)];
@@ -102,6 +102,8 @@ public final class Aircraft extends Entity {
 		this.setRotation(relativeAngle);
 
 		velocity.len();
+
+		Art.getSound("ding").play(0.5f);
 
 		Debug.msg("||\nGenerated aircraft id " + id + "\nEntry point: "
 				+ coords + "\nRelative angle to first waypoint: "
