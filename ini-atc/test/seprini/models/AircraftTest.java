@@ -118,14 +118,6 @@ public class AircraftTest {
 	}
 
 	@Test
-	public void testGetCentreCoords() {
-		Vector2 result = aircraft.getCentreCoords();
-		Vector2 testAnswer = new Vector2(41f, 36.5f);
-		assertEquals(testAnswer.x, result.x, 0);
-		assertEquals(testAnswer.y, result.y, 0);
-	}
-
-	@Test
 	public void testGetSeparationRadius() {
 		float result = aircraft.getSeparationRadius();
 		assertEquals(result, 100, 0);
