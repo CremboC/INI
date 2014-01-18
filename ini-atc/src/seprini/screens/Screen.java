@@ -55,12 +55,15 @@ public abstract class Screen {
 		if (region == null)
 			Gdx.app.error("Screen", "Region drawing is null");
 
+
 		int width = region.getRegionWidth();
 
 		if (width < 0)
 			width = -width;
 
+		batch.begin();
 		batch.draw(region, x, y, width, region.getRegionHeight());
+		batch.end();
 	}
 
 	/**

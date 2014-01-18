@@ -1,8 +1,8 @@
 package seprini;
 
-import seprini.ATC;
 import seprini.data.Config;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -17,6 +17,8 @@ public class Main {
 		cfg.resizable = Config.RESIZABLE;
 
 		cfg.vSyncEnabled = Config.VSYNC;
+
+		cfg.addIcon("data/ico32x32.png", FileType.Internal);
  
 		new LwjglApplication(new ATC(), cfg);
 	}

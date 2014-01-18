@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import seprini.data.Art;
 import seprini.data.GameDifficulty;
-import seprini.models.MenuAircraft;
 import seprini.screens.GameScreen;
 import seprini.screens.MenuScreen;
 
@@ -51,9 +50,6 @@ public final class MenuController extends ChangeListener implements Controller {
 	 * Adds all the buttons on the screen with their own listener
 	 */
 	private void addButtons() {
-		// add the sideways aircraft with the title
-		ui.addActor(new MenuAircraft());
-
 		// Create a label for difficulty and add it
 		Label difficultylabel = new Label("Difficulty:", Art.getSkin());
 		ui.add(difficultylabel).width(100).center();
