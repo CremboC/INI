@@ -202,6 +202,8 @@ public final class AircraftController extends InputListener implements
 
 			generatedAircraft.toFront();
 			airspace.addActor(generatedAircraft);
+
+			Art.getSound("ding").play(0.5f);
 		}
 
 		sidebar.update();
