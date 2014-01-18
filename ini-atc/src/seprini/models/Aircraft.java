@@ -131,25 +131,28 @@ public final class Aircraft extends Entity {
 			batch.begin();
 		}
 
+		// if the user takes control of the aircraft, draw a line to the
+		// exitpoint
 		if (ignorePath) {
 			Waypoint exitpoint = waypoints.get(waypoints.size() - 1);
 
 			batch.end();
 
 			drawer.begin(ShapeType.Line);
-			drawer.setColor(1, 1, 1, 0);
+			drawer.setColor(1, 0, 0, 0);
 			drawer.line(getX(), getY(), exitpoint.getX(), exitpoint.getY());
 			drawer.end();
 
 			batch.begin();
 		}
 
+		// if the aircraft is either selected or is breaching, draw a circle
+		// around it
 		if (selected || breaching) {
 			batch.end();
 
 			drawer.begin(ShapeType.Line);
-			drawer.setColor(1, 0.64f, 0, 0);
-			// drawer.circle(getX(), getY(), getWidth() / 2 + 5);
+			drawer.setColor(1, 0, 0, 0);
 			drawer.circle(getX(), getY(), getSeparationRadius() * 0.5f);
 			drawer.end();
 
@@ -162,12 +165,15 @@ public final class Aircraft extends Entity {
 	 * Update the aircraft rotation & position
 	 */
 	public void act() {
+		// if player is holding D or -> on the keyboard, turn right
 		if (turnRight)
 			turnRight();
 
+		// if the player is holding A or <-, turn left
 		if (turnLeft)
 			turnLeft();
 
+		// if the player has taken control of the aircraft, ignore all waypoints
 		if (!ignorePath) {
 			// Vector to next waypoint
 			Vector2 nextWaypoint = vectorToWaypoint();
@@ -230,14 +236,11 @@ public final class Aircraft extends Entity {
 		// Creates a new vector to store the new velocity in temporarily
 		Vector2 nextWaypoint = new Vector2();
 
-		// converts waypoints coordinates into 3d vectors to enabled
-		// subtraction.
-		nextWaypoint.x = waypoints.get(0).getCoords().x;
-		nextWaypoint.y = waypoints.get(0).getCoords().y;
-
 		// round it to 2 points after decimal, makes it more manageable later
-		nextWaypoint.x = (float) (Math.round(nextWaypoint.x * 100.0) / 100.0);
-		nextWaypoint.y = (float) (Math.round(nextWaypoint.y * 100.0) / 100.0);
+		nextWaypoint.x = (float) (Math
+				.round(waypoints.get(0).getCoords().x * 100.0) / 100.0);
+		nextWaypoint.y = (float) (Math
+				.round(waypoints.get(0).getCoords().y * 100.0) / 100.0);
 
 		return nextWaypoint;
 	}
@@ -248,9 +251,7 @@ public final class Aircraft extends Entity {
 	 * @return relative angle in degrees, rounded to 2 points after decimal
 	 */
 	private float relativeAngleToWaypoint() {
-		Vector2 nextWaypoint = vectorToWaypoint();
-
-		return relativeAngleToWaypoint(nextWaypoint);
+		return relativeAngleToWaypoint(vectorToWaypoint());
 	}
 
 	/**
@@ -260,7 +261,6 @@ public final class Aircraft extends Entity {
 	 * @return angle in degrees, rounded to 2 points after decimal
 	 */
 	private float relativeAngleToWaypoint(Vector2 waypoint) {
-
 		// degrees to nextWaypoint relative to aircraft
 		float degrees = (float) ((Math.atan2(getX() - waypoint.x,
 				-(getY() - waypoint.y)) * 180.0f / Math.PI) + 90.0f);
@@ -347,8 +347,7 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Turns right by 5 degrees if the user presses the right key for more than
-	 * 2000ms
+	 * Turns right by maxTurningRate * 2
 	 */
 	public void turnRight() {
 		ignorePath = true;
@@ -358,8 +357,7 @@ public final class Aircraft extends Entity {
 	}
 
 	/**
-	 * Turns left by 5 degrees if the user presses the right key for more than
-	 * 2000ms
+	 * Turns left by maxTurningRate * 2
 	 */
 	public void turnLeft() {
 		ignorePath = true;
@@ -368,6 +366,11 @@ public final class Aircraft extends Entity {
 		velocity.setAngle(getRotation());
 	}
 
+	/**
+	 * Get the whole flightplan for this aircraft
+	 * 
+	 * @return flightplan
+	 */
 	public ArrayList<Waypoint> getFlightPlan() {
 		return waypoints;
 	}
@@ -379,11 +382,6 @@ public final class Aircraft extends Entity {
 	 */
 	public float getRadius() {
 		return radius;
-	}
-
-	public Vector2 getCentreCoords() {
-		return new Vector2(this.getX() + this.getOriginX(), this.getY()
-				+ this.getOriginY());
 	}
 
 	public float getSeparationRadius() {
