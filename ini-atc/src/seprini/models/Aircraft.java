@@ -36,7 +36,6 @@ public final class Aircraft extends Entity {
 
 	private final int sepRulesBreachCounter = 0;
 	private boolean breaching;
-	private int lastTimeTurned;
 
 	private boolean isActive = true;
 	private boolean ignorePath = false; // When user has taken control of the

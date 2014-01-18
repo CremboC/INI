@@ -262,7 +262,7 @@ public final class SidebarController extends ChangeListener implements
 	 * This is true when the button to create new waypoints has clicked, false
 	 * otherwise
 	 * 
-	 * @return
+	 * @return whether the create waypoint button has been clicked
 	 */
 	public boolean allowNewWaypoints() {
 		return allowNewWaypoints;
@@ -272,7 +272,7 @@ public final class SidebarController extends ChangeListener implements
 	 * True when then button to redirect aircraft has been clicked, false
 	 * otherwise
 	 * 
-	 * @return
+	 * @return whether the button as be clicked or not
 	 */
 	public boolean allowRedirection() {
 		return allowRedirection;

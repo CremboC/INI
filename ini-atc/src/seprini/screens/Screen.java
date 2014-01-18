@@ -6,7 +6,6 @@ import seprini.data.Art;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -30,10 +29,11 @@ public abstract class Screen {
 	/**
 	 * Initialise all the required default parameters
 	 * 
-	 * @param atc
+	 * @param pAtc
+	 *            the main class, for setting screen
 	 */
-	public final void init(ATC atc) {
-		this.atc = atc;
+	public final void init(ATC pAtc) {
+		this.atc = pAtc;
 	}
 	/**
 	 * Convenience method for the main setScreen method
@@ -51,12 +51,13 @@ public abstract class Screen {
 	 * @param x
 	 * @param y
 	 */
-	public void draw(TextureRegion region, int x, int y, SpriteBatch batch) {
+	public static void draw(TextureRegion region, int x, int y,
+			SpriteBatch batch) {
 		if (region == null)
 			Gdx.app.error("Screen", "Region drawing is null");
 
 
-		int width = region.getRegionWidth();
+		int width = region.getRegionWidth() + 1;
 
 		if (width < 0)
 			width = -width;
@@ -67,15 +68,6 @@ public abstract class Screen {
 	}
 
 	/**
-	 * Draw a texture from a sprite
-	 * 
-	 * @param sprite
-	 */
-	public void drawSprite(Sprite sprite, SpriteBatch batch) {
-		sprite.draw(batch);
-	}
-
-	/**
 	 * Draws a string using the default 15pt Arial font
 	 * 
 	 * @param str
@@ -83,7 +75,8 @@ public abstract class Screen {
 	 * @param y
 	 * @param color
 	 */
-	public void drawString(CharSequence str, float x, float y, Color color,
+	public static void drawString(CharSequence str, float x, float y,
+			Color color,
 			SpriteBatch batch) {
 		batch.begin();
 		BitmapFont font = Art.getSkin().get(BitmapFont.class);

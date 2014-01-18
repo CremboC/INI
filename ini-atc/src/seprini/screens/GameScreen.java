@@ -82,6 +82,11 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void render() {
+
+		// draw the background map
+		draw(Art.getTextureRegion("airspace"), 0, 0, root.getSpriteBatch());
+
+		// draw every actor on the stage
 		root.draw();
 
 		// draw the altitude for each aircraft
@@ -103,6 +108,7 @@ public class GameScreen extends Screen {
 					craft.getY() - 20, color, root.getSpriteBatch());
 		}
 
+		// debug the ui and draw fps
 		if (Config.DEBUG_UI) {
 			Table.drawDebug(root);
 			drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
@@ -115,6 +121,7 @@ public class GameScreen extends Screen {
 		if (State.paused)
 			return;
 
+		// increment global clock
 		State.tick();
 
 		controller.update();

@@ -37,7 +37,7 @@ public class MenuScreen extends Screen {
 
 		// creater the controller for this screen, this will handle basically
 		// everything for this screen, including input and creation of buttons
-		MenuController controller = new MenuController(this, ui);
+		new MenuController(this, ui);
 
 		// make it fill the whole screen
 		ui.setFillParent(true);
@@ -52,10 +52,10 @@ public class MenuScreen extends Screen {
 	public void render() {
 		root.draw();
 
-		this.draw(Art.getTextureRegion("menuAircraft"), 300, 390,
+		draw(Art.getTextureRegion("menuAircraft"), 300, 390,
 				root.getSpriteBatch());
 
-		this.draw(Art.getTextureRegion("libgdx"), 1228, 0,
+		draw(Art.getTextureRegion("libgdx"), 1228, 0,
 				root.getSpriteBatch());
 	}
 

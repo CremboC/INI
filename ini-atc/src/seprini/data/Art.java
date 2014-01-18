@@ -144,20 +144,6 @@ public class Art {
 	}
 
 	/**
-	 * Loads a texture and returns a TextureRegion from taken from 0, 0
-	 * 
-	 * @param name
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	private static TextureRegion load(String name, int width, int height) {
-		Texture texture = new Texture(Gdx.files.internal(name));
-		TextureRegion region = new TextureRegion(texture, 0, 0, width, height);
-		return region;
-	}
-
-	/**
 	 * Returns a texture region, should be used for all drawing all models
 	 * 
 	 * @param key
