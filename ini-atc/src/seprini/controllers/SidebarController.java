@@ -134,7 +134,6 @@ public final class SidebarController extends ChangeListener implements
 		createLabel("timer", "..").width(100);
 
 		// adding buttons to bottom
-
 		createButton("menu", " Menu", bottomButtons).width(100);
 		createButton("pause", " Pause", bottomButtons).width(100);
 	}

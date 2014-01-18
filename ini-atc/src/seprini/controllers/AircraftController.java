@@ -6,6 +6,7 @@ import java.util.Random;
 import seprini.controllers.components.FlightPlanComponent;
 import seprini.controllers.components.WaypointComponent;
 import seprini.data.Art;
+import seprini.data.Config;
 import seprini.data.Debug;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
@@ -110,7 +111,7 @@ public final class AircraftController extends InputListener implements
 		// initialise aircraft types.
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
 				.setMaxClimbRate(10).setMaxSpeed(1.5f).setMaxTurningSpeed(0.7f)
-				.setRadius(10).setSeparationRadius(separationRadius)
+				.setRadius(15).setSeparationRadius(separationRadius)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(0.8f, 0.8f));
 
@@ -145,10 +146,10 @@ public final class AircraftController extends InputListener implements
 
 				if (!planeI.equals(planeJ)
 						// Check difference in altitude.
-						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < 100
+						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < Config.MIN_ALTITUDE_DIFFERENCE
 						// Check difference in horizontal 2d plane.
-						&& planeI.getCentreCoords().dst(
-								planeJ.getCentreCoords()) < planeI.getRadius()
+						&& planeI.getCoords().dst(planeJ.getCoords()) < planeI
+								.getRadius()
 								+ planeJ.getRadius()) {
 					collisionHasOccured(planeI, planeJ);
 				}
@@ -159,8 +160,7 @@ public final class AircraftController extends InputListener implements
 						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < planeI
 								.getSeparationRadius()
 						// Check difference in horizontal 2d plane.
-						&& planeI.getCentreCoords().dst(
-								planeJ.getCentreCoords()) < planeI
+						&& planeI.getCoords().dst(planeJ.getCoords()) < planeI
 								.getSeparationRadius()) {
 					planeI.isBreaching(true);
 					planeJ.isBreaching(true);
