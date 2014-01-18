@@ -45,7 +45,7 @@ public class MenuScreen extends Screen {
 		// add the table UI
 		root.addActor(ui);
 
-		Art.getSound("national").play(1.0f);
+		Art.getSound("national").play(0.5f);
 	}
 
 	@Override

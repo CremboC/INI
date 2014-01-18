@@ -68,8 +68,10 @@ public class Art {
 
 	private static void loadSounds() {
 		sounds.put("ding", loadSound("ding.wav"));
+		sounds.put("warning", loadSound("warning.wav"));
+		sounds.put("crash", loadSound("crash.mp3"));
 		sounds.put("national", loadSound("National.mp3"));
-		// sounds.put("ambience", loadSound("ambience.wav"));
+		sounds.put("ambience", loadSound("ambience.mp3"));
 	}
 
 	/**

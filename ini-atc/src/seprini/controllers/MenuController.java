@@ -109,6 +109,5 @@ public final class MenuController extends ChangeListener implements Controller {
 
 		if (actor.equals(buttons.get("exit")))
 			Gdx.app.exit();
-
 	}
 }

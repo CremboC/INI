@@ -37,7 +37,8 @@ public final class AircraftController extends InputListener implements
 
 	private final int maxAircraft, timeBetweenGenerations, separationRadius;
 
-	private float lastGenerated;
+	private float lastGenerated, lastWarned;
+	private boolean breachingSound, breachingIsPlaying;
 
 	private final AircraftType defaultAircraft = new AircraftType();
 	private Aircraft selectedAircraft;
@@ -53,7 +54,7 @@ public final class AircraftController extends InputListener implements
 	private final GameScreen screen;
 
 	private int aircraftId = 0;
-
+	
 	/**
 	 * 
 	 * @param diff
@@ -128,6 +129,12 @@ public final class AircraftController extends InputListener implements
 	public void update() {
 		Aircraft planeI, planeJ;
 
+		breachingSound = false;
+
+		if (State.time() - lastWarned >= 2) {
+			breachingIsPlaying = false;
+		}
+
 		// Updates aircraft in turn
 		// Removes aircraft which are no longer active from aircraftList.
 		// Manages collision detection.
@@ -162,8 +169,6 @@ public final class AircraftController extends InputListener implements
 						// Check difference in horizontal 2d plane.
 						&& planeI.getCoords().dst(planeJ.getCoords()) < planeI
 								.getSeparationRadius()) {
-					planeI.isBreaching(true);
-					planeJ.isBreaching(true);
 
 					separationRulesBreached(planeI, planeJ);
 				}
@@ -174,6 +179,12 @@ public final class AircraftController extends InputListener implements
 				removeAircraft(i);
 			}
 
+		}
+
+		if (breachingSound && !breachingIsPlaying) {
+			breachingIsPlaying = true;
+			lastWarned = State.time();
+			Art.getSound("warning").play(1.0f);
 		}
 
 		final Aircraft generatedAircraft = generateAircraft();
@@ -203,12 +214,19 @@ public final class AircraftController extends InputListener implements
 
 	private void collisionHasOccured(Aircraft a, Aircraft b) {
 		// End the game
+		Art.getSound("ambience").stop();
+		Art.getSound("crash").play(1.0f);
 		screen.setScreen(new EndScreen());
 	}
 
 	private void separationRulesBreached(Aircraft a, Aircraft b) {
 		// for scoring mechanisms, if applicable
 		// TODO code for separation rules breach
+		a.isBreaching(true);
+		b.isBreaching(true);
+
+		breachingSound = true;
+
 	}
 
 	/**
