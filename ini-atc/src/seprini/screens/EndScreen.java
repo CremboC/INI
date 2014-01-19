@@ -1,6 +1,7 @@
 package seprini.screens;
 
 import seprini.data.Art;
+import seprini.data.State;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -38,22 +39,27 @@ public class EndScreen extends Screen {
 
 		root.setKeyboardFocus(ui);
 
+		Art.getSkin().getFont("default").setScale(1f);
+
 		Label text = new Label(
-				"PLANES HAVE COLLIDED OMG\nPRESS ESC TO RETURN TO MAIN MENU",
+				"You have failed.\n"
+						+ "Two aeroplanes have collided mid-flight in a huge crash which resulted in the death of many innocent people.\n"
+						+ "However, surprisingly, you managed to avoid a crash for exactly "
+						+ Math.round(State.time())
+						+ " seconds, which is respectable (at least by some standards).\n"
+						+ "\n"
+						+ "\nPRESS ESC TO RETURN TO MAIN MENU ",
 				Art.getSkin(), "textStyle");
 
 		ui.add(text).center();
 
 		ui.row();
 
-		Art.getSkin().getFont("default").setScale(1f);
-
 		TextButton button = new TextButton("Main Menu", Art.getSkin());
 
 		button.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
 				setScreen(new MenuScreen());
 			}
 		});
