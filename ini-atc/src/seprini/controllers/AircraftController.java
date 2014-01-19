@@ -53,7 +53,7 @@ public final class AircraftController extends InputListener implements
 	private final GameScreen screen;
 
 	private int aircraftId = 0;
-	
+
 	/**
 	 * 
 	 * @param diff
@@ -83,26 +83,26 @@ public final class AircraftController extends InputListener implements
 		// insert code here to initialise variables (eg max no of aircraft) to
 		// wanted value for that difficulty level.
 		switch (difficulty) {
-			case EASY :
-				maxAircraft = 1;
-				timeBetweenGenerations = 1;
-				separationRadius = 150;
-				break;
-			case MEDIUM :
-				maxAircraft = 2;
-				timeBetweenGenerations = 5;
-				separationRadius = 100;
-				break;
-			case HARD :
-				maxAircraft = 10;
-				timeBetweenGenerations = 2;
-				separationRadius = 50;
-				break;
-			default :
-				maxAircraft = 1;
-				timeBetweenGenerations = 1;
-				separationRadius = 100;
-				break;
+		case EASY:
+			maxAircraft = 1;
+			timeBetweenGenerations = 1;
+			separationRadius = 150;
+			break;
+		case MEDIUM:
+			maxAircraft = 2;
+			timeBetweenGenerations = 5;
+			separationRadius = 100;
+			break;
+		case HARD:
+			maxAircraft = 10;
+			timeBetweenGenerations = 2;
+			separationRadius = 50;
+			break;
+		default:
+			maxAircraft = 1;
+			timeBetweenGenerations = 1;
+			separationRadius = 100;
+			break;
 		}
 
 		// initialise aircraft types.
@@ -152,8 +152,7 @@ public final class AircraftController extends InputListener implements
 						&& Math.abs(planeI.getAltitude() - planeJ.getAltitude()) < Config.MIN_ALTITUDE_DIFFERENCE
 						// Check difference in horizontal 2d plane.
 						&& planeI.getCoords().dst(planeJ.getCoords()) < planeI
-								.getRadius()
-								+ planeJ.getRadius()) {
+								.getRadius() + planeJ.getRadius()) {
 					collisionHasOccured(planeI, planeJ);
 				}
 
@@ -240,7 +239,8 @@ public final class AircraftController extends InputListener implements
 
 		// difference between aircraft generated - 5 seconds, needs to be
 		// dependable on difficulty
-		if (State.time() - lastGenerated < timeBetweenGenerations)
+		if (State.time() - lastGenerated < timeBetweenGenerations
+				+ rand.nextInt(100))
 			return null;
 
 		Aircraft newAircraft = new Aircraft(randomAircraftType(),
@@ -281,8 +281,6 @@ public final class AircraftController extends InputListener implements
 
 		return;
 	}
-
-
 
 	/**
 	 * Selects an aircraft.
