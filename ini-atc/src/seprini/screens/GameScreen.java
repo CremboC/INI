@@ -62,14 +62,8 @@ public class GameScreen extends Screen {
 		ui.add(airspace).width(Config.AIRSPACE_SIZE.x)
 				.height(Config.AIRSPACE_SIZE.y);
 
-		// Temporary background creator for sidebar
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
 
-		// set the temporary background
-		sidebar.setBackground(new TextureRegionDrawable(new TextureRegion(
-				new Texture(pixmap))));
+
 
 		// move the sidebar to the top right, add it to the main table and set
 		// its size
