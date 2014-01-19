@@ -2,7 +2,6 @@ package seprini.controllers;
 
 import java.util.HashMap;
 
-import seprini.ATC;
 import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.State;
@@ -226,42 +225,43 @@ public final class SidebarController extends ChangeListener implements
 
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
-		if (State.paused = false){
+		if (State.paused == false) {
 			if (actor.equals(buttons.get("createWaypoint")))
-						createWaypointClicked();
-	
+				createWaypointClicked();
+
 			if (actor.equals(buttons.get("assignWaypoint")))
 				assignWaypointClicked();
-	
+
 			if (selectedAircraft != null) {
 				if (actor.equals(buttons.get("left")))
 					selectedAircraft.turnLeft();
-	
+
 				if (actor.equals(buttons.get("right")))
 					selectedAircraft.turnRight();
-	
+
 				if (actor.equals(buttons.get("up")))
 					selectedAircraft.increaseAltitude();
-	
+
 				if (actor.equals(buttons.get("down")))
 					selectedAircraft.decreaseAltitude();
-	
+
 				if (actor.equals(buttons.get("accelerate")))
 					selectedAircraft.increaseSpeed();
-	
+
 				if (actor.equals(buttons.get("decelerate")))
 					selectedAircraft.decreaseSpeed();
-					
+
 			}
 		}
-			if (actor.equals(buttons.get("menu"))) {
-				Art.getSound("ambience").stop();
-				screen.setScreen(new MenuScreen());
-			}
-	
-			if (actor.equals(buttons.get("pause"))){
-				State.paused = (State.paused) ? false : true;
-			}
+		if (actor.equals(buttons.get("menu"))) {
+			Art.getSound("ambience").stop();
+			screen.setScreen(new MenuScreen());
+		}
+
+		if (actor.equals(buttons.get("pause"))) {
+			State.paused = (State.paused) ? false : true;
+
+		}
 
 	}
 

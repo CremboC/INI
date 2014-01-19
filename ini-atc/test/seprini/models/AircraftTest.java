@@ -33,7 +33,7 @@ public class AircraftTest {
 		AircraftType defaultAircraft = new AircraftType();
 
 		defaultAircraft.setCoords(new Vector2(0, 0)).setActive(true)
-				.setMaxClimbRate(0).setMaxSpeed(0.8f).setMaxTurningSpeed(0.4f)
+				.setMaxClimbRate(10).setMaxSpeed(0.8f).setMaxTurningSpeed(0.4f)
 				.setRadius(15).setSeparationRadius(100)
 				.setTexture(Art.getTextureRegion("aircraft"))
 				.setVelocity(new Vector2(0.8f, 0.8f));
@@ -89,16 +89,19 @@ public class AircraftTest {
 
 	@Test
 	public void testIncreaseAltitude() {
+		int aircraftAltitude = aircraft.getAltitude();
 		aircraft.increaseAltitude();
-		float result = aircraft.getAltitude();
-		assertEquals(1100f, result, 0);
+		aircraft.act();
+		int result = aircraft.getAltitude();
+		System.out.println(result);
+		assertEquals(aircraftAltitude, result, 0);
 	}
 
 	@Test
 	public void testDecreaseAltitude() {
 		aircraft.decreaseAltitude();
 		float result = aircraft.getAltitude();
-		assertEquals(900f, result, 0);
+		assertEquals(1990f, result, 0);
 	}
 
 	@Test
