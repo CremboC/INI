@@ -92,27 +92,30 @@ public final class SidebarController extends ChangeListener implements
 		sidebar.addActor(bottomButtons);
 
 		// adding labels to aircraft controls
-		createLabel("speed", " Speed: ", aircraftControls).width(100);
-		createLabel("altitude", "Altitude: ", aircraftControls).width(100);
+		createLabel("speed", " Speed: ", aircraftControls).width(200)
+				.colspan(2);
 
-		aircraftControls.row().width(100);
+		aircraftControls.row().width(200).colspan(2);
+
+		createLabel("altitude", " Altitude: ", aircraftControls);
+
+		aircraftControls.row().width(200).colspan(2);
 
 		// adding buttons to aircraft controls
-		createButton("createWaypoint", " Create Waypoint", aircraftControls)
-				.width(100);
-		createButton("assignWaypoint", " Assign Waypoint", aircraftControls)
-				.width(100);
+		createButton("createWaypoint", " Create Waypoint", aircraftControls);
 
-		aircraftControls.row().spaceTop(50);
+		aircraftControls.row().width(200).colspan(2);
 
-		createButton("accelerate", " Accelerate", aircraftControls).width(200)
-				.colspan(2);
+		createButton("assignWaypoint", " Assign Waypoint", aircraftControls);
+
+		aircraftControls.row().spaceTop(50).colspan(2);
+
+		createButton("accelerate", " Accelerate", aircraftControls).width(200);
 		// createButton("takeOff", "Take Off", aircraftControls).width(100);
 
-		aircraftControls.row();
+		aircraftControls.row().colspan(2);
 
-		createButton("decelerate", " Decelerate", aircraftControls).width(200)
-				.colspan(2);
+		createButton("decelerate", " Decelerate", aircraftControls).width(200);
 		// createButton("land", "Land", aircraftControls).width(100);
 
 		aircraftControls.row().spaceTop(100);
@@ -130,8 +133,10 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.row();
 
-		createLabel("", "Time:").width(100);
-		createLabel("timer", "..").width(100);
+		createLabel("", " Time:", bottomButtons).width(100);
+		createLabel("timer", "..", bottomButtons).width(100);
+
+		bottomButtons.row();
 
 		// adding buttons to bottom
 		createButton("menu", " Menu", bottomButtons).width(100);
@@ -153,11 +158,11 @@ public final class SidebarController extends ChangeListener implements
 
 		// update aircraft altitude text
 		labels.get("altitude").setText(
-				"Altitude: " + selectedAircraft.getAltitude() + "m");
+				" Altitude: " + selectedAircraft.getAltitude() + "m");
 
 		// update aircraft speed text
 		labels.get("speed").setText(
-				"Speed: "
+				" Speed: "
 						+ Math.round(selectedAircraft.getSpeed()
 								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
 	}
@@ -202,7 +207,6 @@ public final class SidebarController extends ChangeListener implements
 	 */
 	private Cell<?> createLabel(String name, String text) {
 		Label label = new Label(text, Art.getSkin());
-
 		labels.put(name, label);
 
 		return sidebar.add(label);

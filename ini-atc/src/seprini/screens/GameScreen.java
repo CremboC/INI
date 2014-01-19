@@ -10,13 +10,8 @@ import seprini.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * The game screen - all game logic starts here
@@ -30,9 +25,6 @@ public class GameScreen extends Screen {
 	private final AircraftController controller;
 
 	public GameScreen(GameDifficulty diff) {
-
-		// make font smaller
-		Art.getSkin().getFont("default").setScale(0.89f);
 
 		// create a table layout, main ui
 		Table ui = new Table();
@@ -61,9 +53,6 @@ public class GameScreen extends Screen {
 		airspace.addListener(controller);
 		ui.add(airspace).width(Config.AIRSPACE_SIZE.x)
 				.height(Config.AIRSPACE_SIZE.y);
-
-
-
 
 		// move the sidebar to the top right, add it to the main table and set
 		// its size
