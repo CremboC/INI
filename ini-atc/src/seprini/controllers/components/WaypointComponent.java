@@ -43,9 +43,14 @@ public class WaypointComponent {
 
 		// add some waypoints
 		createWaypoint(300, 200, true);
+		createWaypoint(150, 360, true);
 		createWaypoint(300, 500, true);
+		createWaypoint(600, 650, true);
 		createWaypoint(700, 200, true);
+		createWaypoint(850, 360, true);
 		createWaypoint(700, 500, true);
+		createWaypoint(450, 100, true);
+		createWaypoint(540, 360, true);
 	}
 
 	/**
