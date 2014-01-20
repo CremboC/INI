@@ -23,7 +23,7 @@ public abstract class Screen {
 	 * Dispose of unused resources
 	 */
 	public void removed() {
-
+		
 	}
 
 	/**
@@ -76,13 +76,10 @@ public abstract class Screen {
 	 * @param color
 	 */
 	public static void drawString(CharSequence str, float x, float y,
-			Color color,
-			SpriteBatch batch) {
-		batch.begin();
+			Color color, SpriteBatch batch) {
 		BitmapFont font = Art.getSkin().get(BitmapFont.class);
 		font.setColor(color);
 		font.draw(batch, str, x, y);
-		batch.end();
 	}
 
 	public abstract void render();

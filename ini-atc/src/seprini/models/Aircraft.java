@@ -8,6 +8,7 @@ import seprini.data.Debug;
 import seprini.models.types.AircraftType;
 import seprini.screens.Screen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -115,6 +116,21 @@ public final class Aircraft extends Entity {
 	@Override
 	protected void additionalDraw(SpriteBatch batch) {
 
+		// draw the altitude for each aircraft
+		Color color;
+
+		if (getAltitude() <= 7500) {
+			color = Color.GREEN;
+		} else if (getAltitude() <= 12500) {
+			color = Color.ORANGE;
+		} else if (getAltitude() > 12500) {
+			color = Color.RED;
+		} else {
+			color = Color.BLACK;
+		}
+
+		Screen.drawString("Alt: " + getAltitude(), getX() - 30, getY() - 20,
+				color, batch);
 
 		if (!ignorePath && !selected && !breaching)
 			return;

@@ -5,7 +5,6 @@ import seprini.data.Art;
 import seprini.data.Config;
 import seprini.data.GameDifficulty;
 import seprini.data.State;
-import seprini.models.Aircraft;
 import seprini.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
@@ -81,25 +80,6 @@ public class GameScreen extends Screen {
 	public void render() {
 		// draw every actor on the stage
 		root.draw();
-
-		// draw the altitude for each aircraft
-		for (Aircraft craft : controller.getAircraftList()) {
-
-			Color color;
-
-			if (craft.getAltitude() <= 7500) {
-				color = Color.GREEN;
-			} else if (craft.getAltitude() <= 12500) {
-				color = Color.ORANGE;
-			} else if (craft.getAltitude() > 12500) {
-				color = Color.RED;
-			} else {
-				color = Color.BLACK;
-			}
-
-			drawString("Alt: " + craft.getAltitude(), craft.getX() - 25,
-					craft.getY() - 20, color, root.getSpriteBatch());
-		}
 
 		// debug the ui and draw fps
 		if (Config.DEBUG_UI) {
