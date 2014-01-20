@@ -325,7 +325,7 @@ public final class Aircraft extends Entity {
 	 * Increases rate of altitude change
 	 */
 	public void increaseAltitude() {
-		if (altitude + ALTITUDE_CHANGE > 15000)
+		if (desiredAltitude + ALTITUDE_CHANGE > 15000)
 			return;
 
 		this.desiredAltitude += ALTITUDE_CHANGE;
@@ -335,7 +335,7 @@ public final class Aircraft extends Entity {
 	 * Decreasing rate of altitude change
 	 */
 	public void decreaseAltitude() {
-		if (altitude - ALTITUDE_CHANGE < 5000)
+		if (desiredAltitude - ALTITUDE_CHANGE < 5000)
 			return;
 
 		this.desiredAltitude -= ALTITUDE_CHANGE;
