@@ -25,9 +25,6 @@ public class MenuScreen extends Screen {
 	 * for the menu screen
 	 */
 	public MenuScreen() {
-		// set font size for this screen
-		Art.getSkin().getFont("default").setScale(1f);
-
 		// create a stage and set it as the input processor
 		root = new Stage();
 		Gdx.input.setInputProcessor(root);

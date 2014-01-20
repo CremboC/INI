@@ -10,8 +10,6 @@ import org.junit.Test;
 
 public class StateTest {
 
-	private State testState;
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -22,7 +20,6 @@ public class StateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		testState = new State();
 	}
 
 	@After
@@ -37,14 +34,14 @@ public class StateTest {
 	@Test
 	public void testTime() {
 		// fail("Not yet implemented");
-		assertEquals(testState.time(), 0f, 0);
+		assertEquals(State.time(), 0f, 0);
 	}
 
 	@Test
 	public void testReset() {
 		// fail("Not yet implemented");
-		testState.reset();
-		assertEquals(testState.time(), 0f, 0);
+		State.reset();
+		assertEquals(State.time(), 0f, 0);
 
 	}
 }
