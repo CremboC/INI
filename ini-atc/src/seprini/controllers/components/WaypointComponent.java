@@ -6,6 +6,7 @@ import seprini.controllers.AircraftController;
 import seprini.controllers.SidebarController;
 import seprini.data.Config;
 import seprini.data.Debug;
+import seprini.models.Entrypoint;
 import seprini.models.Exitpoint;
 import seprini.models.Waypoint;
 
@@ -18,7 +19,7 @@ public class WaypointComponent {
 	
 	private ArrayList<Waypoint> permanentList = new ArrayList<Waypoint>();
 	private ArrayList<Waypoint> userList = new ArrayList<Waypoint>();
-	private ArrayList<Waypoint> entryList = new ArrayList<Waypoint>();
+	private ArrayList<Entrypoint> entryList = new ArrayList<Entrypoint>();
 	private ArrayList<Exitpoint> exitList = new ArrayList<Exitpoint>();
 
 	private final AircraftController controller;
@@ -31,14 +32,14 @@ public class WaypointComponent {
 		this.controller = controller;
 
 		// add entry waypoints to entryList
-		getEntryList().add(new Waypoint(new Vector2(0, 0), true));
-		getEntryList().add(new Waypoint(new Vector2(0, 720), true));
-		getEntryList().add(new Waypoint(new Vector2(1080, 360), true));
+		createEntrypoint(0, 0);
+		createEntrypoint(0, 720);
+		createEntrypoint(1080, 360);
 
 		// add exit waypoints to exitList
-		getExitList().add(new Exitpoint(new Vector2(1080, 720)));
-		getExitList().add(new Exitpoint(new Vector2(1080, 0)));
-		getExitList().add(new Exitpoint(new Vector2(0, 420)));
+		createExitpoint(1080, 720);
+		createExitpoint(1080, 0);
+		createExitpoint(0, 420);
 
 		// add some waypoints
 		createWaypoint(300, 200, true);
@@ -106,12 +107,38 @@ public class WaypointComponent {
 
 		return true;
 	}
+	
+	/**
+	 * Creates an exitpoint, adds it to the list of exitpoints and adds it to
+	 * the airspace
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	private void createExitpoint(float x, float y) {
+		Exitpoint point = new Exitpoint(new Vector2(x, y));
+		getExitList().add(point);
+		controller.getAirspace().addActor(point);
+	}
+
+	/**
+	 * Creates an entry point, adds it to the list of exitpoints and adds it to
+	 * the airspace
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	private void createEntrypoint(float x, float y) {
+		Entrypoint point = new Entrypoint(new Vector2(x, y), false);
+		getEntryList().add(point);
+		controller.getAirspace().addActor(point);
+	}
 
 	public ArrayList<Waypoint> getPermanentList() {
 		return permanentList;
 	}
 
-	public ArrayList<Waypoint> getEntryList() {
+	public ArrayList<Entrypoint> getEntryList() {
 		return entryList;
 	}
 
