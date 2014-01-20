@@ -31,7 +31,7 @@ public class FlightPlanComponent {
 		// Initialisation of parameters required by flightPlanWaypointGenerator.
 		ArrayList<Waypoint> flightPlan = new ArrayList<Waypoint>();
 		Waypoint entryWaypoint = setStartpoint();
-		Waypoint lastWaypoint = setEndpoint(entryWaypoint, 500);
+		Waypoint lastWaypoint = setEndpoint(entryWaypoint, 600);
 		// entryWaypoint immediately added to aircrafts flightPlan.
 		flightPlan.add(entryWaypoint);
 
@@ -71,7 +71,7 @@ public class FlightPlanComponent {
 			// Call selectNextWaypoint.
 			Waypoint nextWaypoint = selectNextWaypoint(currentWaypoint,
 					lastWaypoint, flightPlan, normalVectorFromCurrentToLast,
-					waypointSelectionList, 50, 300);
+					waypointSelectionList, 30, 100);
 			// Recurse with updated flightPlan and nextWaypoint.
 			return flightPlanWaypointGenerator(flightPlan, nextWaypoint,
 					lastWaypoint);
@@ -98,8 +98,6 @@ public class FlightPlanComponent {
 			ArrayList<Waypoint> waypointSelectionList, int maxAngle,
 			int minDistance) {
 		Waypoint nextWaypoint = null;
-
-		Collections.shuffle(waypointSelectionList, new Random());
 
 		for (Waypoint waypoint : waypointSelectionList) {
 			// Find normal vector from current item in waypointSelectionList to

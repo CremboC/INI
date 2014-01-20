@@ -1,6 +1,8 @@
 package seprini.controllers.components;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import seprini.controllers.AircraftController;
 import seprini.controllers.SidebarController;
@@ -35,11 +37,13 @@ public class WaypointComponent {
 		createEntrypoint(0, 0);
 		createEntrypoint(0, 720);
 		createEntrypoint(1080, 360);
+		createEntrypoint(540, 0);
 
 		// add exit waypoints to exitList
 		createExitpoint(1080, 720);
 		createExitpoint(1080, 0);
 		createExitpoint(0, 420);
+		createExitpoint(540, 720);
 
 		// add some waypoints
 		createWaypoint(300, 200, true);
@@ -51,6 +55,8 @@ public class WaypointComponent {
 		createWaypoint(700, 500, true);
 		createWaypoint(450, 100, true);
 		createWaypoint(540, 360, true);
+		
+		Collections.shuffle(permanentList, new Random());
 	}
 
 	/**
