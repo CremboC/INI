@@ -41,6 +41,9 @@ public final class SidebarController extends ChangeListener implements
 
 	private Table aircraftControls, waypointWrapper, bottomButtons;
 
+	// stores state of the turn left/right buttons
+	private boolean turningLeft, turningRight;
+
 	/**
 	 * 
 	 * 
@@ -95,41 +98,48 @@ public final class SidebarController extends ChangeListener implements
 		createLabel("speed", " Speed: ", aircraftControls).width(200)
 				.colspan(2);
 
-		aircraftControls.row().width(200).colspan(2);
+		aircraftControls.row();
 
-		createLabel("altitude", " Altitude: ", aircraftControls);
+		createLabel("altitude", " Altitude: ", aircraftControls).width(200)
+				.colspan(2);
 
-		aircraftControls.row().width(200).colspan(2);
+		aircraftControls.row();
 
 		// adding buttons to aircraft controls
-		createButton("createWaypoint", " Create Waypoint", aircraftControls);
+		createButton("createWaypoint", " Create Waypoint", aircraftControls,
+				true).width(200).colspan(2);
 
-		aircraftControls.row().width(200).colspan(2);
+		aircraftControls.row();
 
-		createButton("assignWaypoint", " Assign Waypoint", aircraftControls);
+		createButton("assignWaypoint", " Assign Waypoint", aircraftControls,
+				true).width(200).colspan(2);
 
-		aircraftControls.row().spaceTop(50).colspan(2);
+		aircraftControls.row();
 
-		createButton("accelerate", " Accelerate", aircraftControls).width(200);
+		createButton("accelerate", " Accelerate", aircraftControls, false)
+				.width(200).colspan(2);
 		// createButton("takeOff", "Take Off", aircraftControls).width(100);
 
 		aircraftControls.row().colspan(2);
 
-		createButton("decelerate", " Decelerate", aircraftControls).width(200);
+		createButton("decelerate", " Decelerate", aircraftControls, false)
+				.width(200);
 		// createButton("land", "Land", aircraftControls).width(100);
 
 		aircraftControls.row().spaceTop(100);
 
-		createButton("up", " Up", aircraftControls).width(100).colspan(2);
+		createButton("up", " Up", aircraftControls, false).width(100)
+				.colspan(2);
 
 		aircraftControls.row();
 
-		createButton("left", " Left", aircraftControls).width(100);
-		createButton("right", "Right", aircraftControls).width(100);
+		createButton("left", " Left", aircraftControls, true).width(100);
+		createButton("right", "Right", aircraftControls, true).width(100);
 
 		aircraftControls.row();
 
-		createButton("down", "Down", aircraftControls).width(100).colspan(2);
+		createButton("down", "Down", aircraftControls, false).width(100)
+				.colspan(2);
 
 		aircraftControls.row();
 
@@ -139,8 +149,8 @@ public final class SidebarController extends ChangeListener implements
 		bottomButtons.row();
 
 		// adding buttons to bottom
-		createButton("menu", " Menu", bottomButtons).width(100);
-		createButton("pause", " Pause", bottomButtons).width(100);
+		createButton("menu", " Menu", bottomButtons, false).width(100);
+		createButton("pause", " Pause", bottomButtons, false).width(100);
 	}
 
 	/**
@@ -188,8 +198,10 @@ public final class SidebarController extends ChangeListener implements
 	 * @param text
 	 * @return
 	 */
-	private Cell<?> createButton(String name, String text, Table parent) {
-		TextButton button = new TextButton(text, Art.getSkin());
+	private Cell<?> createButton(String name, String text, Table parent,
+			boolean toggle) {
+		String style = (toggle) ? "toggle" : "default";
+		TextButton button = new TextButton(text, Art.getSkin(), style);
 		button.pad(3);
 		button.addListener(this);
 
@@ -238,10 +250,14 @@ public final class SidebarController extends ChangeListener implements
 
 			if (selectedAircraft != null) {
 				if (actor.equals(buttons.get("left")))
-					selectedAircraft.turnLeft();
+					selectedAircraft.turnLeft(turningLeft = (turningLeft)
+							? false
+							: true);
 
 				if (actor.equals(buttons.get("right")))
-					selectedAircraft.turnRight();
+					selectedAircraft.turnRight(turningRight = (turningRight)
+							? false
+							: true);
 
 				if (actor.equals(buttons.get("up")))
 					selectedAircraft.increaseAltitude();

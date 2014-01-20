@@ -4,8 +4,21 @@ import com.badlogic.gdx.Gdx;
 
 public class State {
 
+	private static State instance = null;
+
 	public static boolean paused = false;
 	private static float time = 0;
+
+	private State() {
+
+	}
+
+	public static State getInstance() {
+		if (instance == null) {
+			instance = new State();
+		}
+		return instance;
+	}
 
 	/**
 	 * Tick time; time += delta

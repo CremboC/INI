@@ -115,6 +115,7 @@ public final class Aircraft extends Entity {
 	@Override
 	protected void additionalDraw(SpriteBatch batch) {
 
+
 		if (!ignorePath && !selected && !breaching)
 			return;
 

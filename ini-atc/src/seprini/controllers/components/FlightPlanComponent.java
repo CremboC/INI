@@ -58,8 +58,8 @@ public class FlightPlanComponent {
 		else {
 			// Find normal vector from currentWaypoint to lastWaypoint and
 			// normalise.
-			Vector2 normalVectorFromCurrentToLast = lastWaypoint.getCoords()
-					.cpy().sub(currentWaypoint.getCoords()).nor();
+			Vector2 normalVectorFromCurrentToLast = (lastWaypoint.getCoords()
+					.cpy().sub(currentWaypoint.getCoords())).nor();
 
 			// Create the list of waypoints for the generator to choose from,
 			// including the final waypoint so that the base case can be
@@ -109,8 +109,8 @@ public class FlightPlanComponent {
 			// normalVectorFromCurrentToLast is less than specified maxAngle.
 			// 3. Is minDistance away from currentWaypoint
 			if (!flightPlan.contains(waypoint)
-					&& Math.abs(normalVectorFromCurrentToPotential.angle()
-							- normalVectorFromCurrentToLast.angle()) < maxAngle
+					// the acos returns a value of radians, which is then converted to degrees.
+					&& (Math.acos(normalVectorFromCurrentToPotential.dot(normalVectorFromCurrentToLast))*180/Math.PI) < maxAngle
 					&& waypoint.getCoords().dst(currentWaypoint.getCoords()) > minDistance
 					&& waypoint.getCoords().dst(lastWaypoint.getCoords()) > minDistance) {
 				// If all conditions are met, choose this waypoint as the

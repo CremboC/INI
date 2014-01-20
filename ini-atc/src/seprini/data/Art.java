@@ -49,7 +49,8 @@ public class Art {
 	public static void load() {
 		// loads the whole sprite which consists most of the game's textures
 		Texture combined = loadTexture("data/combinedgraphics.png");
-		combined.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		combined.setFilter(TextureFilter.MipMapLinearLinear,
+				TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1079, 720));
@@ -58,6 +59,8 @@ public class Art {
 		textures.put("waypoint", split(combined, 0, 720, 20, 20));
 		textures.put("menuAircraft", split(combined, 1280, 64, 727, 249));
 		textures.put("libgdx", split(combined, 1353, 0, 53, 10));
+		textures.put("entrypoint", split(combined, 20, 720, 20, 20));
+		textures.put("exitpoint", split(combined, 40, 720, 20, 20));
 
 		// load the default skin
 		loadSkin();
@@ -70,7 +73,7 @@ public class Art {
 		sounds.put("ding", loadSound("ding.wav"));
 		sounds.put("warning", loadSound("warning.wav"));
 		sounds.put("crash", loadSound("crash.mp3"));
-		sounds.put("national", loadSound("National.mp3"));
+		sounds.put("national", loadSound("national.mp3"));
 		sounds.put("ambience", loadSound("ambience.mp3"));
 	}
 
@@ -94,10 +97,21 @@ public class Art {
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", 0.07f, 0.1f, 0.22f, 1);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.checked = skin.newDrawable("white", 0.07f, 0.1f, 0.22f,
+				1);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
+
+		// Configure a TextButtonStyle and name it "default". Skin resources are
+		// stored by type, so this doesn't overwrite the font.
+		TextButtonStyle toggleStyle = new TextButtonStyle();
+		toggleStyle.up = skin.newDrawable("white", 0.07f, 0.1f, 0.22f, 1);
+		toggleStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+		toggleStyle.checked = skin.newDrawable("white", Color.BLUE);
+		toggleStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+		toggleStyle.font = skin.getFont("default");
+		skin.add("toggle", toggleStyle);
 
 		// labelStyle with background
 		LabelStyle labelStyle = new LabelStyle();
