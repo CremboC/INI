@@ -72,7 +72,7 @@ public final class AircraftController extends InputListener implements
 		this.difficulty = diff;
 		this.airspace = airspace;
 		this.screen = screen;
-		
+
 		// add the background
 		airspace.addActor(new Map());
 
@@ -88,26 +88,26 @@ public final class AircraftController extends InputListener implements
 		// insert code here to initialise variables (eg max no of aircraft) to
 		// wanted value for that difficulty level.
 		switch (difficulty) {
-			case EASY :
-				maxAircraft = 2;
-				timeBetweenGenerations = 6;
-				separationRadius = 150;
-				break;
-			case MEDIUM :
-				maxAircraft = 2;
-				timeBetweenGenerations = 5;
-				separationRadius = 100;
-				break;
-			case HARD :
-				maxAircraft = 2;
-				timeBetweenGenerations = 4;
-				separationRadius = 75;
-				break;
-			default :
-				maxAircraft = 1;
-				timeBetweenGenerations = 1;
-				separationRadius = 100;
-				break;
+		case EASY:
+			maxAircraft = 2;
+			timeBetweenGenerations = 6;
+			separationRadius = 150;
+			break;
+		case MEDIUM:
+			maxAircraft = 2;
+			timeBetweenGenerations = 5;
+			separationRadius = 100;
+			break;
+		case HARD:
+			maxAircraft = 2;
+			timeBetweenGenerations = 4;
+			separationRadius = 75;
+			break;
+		default:
+			maxAircraft = 1;
+			timeBetweenGenerations = 1;
+			separationRadius = 100;
+			break;
 		}
 
 		// initialise aircraft types.
@@ -177,6 +177,10 @@ public final class AircraftController extends InputListener implements
 			// Remove inactive aircraft.
 			if (!planeI.isActive()) {
 				removeAircraft(i);
+			}
+
+			if (planeI.getAltitude() <= 0) {
+				screen.setScreen(new EndScreen());
 			}
 
 		}
