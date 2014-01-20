@@ -68,6 +68,7 @@ public class GameScreen extends Screen {
 
 		// draw the background map
 		draw(Art.getTextureRegion("airspace"), 0, 0, root.getSpriteBatch());
+		draw(Art.getTextureRegion("sidebar"), 1080, 0, root.getSpriteBatch());
 
 		// draw every actor on the stage
 		root.draw();

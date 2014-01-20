@@ -52,7 +52,8 @@ public class Art {
 		combined.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
-		textures.put("airspace", split(combined, 0, 0, 1279, 720));
+		textures.put("airspace", split(combined, 0, 0, 1079, 720));
+		textures.put("sidebar", split(combined, 1080, 0, 200,720));
 		textures.put("aircraft", split(combined, 1281, 0, 72, 63));
 		textures.put("waypoint", split(combined, 0, 720, 20, 20));
 		textures.put("menuAircraft", split(combined, 1280, 64, 727, 249));
