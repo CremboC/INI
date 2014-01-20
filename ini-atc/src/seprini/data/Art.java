@@ -49,7 +49,8 @@ public class Art {
 	public static void load() {
 		// loads the whole sprite which consists most of the game's textures
 		Texture combined = loadTexture("data/combinedgraphics.png");
-		combined.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		combined.setFilter(TextureFilter.MipMapLinearLinear,
+				TextureFilter.Linear);
 
 		// splits up the sprite into parts and loads them into the table
 		textures.put("airspace", split(combined, 0, 0, 1079, 720));

@@ -10,8 +10,13 @@ import seprini.models.Airspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * The game screen - all game logic starts here
@@ -54,6 +59,15 @@ public class GameScreen extends Screen {
 		ui.add(airspace).width(Config.AIRSPACE_SIZE.x)
 				.height(Config.AIRSPACE_SIZE.y);
 
+		// Temporary background creator for sidebar
+		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
+		pixmap.setColor(new Color(0.31f, 0.33f, 0.32f, 1));
+		pixmap.fill();
+
+		// set the temporary background
+		sidebar.setBackground(new TextureRegionDrawable(new TextureRegion(
+				new Texture(pixmap))));
+
 		// move the sidebar to the top right, add it to the main table and set
 		// its size
 		ui.add(sidebar).width(Config.SIDEBAR_SIZE.x)
@@ -65,11 +79,6 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void render() {
-
-		// draw the background map
-		draw(Art.getTextureRegion("airspace"), 0, 0, root.getSpriteBatch());
-		draw(Art.getTextureRegion("sidebar"), 1080, 0, root.getSpriteBatch());
-
 		// draw every actor on the stage
 		root.draw();
 
