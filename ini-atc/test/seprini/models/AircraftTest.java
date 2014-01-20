@@ -127,7 +127,13 @@ public class AircraftTest {
 	@Test
 	public void testGetAltitude() {
 		float result = aircraft.getAltitude();
-		assertEquals(10000, result, 0);
+		if (result == 5000) {
+			assertEquals(5000, result, 0);
+		} else if (result == 10000) {
+			assertEquals(10000, result, 0);
+		} else if (result == 15000) {
+			assertEquals(15000, result, 0);
+		}
 	}
 
 	@Test
