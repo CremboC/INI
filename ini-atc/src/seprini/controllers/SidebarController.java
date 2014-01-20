@@ -41,6 +41,9 @@ public final class SidebarController extends ChangeListener implements
 
 	private Table aircraftControls, waypointWrapper, bottomButtons;
 
+	// stores state of the turn left/right buttons
+	private boolean turningLeft, turningRight;
+
 	/**
 	 * 
 	 * 
@@ -130,8 +133,8 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.row();
 
-		createButton("left", " Left", aircraftControls, false).width(100);
-		createButton("right", "Right", aircraftControls, false).width(100);
+		createButton("left", " Left", aircraftControls, true).width(100);
+		createButton("right", "Right", aircraftControls, true).width(100);
 
 		aircraftControls.row();
 
@@ -247,10 +250,14 @@ public final class SidebarController extends ChangeListener implements
 
 			if (selectedAircraft != null) {
 				if (actor.equals(buttons.get("left")))
-					selectedAircraft.turnLeft();
+					selectedAircraft.turnLeft(turningLeft = (turningLeft)
+							? false
+							: true);
 
 				if (actor.equals(buttons.get("right")))
-					selectedAircraft.turnRight();
+					selectedAircraft.turnRight(turningRight = (turningRight)
+							? false
+							: true);
 
 				if (actor.equals(buttons.get("up")))
 					selectedAircraft.increaseAltitude();
