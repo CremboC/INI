@@ -59,7 +59,8 @@ public class Art {
 		textures.put("waypoint", split(combined, 0, 720, 20, 20));
 		textures.put("menuAircraft", split(combined, 1280, 64, 727, 249));
 		textures.put("libgdx", split(combined, 1353, 0, 53, 10));
-
+		textures.put("entryWayPoint", split(combined, 20, 720, 20, 20));
+		textures.put("exitWayPoint", split(combined, 40, 720, 20, 20));
 		// load the default skin
 		loadSkin();
 
