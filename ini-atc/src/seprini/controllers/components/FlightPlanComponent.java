@@ -1,6 +1,7 @@
 package seprini.controllers.components;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import seprini.models.Exitpoint;
@@ -97,6 +98,8 @@ public class FlightPlanComponent {
 			ArrayList<Waypoint> waypointSelectionList, int maxAngle,
 			int minDistance) {
 		Waypoint nextWaypoint = null;
+
+		Collections.shuffle(waypointSelectionList, new Random());
 
 		for (Waypoint waypoint : waypointSelectionList) {
 			// Find normal vector from current item in waypointSelectionList to
