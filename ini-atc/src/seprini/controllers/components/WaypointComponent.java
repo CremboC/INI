@@ -100,7 +100,7 @@ public class WaypointComponent {
 			 * Alternatively, should call redirection method.
 			 */
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
+			public boolean touchDown(InputEvent event, float tX, float tY,
 					int pointer, int button) {
 
 				if (button == Buttons.LEFT && sidebar.allowRedirection()) {

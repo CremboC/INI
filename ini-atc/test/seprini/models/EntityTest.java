@@ -41,19 +41,16 @@ public class EntityTest {
 
 	@Test
 	public void testGetX() {
-		// *fail("Not yet implemented");
 		assertEquals(0, entity.getX(), 0);
 	}
 
 	@Test
 	public void testGetY() {
-		// *fail("Not yet implemented");
 		assertEquals(1, entity.getY(), 0);
 	}
 
 	@Test
 	public void testGetWidth() {
-		// *fail("Not yet implemented");
 		assertEquals(1, entity.getWidth(), 0);
 	}
 
@@ -64,24 +61,20 @@ public class EntityTest {
 
 	@Test
 	public void testDrawSpriteBatchFloat() {
-		// *fail("Not yet implemented");
 		// FUNCTIONAL
 	}
 
 	@Test
 	public void testAdditionalDraw() {
-		// *fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetRegion() {
-		// *fail("Not yet implemented");
 		// FUNCTIONAL
 	}
 
 	@Test
 	public void testGetCoords() {
-		// *fail("Not yet implemented");
 		Vector2 testcoords = new Vector2();
 		testcoords.x = 0;
 		testcoords.y = 1;

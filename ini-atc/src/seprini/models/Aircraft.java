@@ -34,6 +34,7 @@ public final class Aircraft extends Entity {
 
 	private float velocityScalar;
 
+	@SuppressWarnings("unused")
 	private final int sepRulesBreachCounter = 0;
 	private boolean breaching;
 
@@ -416,7 +417,7 @@ public final class Aircraft extends Entity {
 	/**
 	 * Returns aircraft velocity scalar times 700
 	 * 
-	 * @return
+	 * @return the velocity scalar
 	 */
 	public float getSpeed() {
 		return velocityScalar;

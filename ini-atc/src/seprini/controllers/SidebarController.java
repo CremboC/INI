@@ -203,6 +203,7 @@ public final class SidebarController extends ChangeListener implements
 	 * @param text
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private Cell<?> createLabel(String name, String text) {
 		Label label = new Label(text, Art.getSkin());
 		labels.put(name, label);

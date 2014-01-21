@@ -28,18 +28,15 @@ public class StateTest {
 
 	@Test
 	public void testTick() {
-		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testTime() {
-		// fail("Not yet implemented");
 		assertEquals(State.time(), 0f, 0);
 	}
 
 	@Test
 	public void testReset() {
-		// fail("Not yet implemented");
 		State.reset();
 		assertEquals(State.time(), 0f, 0);
 

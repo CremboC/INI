@@ -99,12 +99,10 @@ public class AircraftTest {
 
 	@Test
 	public void testTurnRight() {
-		// fail("Not yet implemented");
 	}
 
 	@Test
 	public void testTurnLeft() {
-		// fail("Not yet implemented");
 	}
 
 	@Test
@@ -121,7 +119,6 @@ public class AircraftTest {
 
 	@Test
 	public void testIsBreaching() {
-		// fail("Not yet implemented");
 	}
 
 	@Test
@@ -149,7 +146,6 @@ public class AircraftTest {
 
 	@Test
 	public void testSelected() {
-		// fail("Not yet implemented");
 	}
 
 	@Test

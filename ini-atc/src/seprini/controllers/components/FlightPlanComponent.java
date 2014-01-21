@@ -1,7 +1,6 @@
 package seprini.controllers.components;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 import seprini.models.Exitpoint;
