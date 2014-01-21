@@ -132,28 +132,11 @@ public final class Aircraft extends Entity {
 		Screen.drawString("alt: " + getAltitude(), getX() - 30, getY() - 20,
 				color, batch, true, 1);
 
-		if (!ignorePath && !selected && !breaching)
-			return;
-
 		ShapeRenderer drawer = Screen.shapeRenderer;
-
-		// debug line from aircraft centre to waypoint centre
-		if (Config.DEBUG_UI) {
-			Vector2 nextWaypoint = vectorToWaypoint();
-
-			batch.end();
-
-			drawer.begin(ShapeType.Line);
-			drawer.setColor(1, 0, 0, 0);
-			drawer.line(getX(), getY(), nextWaypoint.x, nextWaypoint.y);
-			drawer.end();
-
-			batch.begin();
-		}
 
 		// if the user takes control of the aircraft, draw a line to the
 		// exitpoint
-		if (ignorePath) {
+		if (selected) {
 			Waypoint exitpoint = waypoints.get(waypoints.size() - 1);
 
 			batch.end();
@@ -174,6 +157,20 @@ public final class Aircraft extends Entity {
 			drawer.begin(ShapeType.Line);
 			drawer.setColor(1, 0, 0, 0);
 			drawer.circle(getX(), getY(), getSeparationRadius() * 0.5f);
+			drawer.end();
+
+			batch.begin();
+		}
+
+		// debug line from aircraft centre to waypoint centre
+		if (Config.DEBUG_UI) {
+			Vector2 nextWaypoint = vectorToWaypoint();
+
+			batch.end();
+
+			drawer.begin(ShapeType.Line);
+			drawer.setColor(1, 0, 0, 0);
+			drawer.line(getX(), getY(), nextWaypoint.x, nextWaypoint.y);
 			drawer.end();
 
 			batch.begin();
