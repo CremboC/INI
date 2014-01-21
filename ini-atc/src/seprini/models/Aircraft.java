@@ -129,8 +129,8 @@ public final class Aircraft extends Entity {
 			color = Color.BLACK;
 		}
 
-		Screen.drawString("Alt: " + getAltitude(), getX() - 30, getY() - 20,
-				color, batch);
+		Screen.drawString("alt: " + getAltitude(), getX() - 30, getY() - 20,
+				color, batch, true, 1);
 
 		if (!ignorePath && !selected && !breaching)
 			return;

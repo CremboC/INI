@@ -85,7 +85,7 @@ public class GameScreen extends Screen {
 		if (Config.DEBUG_UI) {
 			Table.drawDebug(root);
 			drawString("fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20,
-					Color.BLACK, root.getSpriteBatch());
+					Color.BLACK, root.getSpriteBatch(), false, 1);
 		}
 	}
 

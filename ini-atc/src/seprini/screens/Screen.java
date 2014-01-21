@@ -76,10 +76,18 @@ public abstract class Screen {
 	 * @param color
 	 */
 	public static void drawString(CharSequence str, float x, float y,
-			Color color, SpriteBatch batch) {
+			Color color, SpriteBatch batch, boolean isNative, float scale) {
 		BitmapFont font = Art.getSkin().get(BitmapFont.class);
+
+		if (!isNative)
+			batch.begin();
+
 		font.setColor(color);
+		font.setScale(scale);
 		font.draw(batch, str, x, y);
+
+		if (!isNative)
+			batch.end();
 	}
 
 	public abstract void render();
