@@ -157,24 +157,28 @@ public final class SidebarController extends ChangeListener implements
 	 * Update the sidebar according to changes in the AircraftController
 	 */
 	public void update() {
+		String altitudeText;
+		String speedText;
 		// update timer
 		labels.get("timer").setText("" + Math.round(State.time()));
 
 		// if there is no selected aircraft, return immediately to avoid errors
 		// otherwise set it to the local selectedAircraft variable and update
 		// the text
-		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null)
-			return;
-
+		if ((selectedAircraft = aircrafts.getSelectedAircraft()) == null) {
+			altitudeText = " Altitude: ";
+			speedText = " Speed: ";
+		} else {
+			altitudeText = " Altitude: " + selectedAircraft.getAltitude() + "m";
+			speedText = " Speed: " + Math.round(selectedAircraft.getSpeed()
+							* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h";
+		}
+			
 		// update aircraft altitude text
-		labels.get("altitude").setText(
-				" Altitude: " + selectedAircraft.getAltitude() + "m");
+		labels.get("altitude").setText(altitudeText);
 
 		// update aircraft speed text
-		labels.get("speed").setText(
-				" Speed: "
-						+ Math.round(selectedAircraft.getSpeed()
-								* Config.AIRCRAFT_SPEED_MULTIPLIER) + "km/h");
+		labels.get("speed").setText(speedText);
 	}
 
 	/**
