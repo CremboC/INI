@@ -26,7 +26,10 @@ public class Waypoint extends Entity {
 		this.texture = Art.getTextureRegion("waypoint");
 		this.size = Config.WAYPOINT_SIZE;
 
+		// set the origin to the centre
 		this.setOrigin(getWidth() / 2, getHeight() / 2);
+
+		// set its bounds so it's clickable
 		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
 				getWidth(), getHeight());
 	}

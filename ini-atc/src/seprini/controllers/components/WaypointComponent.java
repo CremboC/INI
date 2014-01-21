@@ -89,8 +89,10 @@ public class WaypointComponent {
 		else
 			userList.add(waypoint);
 
+		// add it to the airspace so it is automatically drawn using root.draw()
 		controller.getAirspace().addActor(waypoint);
 
+		// add a listener is a user can remove it or redirect aircraft to it
 		waypoint.addListener(new ClickListener() {
 
 			/**

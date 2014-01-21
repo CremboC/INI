@@ -116,22 +116,6 @@ public final class Aircraft extends Entity {
 	@Override
 	protected void additionalDraw(SpriteBatch batch) {
 
-		// draw the altitude for each aircraft
-		Color color;
-
-		if (getAltitude() <= 7500) {
-			color = Color.GREEN;
-		} else if (getAltitude() <= 12500) {
-			color = Color.ORANGE;
-		} else if (getAltitude() > 12500) {
-			color = Color.RED;
-		} else {
-			color = Color.BLACK;
-		}
-
-		Screen.drawString("alt: " + getAltitude(), getX() - 30, getY() - 20,
-				color, batch, true, 1);
-
 		ShapeRenderer drawer = Screen.shapeRenderer;
 
 		// if the user takes control of the aircraft, draw a line to the
@@ -161,6 +145,22 @@ public final class Aircraft extends Entity {
 
 			batch.begin();
 		}
+
+		// draw the altitude for each aircraft
+		Color color;
+
+		if (getAltitude() <= 7500) {
+			color = Color.GREEN;
+		} else if (getAltitude() <= 12500) {
+			color = Color.ORANGE;
+		} else if (getAltitude() > 12500) {
+			color = Color.RED;
+		} else {
+			color = Color.BLACK;
+		}
+
+		Screen.drawString("alt: " + getAltitude(), getX() - 30, getY() - 20,
+				color, batch, true, 1);
 
 		// debug line from aircraft centre to waypoint centre
 		if (Config.DEBUG_UI) {
@@ -204,8 +204,7 @@ public final class Aircraft extends Entity {
 				startAngle = relativeAngle;
 
 				// making sure we rotate to the correct side, otherwise may
-				// results
-				// in a helicopter with no tail rotor
+				// results in a helicopter with no tail rotor
 				if (startAngle < getRotation()) {
 					rotate(-maxTurningRate);
 				} else {
@@ -237,6 +236,7 @@ public final class Aircraft extends Entity {
 		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
 				getWidth(), getHeight());
 
+		// allows for smooth decent/ascent
 		if (altitude > desiredAltitude) {
 			this.altitude -= this.maxClimbRate;
 		} else if (altitude < desiredAltitude) {

@@ -25,8 +25,6 @@ import com.esotericsoftware.tablelayout.Cell;
 public final class SidebarController extends ChangeListener implements
 		Controller {
 
-	private final Table sidebar;
-
 	private final AircraftController aircrafts;
 
 	private Aircraft selectedAircraft;
@@ -34,12 +32,15 @@ public final class SidebarController extends ChangeListener implements
 	private final HashMap<String, TextButton> buttons = new HashMap<String, TextButton>();
 	private final HashMap<String, Label> labels = new HashMap<String, Label>();
 
+	// store whether the allow redirection / create waypoint buttons have been
+	// clicked
 	private boolean allowNewWaypoints = false;
 	private boolean allowRedirection = false;
 
 	private final GameScreen screen;
 
-	private Table aircraftControls, waypointWrapper, bottomButtons;
+	// UI wrappers for the controls and the buttons at the bottom
+	private Table sidebar, aircraftControls, bottomButtons;
 
 	// stores state of the turn left/right buttons
 	private boolean turningLeft, turningRight;
@@ -76,12 +77,6 @@ public final class SidebarController extends ChangeListener implements
 
 		aircraftControls.top();
 		sidebar.addActor(aircraftControls);
-
-		// wrapper for waypoint list
-		waypointWrapper = new Table();
-		waypointWrapper.setFillParent(true);
-
-		sidebar.addActor(waypointWrapper);
 
 		// wrapper for bottom buttons
 		bottomButtons = new Table();
@@ -182,20 +177,6 @@ public final class SidebarController extends ChangeListener implements
 	}
 
 	/**
-	 * Handles what happens after the 'create waypoint' button has been clicked
-	 */
-	private void createWaypointClicked() {
-		allowNewWaypoints = (allowNewWaypoints) ? false : true;
-	}
-
-	/**
-	 * Handles what happens after the 'assign waypoint' button has been clicked
-	 */
-	private void assignWaypointClicked() {
-		allowRedirection = (allowRedirection) ? false : true;
-	}
-
-	/**
 	 * Convinience method to create buttons and add them to the sidebar
 	 * 
 	 * @param name
@@ -204,8 +185,9 @@ public final class SidebarController extends ChangeListener implements
 	 */
 	private Cell<?> createButton(String name, String text, Table parent,
 			boolean toggle) {
-		String style = (toggle) ? "toggle" : "default";
-		TextButton button = new TextButton(text, Art.getSkin(), style);
+		TextButton button = new TextButton(text, Art.getSkin(), (toggle)
+				? "toggle"
+				: "default");
 		button.pad(3);
 		button.addListener(this);
 
@@ -247,10 +229,10 @@ public final class SidebarController extends ChangeListener implements
 	public void changed(ChangeEvent event, Actor actor) {
 		if (State.paused == false) {
 			if (actor.equals(buttons.get("createWaypoint")))
-				createWaypointClicked();
+				allowNewWaypoints = (allowNewWaypoints) ? false : true;
 
 			if (actor.equals(buttons.get("assignWaypoint")))
-				assignWaypointClicked();
+				allowRedirection = (allowRedirection) ? false : true;
 
 			if (selectedAircraft != null) {
 				if (actor.equals(buttons.get("left")))

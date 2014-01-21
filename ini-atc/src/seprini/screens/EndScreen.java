@@ -77,4 +77,9 @@ public class EndScreen extends Screen {
 		root.act();
 	}
 
+	@Override
+	public void removed() {
+		root.dispose();
+	}
+
 }

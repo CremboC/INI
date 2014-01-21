@@ -12,8 +12,4 @@ public final class Exitpoint extends Waypoint {
 		super(position, false);
 		this.texture = Art.getTextureRegion("exitpoint");
 	}
-
-	public String toString() {
-		return "Exitpoint - x: " + getX() + " y: " + getY();
-	}
 }

@@ -132,9 +132,8 @@ public final class AircraftController extends InputListener implements
 
 		breachingSound = false;
 
-		if (State.time() - lastWarned >= 2) {
-			breachingIsPlaying = false;
-		}
+		// wait at least 2 seconds before allowing to warn again
+		breachingIsPlaying = (State.time() - lastWarned >= 2) ? false : true;
 
 		// Updates aircraft in turn
 		// Removes aircraft which are no longer active from aircraftList.
@@ -185,12 +184,16 @@ public final class AircraftController extends InputListener implements
 
 		}
 
+		// make sure the breaching sound plays only when a separation breach
+		// occurs. Also makes sure it start playing it only one time so there
+		// aren't multiple warning sounds at the same time
 		if (breachingSound && !breachingIsPlaying) {
 			breachingIsPlaying = true;
 			lastWarned = State.time();
 			Art.getSound("warning").play(1.0f);
 		}
 
+		// try to generate a new aircraft
 		final Aircraft generatedAircraft = generateAircraft();
 
 		// if the newly generated aircraft is not null (ie checking one was
@@ -208,23 +211,48 @@ public final class AircraftController extends InputListener implements
 
 			});
 
+			// push the aircraft to the top so it's infront of the user created
+			// waypoints
 			generatedAircraft.toFront();
+
+			// add it to the airspace (stage group) so its automatically drawn
+			// upon calling root.draw()
 			airspace.addActor(generatedAircraft);
 
+			// play a sound to audibly inform the player that an aircraft as
+			// spawned
 			Art.getSound("ding").play(0.5f);
 		}
 
+		// finally, update the sidebar
 		sidebar.update();
-
 	}
 
+	/**
+	 * Handles what happens after a collision
+	 * 
+	 * @param a
+	 *            first aircraft that collided
+	 * @param b
+	 *            second aircraft that collided
+	 */
 	private void collisionHasOccured(Aircraft a, Aircraft b) {
-		// End the game
+		// stop the ambience sound and play the crash sound
 		Art.getSound("ambience").stop();
-		Art.getSound("crash").play(1.0f);
+		Art.getSound("crash").play(0.6f);
+
+		// change the screen to the endScreen
 		screen.setScreen(new EndScreen());
 	}
 
+	/**
+	 * Handles what happens after the separation rules have been breached
+	 * 
+	 * @param a
+	 *            first aircraft that breached
+	 * @param b
+	 *            second aircraft that breached
+	 */
 	private void separationRulesBreached(Aircraft a, Aircraft b) {
 		// for scoring mechanisms, if applicable
 		a.isBreaching(true);
@@ -239,13 +267,21 @@ public final class AircraftController extends InputListener implements
 	 * Checks if maximum number of aircraft is not exceeded. If it isn't, a new
 	 * aircraft is generated with the arguments randomAircraftType() and
 	 * generateFlightPlan().
+	 * 
+	 * @return an <b>Aircraft</b> if the following conditions have been met: <br>
+	 *         a) there are no more aircraft on screen than allowed <br>
+	 *         b) enough time has passed since the last aircraft has been
+	 *         generated <br>
+	 *         otherwise <b>null</b>
+	 * 
 	 */
 	private Aircraft generateAircraft() {
+		// number of aircraft has reached maximum, abort
 		if (aircraftList.size() == maxAircraft)
 			return null;
 
-		// difference between aircraft generated - 5 seconds, needs to be
-		// dependable on difficulty
+		// time difference between aircraft generated - depends on difficulty
+		// selected
 		if (State.time() - lastGenerated < timeBetweenGenerations
 				+ rand.nextInt(100))
 			return null;
@@ -255,6 +291,8 @@ public final class AircraftController extends InputListener implements
 
 		aircraftList.add(newAircraft);
 
+		// store the time when an aircraft was last generated to know when to
+		// generate the next aicraft
 		lastGenerated = State.time();
 
 		return newAircraft;
@@ -285,8 +323,6 @@ public final class AircraftController extends InputListener implements
 
 		// removes the aircraft from the stage
 		aircraft.remove();
-
-		return;
 	}
 
 	/**
@@ -316,7 +352,8 @@ public final class AircraftController extends InputListener implements
 	/**
 	 * Redirects aircraft to another waypoint.
 	 * 
-	 * @param object
+	 * @param waypoint
+	 *            Waypoint to redirect to
 	 */
 	public void redirectAircraft(Waypoint waypoint) {
 		Debug.msg("Redirecting aircraft " + 0 + " to " + waypoint);
@@ -353,13 +390,7 @@ public final class AircraftController extends InputListener implements
 
 	@Override
 	public boolean keyDown(InputEvent event, int keycode) {
-		if (keycode == Keys.SPACE)
-			State.paused = (State.paused) ? false : true;
-
-		if (keycode == Keys.ESCAPE)
-			screen.setScreen(new EndScreen());
-
-		if (selectedAircraft != null && (State.paused == false)) {
+		if (selectedAircraft != null && !State.paused) {
 
 			if (keycode == Keys.LEFT || keycode == Keys.A)
 				selectedAircraft.turnLeft(true);
