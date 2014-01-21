@@ -30,4 +30,11 @@ public final class Config {
 	public final static int MIN_ALTITUDE_DIFFERENCE = 1000;
 	public static final int[] ALTITUDES = { 5000, 10000, 15000 };
 
+	// other
+	public final static String COPYRIGHT_NOTICE = "Copyright Disclaimer Under Section 107 of the Copyright Act 1976, allowance is made "
+			+ "for 'fair use' for purposes such as criticism, comment, news reporting, teaching, "
+			+ "scholarship, and research. Fair use is a use permitted by copyright statute that "
+			+ "might otherwise be infringing. Non-profit, educational or personal use tips the "
+			+ "balance in favor of fair use.";
+
 }

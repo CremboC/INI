@@ -95,6 +95,7 @@ public final class MenuController extends ChangeListener implements Controller {
 
 		// stop the anthem after entering the game
 		Art.getSound("comeflywithme").stop();
+		Art.getSkin().getFont("default").setScale(1f);
 
 		// Pass difficulty to the newly created GameScreen so the game can
 		// change variables depending on it

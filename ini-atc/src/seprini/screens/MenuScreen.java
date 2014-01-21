@@ -2,6 +2,7 @@ package seprini.screens;
 
 import seprini.controllers.MenuController;
 import seprini.data.Art;
+import seprini.data.Config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -44,21 +45,14 @@ public class MenuScreen extends Screen {
 		// add the table UI
 		root.addActor(ui);
 
-		Art.getSound("comeflywithme").play(0.5f);
+		Art.getSound("comeflywithme").play(1f);
 	}
 
 	@Override
 	public void render() {
 		root.draw();
 
-		
-
-		drawString(
-				"Copyright Disclaimer Under Section 107 of the Copyright Act 1976, allowance is made "
-						+ "for 'fair use' for purposes such as criticism, comment, news reporting, teaching, "
-						+ "scholarship, and research. Fair use is a use permitted by copyright statute that "
-						+ "might otherwise be infringing. Non-profit, educational or personal use tips the "
-						+ "balance in favor of fair use.", 10, 10, Color.BLACK,
+		drawString(Config.COPYRIGHT_NOTICE, 10, 10, Color.BLACK,
 				root.getSpriteBatch(), false, 0.5f);
 
 		draw(Art.getTextureRegion("menuAircraft"), 300, 390,
