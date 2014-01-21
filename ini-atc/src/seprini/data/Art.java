@@ -73,7 +73,7 @@ public class Art {
 		sounds.put("ding", loadSound("ding.wav"));
 		sounds.put("warning", loadSound("warning.mp3"));
 		sounds.put("crash", loadSound("crash.mp3"));
-		sounds.put("national", loadSound("national.mp3"));
+		sounds.put("comeflywithme", loadSound("comeflywithme.mp3"));
 		sounds.put("ambience", loadSound("ambience.mp3"));
 	}
 
