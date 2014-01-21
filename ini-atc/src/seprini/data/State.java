@@ -23,7 +23,7 @@ public class State {
 	/**
 	 * Tick time; time += delta
 	 */
-	public static void tick() {
+	public synchronized static void tick() {
 		time += Gdx.graphics.getDeltaTime();
 	}
 
