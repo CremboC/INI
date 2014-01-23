@@ -42,10 +42,6 @@ public final class Aircraft extends Entity {
 	private boolean ignorePath = false; // When user has taken control of the
 	// aircraft
 
-	// used for smooth rotation, to remember the original angle to the next
-	// waypoint
-	private float startAngle;
-
 	// whether the aircraft is selected by the player
 	private boolean selected;
 
@@ -201,12 +197,10 @@ public final class Aircraft extends Entity {
 			// smoothly rotate aircraft sprite
 			// if current rotation is not the one needed
 			if (getRotation() != relativeAngle) {
-				// set the startAngle to remember it
-				startAngle = relativeAngle;
 
 				// making sure we rotate to the correct side, otherwise may
 				// results in a helicopter with no tail rotor
-				if (startAngle < getRotation()) {
+				if (relativeAngle < getRotation()) {
 					rotate(-maxTurningRate);
 				} else {
 					rotate(maxTurningRate);
