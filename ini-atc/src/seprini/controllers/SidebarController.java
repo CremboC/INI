@@ -154,6 +154,7 @@ public final class SidebarController extends ChangeListener implements
 	public void update() {
 		String altitudeText;
 		String speedText;
+
 		// update timer
 		labels.get("timer").setText("" + Math.round(State.time()));
 

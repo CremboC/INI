@@ -110,7 +110,8 @@ public class FlightPlanComponent {
 			// 3. Is minDistance away from currentWaypoint
 			if (!flightPlan.contains(waypoint)
 					// the acos returns a value of radians, which is then converted to degrees.
-					&& (Math.acos(normalVectorFromCurrentToPotential.dot(normalVectorFromCurrentToLast))*180/Math.PI) < maxAngle
+					&& (Math.acos(normalVectorFromCurrentToPotential
+							.dot(normalVectorFromCurrentToLast)) * 180 / Math.PI) < maxAngle
 					&& waypoint.getCoords().dst(currentWaypoint.getCoords()) > minDistance
 					&& waypoint.getCoords().dst(lastWaypoint.getCoords()) > minDistance) {
 				// If all conditions are met, choose this waypoint as the

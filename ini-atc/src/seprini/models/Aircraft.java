@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public final class Aircraft extends Entity {
@@ -42,14 +43,16 @@ public final class Aircraft extends Entity {
 	private boolean ignorePath = false; // When user has taken control of the
 	// aircraft
 
-	// used for smooth rotation, to remember the original angle to the next
-	// waypoint
-	private float startAngle;
-
 	// whether the aircraft is selected by the player
 	private boolean selected;
 
 	private boolean turnRight, turnLeft;
+
+	// used for smooth turning
+	// rememeber last angle to check if it's increasing or not
+	private float previousAngle = 0;
+	// if is increasing, switch rotation sides so it uses the 'smaller' angle
+	private boolean rotateRight = false;
 
 	public Aircraft(AircraftType aircraftType, ArrayList<Waypoint> flightPlan,
 			int id) {
@@ -163,6 +166,7 @@ public final class Aircraft extends Entity {
 		Screen.drawString("alt: " + getAltitude(), getX() - 30, getY() - 20,
 				color, batch, true, 1);
 
+
 		// debug line from aircraft centre to waypoint centre
 		if (Config.DEBUG_UI) {
 			Vector2 nextWaypoint = vectorToWaypoint();
@@ -193,24 +197,36 @@ public final class Aircraft extends Entity {
 
 		// if the player has taken control of the aircraft, ignore all waypoints
 		if (!ignorePath) {
+
 			// Vector to next waypoint
 			Vector2 nextWaypoint = vectorToWaypoint();
 
-			float relativeAngle = relativeAngleToWaypoint(nextWaypoint);
+			// relative angle from the aircraft coordinates to the next waypoint
+			float relativeAngle = angleCoordsToWaypoint(nextWaypoint);
 
-			// smoothly rotate aircraft sprite
-			// if current rotation is not the one needed
-			if (getRotation() != relativeAngle) {
-				// set the startAngle to remember it
-				startAngle = relativeAngle;
-
-				// making sure we rotate to the correct side, otherwise may
-				// results in a helicopter with no tail rotor
-				if (startAngle < getRotation()) {
-					rotate(-maxTurningRate);
-				} else {
-					rotate(maxTurningRate);
+			// smoothly rotate aircraft
+			// sets a threshold due to float imprecision, should be generally
+			// relativeAngle != 0
+			if (relativeAngle > 1) {
+				
+				// if the current angle is bigger than the previous, it means we
+				// are rotating towards the wrong side
+				if (previousAngle < relativeAngle) {
+					// switch to rotate to the other side
+					rotateRight = (rotateRight) ? false : true;
 				}
+
+				// instead of using two rotation variables, it is enough to
+				// store one and just switch that one
+				if (rotateRight) {
+					rotate(maxTurningRate);
+				} else {
+					rotate(-maxTurningRate);
+				}
+
+				// save the current angle as the previous angle for the next
+				// iteration
+				previousAngle = relativeAngle;
 			}
 
 			// checking whether aircraft is at the next waypoint. Whether it's
@@ -233,16 +249,35 @@ public final class Aircraft extends Entity {
 		// finally updating coordinates
 		coords.add(velocity.cpy().scl(velocityScalar));
 
-		// updating bounds to make sure the aircraft is clickable
-		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
-				getWidth(), getHeight());
-
 		// allows for smooth decent/ascent
 		if (altitude > desiredAltitude) {
 			this.altitude -= this.maxClimbRate;
 		} else if (altitude < desiredAltitude) {
 			this.altitude += this.maxClimbRate;
 		}
+
+		// updating bounds to make sure the aircraft is clickable
+		this.setBounds(getX() - getWidth() / 2, getY() - getWidth() / 2,
+				getWidth(), getHeight());
+	}
+
+	/**
+	 * Calculate the angle between the aircraft's coordinates and the vector the
+	 * next waypoint
+	 * 
+	 * @param waypoint
+	 * @return angle IN DEGREES, NOT RADIANS
+	 */
+	private float angleCoordsToWaypoint(Vector2 waypoint) {
+		Vector2 way = new Vector2(waypoint.x - coords.x, waypoint.y - coords.y)
+				.nor();
+		Vector2 coord = velocity.cpy().nor();
+
+		float angle = (float) Math.acos(way.dot(coord) / way.len()
+				* coord.len())
+				* MathUtils.radiansToDegrees;
+		
+		return angle;
 	}
 
 	/**
@@ -279,12 +314,7 @@ public final class Aircraft extends Entity {
 	 * @return angle in degrees, rounded to 2 points after decimal
 	 */
 	private float relativeAngleToWaypoint(Vector2 waypoint) {
-		// degrees to nextWaypoint relative to aircraft
-		float degrees = (float) ((Math.atan2(getX() - waypoint.x,
-				-(getY() - waypoint.y)) * 180.0f / Math.PI) + 90.0f);
-
-		// round it to 2 points after decimal so it's not rotating forever
-		return Math.round(degrees * 100.0f) / 100.0f;
+		return new Vector2(waypoint.x - getX(), waypoint.y - getY()).angle();
 	}
 
 	/**
@@ -368,9 +398,19 @@ public final class Aircraft extends Entity {
 	 * Turns right by maxTurningRate * 2
 	 */
 	public void turnRight() {
-		ignorePath = true;
 
-		this.rotate(-maxTurningRate * 2);
+		ignorePath = true;
+		float angle = 0;
+
+		if (getRotation() - maxTurningRate * 2 < 0)
+			angle = (float) (360 - maxTurningRate * 2);
+
+		if (angle == 0) {
+			this.rotate(-maxTurningRate * 2);
+		} else {
+			this.setRotation(angle);
+		}
+
 		velocity.setAngle(getRotation());
 	}
 
@@ -379,8 +419,17 @@ public final class Aircraft extends Entity {
 	 */
 	public void turnLeft() {
 		ignorePath = true;
+		float angle = 0;
 
-		this.rotate(maxTurningRate * 2);
+		if (getRotation() + maxTurningRate * 2 >= 360.0f)
+			angle = (float) (maxTurningRate * 2);
+
+		if (angle == 0) {
+			this.rotate(maxTurningRate * 2);
+		} else {
+			this.setRotation(angle);
+		}
+
 		velocity.setAngle(getRotation());
 	}
 
