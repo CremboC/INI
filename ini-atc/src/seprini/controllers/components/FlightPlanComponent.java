@@ -64,13 +64,16 @@ public class FlightPlanComponent {
 			// Create the list of waypoints for the generator to choose from,
 			// including the final waypoint so that the base case can be
 			// satisfied;
-			ArrayList<Waypoint> waypointSelectionList = waypoints.getPermanentList();
+			ArrayList<Waypoint> waypointSelectionList = new ArrayList<Waypoint>(waypoints.getPermanentList());
 			waypointSelectionList.add(lastWaypoint);
 
 			// Call selectNextWaypoint.
 			Waypoint nextWaypoint = selectNextWaypoint(currentWaypoint,
 					lastWaypoint, flightPlan, normalVectorFromCurrentToLast,
-					waypointSelectionList, 30, 100);
+					waypointSelectionList, 30, 150);
+			
+			waypointSelectionList.clear();
+			
 			// Recurse with updated flightPlan and nextWaypoint.
 			return flightPlanWaypointGenerator(flightPlan, nextWaypoint,
 					lastWaypoint);
@@ -146,7 +149,7 @@ public class FlightPlanComponent {
 	 * @param entryWaypoint
 	 *            - where this aircraft entered the game
 	 * @param minDistance
-	 *            - desired minimum distance between aircrafts entryWaypoint and
+	 *            - desired minimum distance between aircraft's entryWaypoint and
 	 *            its exitWaypoint.
 	 * @return Exitpoint
 	 */
